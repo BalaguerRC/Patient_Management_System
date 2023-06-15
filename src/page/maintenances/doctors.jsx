@@ -8,27 +8,29 @@ import {
   TableRow,
 } from "@mui/material";
 
-const Users = () => {
+const Doctors = () => {
   return (
     <div>
-      Users
+      Doctors
       <TableContainer component={Paper}>
-        <Table sx={{ width: "100%", minWidth: 800}}>
+        <Table sx={{ width: "100%", minWidth: 800 }}>
           <TableHead>
             <TableCell>Name</TableCell>
             <TableCell>Last Name</TableCell>
             <TableCell>Email</TableCell>
-            <TableCell>UserName</TableCell>
-            <TableCell>Date</TableCell>
+            <TableCell>Phone</TableCell>
+            <TableCell>IDPerson</TableCell>
+            <TableCell>Image</TableCell>
             <TableCell>Actions</TableCell>
           </TableHead>
           <TableBody>
             <TableRow>
               <TableCell>Jhon</TableCell>
-              <TableCell>primera</TableCell>
+              <TableCell>Cena</TableCell>
               <TableCell>@email.com</TableCell>
-              <TableCell>jhoncena</TableCell>
-              <TableCell>20-2020</TableCell>
+              <TableCell>111-955-2144</TableCell>
+              <TableCell>000-000000-0</TableCell>
+              <TableCell>img</TableCell>
               <TableCell></TableCell>
             </TableRow>
           </TableBody>
@@ -38,4 +40,4 @@ const Users = () => {
   );
 };
 
-export default Users;
+export default Doctors;
