@@ -8,6 +8,7 @@ import LabTest from "./page/maintenances/labTest";
 import Patients from "./page/maintenances/patients";
 import MedicalAppointments from "./page/maintenances/medicalAppointments";
 import LabTestResults from "./page/maintenances/labTestResults";
+import Login from "./page/auth/login";
 
 function App() {
   const router = createBrowserRouter([
@@ -42,6 +43,10 @@ function App() {
       ],
     },
     {
+      path: "/login",
+      element: <Login />,
+    },
+    {
       path: "*",
       element: <Notfound />,
     },
@@ -49,7 +54,9 @@ function App() {
 
   return (
     <>
-      <RouterProvider router={router}></RouterProvider>
+      <div className="containerApp">
+        <RouterProvider router={router}></RouterProvider>
+      </div>
     </>
   );
 }
