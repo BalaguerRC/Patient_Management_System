@@ -9,42 +9,53 @@ import Patients from "./page/maintenances/patients";
 import MedicalAppointments from "./page/maintenances/medicalAppointments";
 import LabTestResults from "./page/maintenances/labTestResults";
 import Login from "./page/auth/login";
+import { AuthLayout, Logged } from "./components/AuthLayout";
 
 function App() {
   const router = createBrowserRouter([
     {
-      path: "/",
-      element: <Home />,
+      element: <AuthLayout />,
       children: [
         {
-          path: "users",
-          element: <Users />,
-        },
-        {
-          path: "doctors",
-          element: <Doctors />,
-        },
-        {
-          path: "labTests",
-          element: <LabTest />,
-        },
-        {
-          path: "patients",
-          element: <Patients />,
-        },
-        {
-          path: "medicalAppointments",
-          element: <MedicalAppointments />,
-        },
-        {
-          path: "labTestResults",
-          element: <LabTestResults />,
+          path: "/",
+          element: <Home />,
+          children: [
+            {
+              path: "users",
+              element: <Users />,
+            },
+            {
+              path: "doctors",
+              element: <Doctors />,
+            },
+            {
+              path: "labTests",
+              element: <LabTest />,
+            },
+            {
+              path: "patients",
+              element: <Patients />,
+            },
+            {
+              path: "medicalAppointments",
+              element: <MedicalAppointments />,
+            },
+            {
+              path: "labTestResults",
+              element: <LabTestResults />,
+            },
+          ],
         },
       ],
     },
     {
-      path: "/login",
-      element: <Login />,
+      element: <Logged />,
+      children: [
+        {
+          path: "/login",
+          element: <Login />,
+        },
+      ],
     },
     {
       path: "*",

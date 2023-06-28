@@ -43,7 +43,20 @@ const Home = () => {
               </button>
             </li>
             <li>
-              <button>Log out</button>
+              <form>
+                <button
+                  type="submit"
+                  onClick={() => {
+                    localStorage.removeItem("token_user");
+                    localStorage.removeItem("data_user");
+
+                    
+                  }}
+                  
+                >
+                  Log out
+                </button>
+              </form>
             </li>
           </ul>
         </nav>
