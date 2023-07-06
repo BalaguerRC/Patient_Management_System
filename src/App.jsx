@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
 import Notfound from "./page/error/notFound";
 import Home from "./page/home/home";
-import Users from "./page/maintenances/users";
+import Users from "./page/maintenances/users/users";
 import Doctors from "./page/maintenances/doctors";
 import LabTest from "./page/maintenances/labTest";
 import Patients from "./page/maintenances/patients";
@@ -10,6 +10,8 @@ import MedicalAppointments from "./page/maintenances/medicalAppointments";
 import LabTestResults from "./page/maintenances/labTestResults";
 import Login from "./page/auth/login";
 import { AuthLayout, Logged } from "./components/AuthLayout";
+import AddUser from "./components/users/AddUser";
+import EditUser from "./components/users/EditUser";
 
 function App() {
   const router = createBrowserRouter([
@@ -22,7 +24,20 @@ function App() {
           children: [
             {
               path: "users",
-              element: <Users />,
+              children: [
+                {
+                  index: true,
+                  element: <Users />,
+                },
+                {
+                  path: "addUser",
+                  element: <AddUser/>
+                },
+                {
+                  path: ":id",
+                  element: <EditUser/>
+                }
+              ]
             },
             {
               path: "doctors",
