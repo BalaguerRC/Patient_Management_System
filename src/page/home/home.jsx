@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import { Outlet, useNavigate } from "react-router-dom";
 
 const Home = () => {
@@ -18,44 +18,65 @@ const Home = () => {
         >
           <ul className="ulFromNav">
             <li>
-              <button onClick={() => navigate("/")}>Home</button>
+              <Button variant="contained" onClick={() => navigate("/")}>
+                Home
+              </Button>
             </li>
             <li>
-              <button onClick={() => navigate("users")}>Users</button>
+              <Button variant="contained" onClick={() => navigate("users")}>
+                Users
+              </Button>
             </li>
             <li>
-              <button onClick={() => navigate("doctors")}>Doctors</button>
+              <Button variant="contained" onClick={() => navigate("doctors")}>
+                Doctors
+              </Button>
             </li>
             <li>
-              <button onClick={() => navigate("labTests")}>Lab Tests</button>
+              <Button variant="contained" onClick={() => navigate("labTests")}>
+                Lab Tests
+              </Button>
             </li>
             <li>
-              <button onClick={() => navigate("patients")}>Patients</button>
+              <Button
+                variant="contained"
+                onClick={() => navigate("patients")}
+                disabled
+              >
+                Patients
+              </Button>
             </li>
             <li>
-              <button onClick={() => navigate("medicalAppointments")}>
+              <Button
+                variant="contained"
+                onClick={() => navigate("medicalAppointments")}
+                disabled
+              >
                 Medical Appointments
-              </button>
+              </Button>
             </li>
             <li>
-              <button onClick={() => navigate("labTestResults")}>
+              <Button
+                variant="contained"
+                onClick={() => navigate("labTestResults")}
+                disabled
+              >
                 Lab test Results
-              </button>
+              </Button>
             </li>
             <li>
               <form>
-                <button
+                <Button
+                  variant="contained"
+                  sx={{ background: "red", ":hover": { background: "none" } }}
                   type="submit"
                   onClick={() => {
                     localStorage.removeItem("token_user");
                     localStorage.removeItem("data_user");
-
-                    
                   }}
-                  
                 >
                   Log out
-                </button>
+                </Button>
               </form>
             </li>
           </ul>

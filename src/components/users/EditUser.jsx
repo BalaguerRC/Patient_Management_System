@@ -15,29 +15,71 @@ import { useNavigate, useParams } from "react-router-dom";
 const EditUser = () => {
   //const [SecActive, setSecActive] = useState(false);
   const [Name, setName] = useState();
-    const [LastName, setLastName] = useState();
-    const [Mail, setMail] = useState();
-    const [Username, setUsername] = useState();
-    const [Password, setPassword] = useState();
-    const [ConfirmPassword, setConfirmPassword] = useState();
-    const [Type, setType] = useState();
-  
-    const navigate = useNavigate()
+  const [LastName, setLastName] = useState();
+  const [Mail, setMail] = useState();
+  const [Username, setUsername] = useState();
+  const [Password, setPassword] = useState();
+  const [ConfirmPassword, setConfirmPassword] = useState();
+  const [Type, setType] = useState();
+
+  const navigate = useNavigate();
+
+  const token = localStorage.getItem("token_user");
 
   const { id } = useParams();
 
-  const getUserById=()=>{
-    fetch(import.meta.env.VITE_APIURL+"Users/"+id).then(res=>res.json()).then(data=>{
-        setName(data.data.name_User)
-        setLastName(data.data.lastName_User)
-        setMail(data.data.email_User)
-        setUsername(data.data.userName)
-        setType(data.data.type_User)
-    }).catch(err=>console.log(err))
-  }
+  const getUserById = () => {
+    fetch(import.meta.env.VITE_APIURL + "Users/" + id, {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setName(data.data.name_User);
+        setLastName(data.data.lastName_User);
+        setMail(data.data.email_User);
+        setUsername(data.data.userName);
+        setType(data.data.type_User);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const Post = (
+    name,
+    lastname,
+    mail,
+    username,
+    password,
+    confirmpass,
+    type
+  ) => {
+    if (confirmpass == password) {
+      fetch(import.meta.env.VITE_APIURL + "Users/" + id, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/Json",
+        },
+        body: JSON.stringify({
+          name_User: name,
+          lastName_User: lastname,
+          email_User: mail,
+          userName: username,
+          password_User: confirmpass,
+          type_User: type,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          data.success ? navigate("/users") : console.log(data);
+        });
+
+      //console.log(name,lastname,mail,username,password,confirmpass,type)
+    }
+  };
 
   useEffect(() => {
-    getUserById()
+    getUserById();
   }, []);
 
   return (
@@ -109,8 +151,9 @@ const EditUser = () => {
           <Button
             variant="contained"
             fullWidth
+            type="submit"
             onClick={() =>
-              console.log(
+              Post(
                 Name,
                 LastName,
                 Mail,

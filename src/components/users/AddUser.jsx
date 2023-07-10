@@ -9,7 +9,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const AddUser = () => {
@@ -21,13 +21,59 @@ const AddUser = () => {
   const [Password, setPassword] = useState();
   const [ConfirmPassword, setConfirmPassword] = useState();
   const [Type, setType] = useState();
+  const [Err, setErr] = useState();
+  const [Err2, setErr2] = useState({name:''});
+/**,lastname:'',mail:'',username:'' */
+  const token = localStorage.getItem("token_user");
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
+  const AddUser = (
+    Name,
+    LastName,
+    Mail,
+    Username,
+    Password,
+    ConfirmPassword,
+    Type
+  ) => {
+    if(!Name) setErr2({name: 'no hay name'})
+    if (ConfirmPassword === Password) {
+      fetch(import.meta.env.VITE_APIURL + "Users", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/Json",
+          Authorization: "Bearer " + token,
+        },
+        body: JSON.stringify({
+          name_User: Name,
+          lastName_User: LastName,
+          email_User: Mail,
+          userName: Username,
+          password_User: ConfirmPassword,
+          type_User: Type,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data.errors);
+          //setErr2(data.errors)
+
+          if(data.success) navigate("/users")
+
+          if(data.message) setErr(data.message)
+        }).catch(err=>console.log("Error",err));
+    } else {
+      console.log("la contrase;a no es igual");
+    }
+  };
+
 
   return (
     <div>
       <Typography>Add new user</Typography>
-      <Button onClick={()=>navigate("/users")}>{"<-"}Back</Button>
+      <Button onClick={()=>console.log(Err2.Name_User)}>error</Button>
+      <Button onClick={() => navigate("/users")}>{"<-"}Back</Button>
       <Paper>
         <Grid
           container
@@ -35,8 +81,12 @@ const AddUser = () => {
           justifyContent={"center"}
           alignItems={"center"}
         >
+        
           <TextField
             type="text"
+            /*error*/
+            error={Err2.name ? true: false}
+            helperText={Err2.name}
             placeholder="name..."
             fullWidth
             onChange={(e) => setName(e.target.value)}
@@ -84,13 +134,15 @@ const AddUser = () => {
               <MenuItem value={2}>Doctor</MenuItem>
             </Select>
           </FormControl>
+          <Typography variant="caption">{Err}</Typography>
         </Grid>
         <Grid container direction={"row"}>
           <Button
             variant="contained"
             fullWidth
+            type="submit"
             onClick={() =>
-              console.log(
+              AddUser(
                 Name,
                 LastName,
                 Mail,
