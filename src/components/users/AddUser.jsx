@@ -22,8 +22,18 @@ const AddUser = () => {
   const [ConfirmPassword, setConfirmPassword] = useState();
   const [Type, setType] = useState();
   const [Err, setErr] = useState();
-  const [Err2, setErr2] = useState({name:''});
-/**,lastname:'',mail:'',username:'' */
+
+  /**errores */
+
+  const [ErrName, setErrName] = useState(false);
+  const [ErrLastName, setErrLastName] = useState(false);
+  const [ErrMail, setErrMail] = useState(false);
+  const [ErrUsername, setErrUsername] = useState(false);
+  const [ErrPassword, setErrPassword] = useState(false);
+  const [ErrConfirmPassword, setErrConfirmPassword] = useState(false);
+  /*const [ErrType, setErrType] = useState(false);*/
+
+  /**,lastname:'',mail:'',username:'' */
   const token = localStorage.getItem("token_user");
 
   const navigate = useNavigate();
@@ -37,42 +47,57 @@ const AddUser = () => {
     ConfirmPassword,
     Type
   ) => {
-    if(!Name) setErr2({name: 'no hay name'})
-    if (ConfirmPassword === Password) {
-      fetch(import.meta.env.VITE_APIURL + "Users", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/Json",
-          Authorization: "Bearer " + token,
-        },
-        body: JSON.stringify({
-          name_User: Name,
-          lastName_User: LastName,
-          email_User: Mail,
-          userName: Username,
-          password_User: ConfirmPassword,
-          type_User: Type,
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data.errors);
-          //setErr2(data.errors)
+    if (!Name) setErrName(!ErrName);
+    if (!LastName) setErrLastName(!ErrLastName);
+    if (!Mail) setErrMail(!ErrMail);
+    if (!Username) setErrUsername(!ErrUsername);
+    if (!Password) setErrPassword(!ErrPassword);
+    if (ConfirmPassword != Password) setErrConfirmPassword(!ErrConfirmPassword);
+    //if(!Type) setErrType(!ErrType)
+    else {
+      if (ConfirmPassword === Password) {
+        fetch(import.meta.env.VITE_APIURL + "Users", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/Json",
+            Authorization: "Bearer " + token,
+          },
+          body: JSON.stringify({
+            name_User: Name,
+            lastName_User: LastName,
+            email_User: Mail,
+            userName: Username,
+            password_User: ConfirmPassword,
+            type_User: Type,
+          }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data.errors);
+            //setErrores(data.errors);
 
-          if(data.success) navigate("/users")
+            /*if (data.errors)
+            setErr2({
+              name: data.errors.Name_User ? data.errors.Name_User[0] : null,
+              lastname: data.errors.LastName_User
+                ? data.errors.LastName_User[0]
+                : null,
+            });*/
 
-          if(data.message) setErr(data.message)
-        }).catch(err=>console.log("Error",err));
-    } else {
-      console.log("la contrase;a no es igual");
+            if (data.success) navigate("/users");
+
+            if (data.message) setErr(data.message);
+          })
+          .catch((err) => console.log("Error", err));
+      } else {
+        console.log("la contrase;a no es igual");
+      }
     }
   };
-
 
   return (
     <div>
       <Typography>Add new user</Typography>
-      <Button onClick={()=>console.log(Err2.Name_User)}>error</Button>
       <Button onClick={() => navigate("/users")}>{"<-"}Back</Button>
       <Paper>
         <Grid
@@ -81,45 +106,74 @@ const AddUser = () => {
           justifyContent={"center"}
           alignItems={"center"}
         >
-        
           <TextField
             type="text"
             /*error*/
-            error={Err2.name ? true: false}
-            helperText={Err2.name}
+            error={ErrName}
+            helperText={ErrName ? "falta name" : null}
             placeholder="name..."
+            required
             fullWidth
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => {
+              setName(e.target.value);
+              setErrName(false);
+            }}
           />
           <TextField
             type="text"
             placeholder="lastname..."
+            error={ErrLastName}
+            helperText={ErrLastName ? "falta lastname" : null}
+            required
             fullWidth
-            onChange={(e) => setLastName(e.target.value)}
+            onChange={(e) => {
+              setLastName(e.target.value);
+              setErrLastName(false);
+            }}
           />
           <TextField
             type="text"
+            error={ErrMail}
+            helperText={ErrMail ? "falta mail" : null}
             placeholder="mail..."
             fullWidth
-            onChange={(e) => setMail(e.target.value)}
+            onChange={(e) => {
+              setMail(e.target.value);
+              setErrMail(false);
+            }}
           />
           <TextField
             type="text"
+            error={ErrUsername}
+            helperText={ErrUsername ? "falta username" : null}
             placeholder="username..."
             fullWidth
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e) => {
+              setUsername(e.target.value);
+              setErrUsername(false);
+            }}
           />
           <TextField
             type="password"
+            error={ErrPassword}
+            helperText={ErrPassword ? "falta password" : null}
             placeholder="password..."
             fullWidth
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setErrPassword(false);
+            }}
           />
           <TextField
             type="password"
             placeholder="confirm password..."
+            error={ErrConfirmPassword}
+            helperText={ErrConfirmPassword ? "Confirme el password" : null}
             fullWidth
-            onChange={(e) => setConfirmPassword(e.target.value)}
+            onChange={(e) => {
+              setConfirmPassword(e.target.value)
+              setErrConfirmPassword(false);
+              }}
           />
           <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">Type</InputLabel>

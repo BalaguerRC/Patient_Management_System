@@ -9,12 +9,15 @@ import {
   TableRow,
 } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Doctors = () => {
 
   const [Doctores, setDoctores] = useState([]);
 
   const token = localStorage.getItem("token_user");
+
+  const navigate = useNavigate();
 
   const GetDoctors = () => {
     fetch(import.meta.env.VITE_APIURL + "Doctors", {
@@ -33,6 +36,7 @@ const Doctors = () => {
   return (
     <div>
       Doctors
+      <Button variant="contained" onClick={()=>navigate('addDoctors')}>Add</Button>
       <TableContainer component={Paper}>
         <Table sx={{ width: "100%", minWidth: 800 }}>
           <TableHead>
@@ -56,7 +60,7 @@ const Doctors = () => {
                 <TableCell>{data.identity_Doctor}</TableCell>
                 <TableCell>{data.img_Doctor}</TableCell>
                 <TableCell>
-                  <Button variant="contained">Edit</Button>
+                  <Button variant="contained" onClick={()=>navigate(""+data.id_Doctor)}>Edit</Button>
                   <Button variant="contained">Delete</Button>
                 </TableCell>
               </TableRow>

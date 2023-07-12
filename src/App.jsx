@@ -12,6 +12,8 @@ import Login from "./page/auth/login";
 import { AuthLayout, Logged } from "./components/AuthLayout";
 import AddUser from "./components/users/AddUser";
 import EditUser from "./components/users/EditUser";
+import AddDoctors from "./components/doctors/AddDoctors";
+import EditDoctor from "./components/doctors/EditDoctor";
 
 function App() {
   const router = createBrowserRouter([
@@ -41,7 +43,20 @@ function App() {
             },
             {
               path: "doctors",
-              element: <Doctors />,
+              children: [
+                {
+                  index: true,
+                  element: <Doctors />,
+                },
+                {
+                  path: 'addDoctors',
+                  element: <AddDoctors/>
+                },
+                {
+                  path: ":id",
+                  element: <EditDoctor/>
+                }
+              ]
             },
             {
               path: "labTests",

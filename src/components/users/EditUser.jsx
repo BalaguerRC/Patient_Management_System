@@ -22,6 +22,10 @@ const EditUser = () => {
   const [ConfirmPassword, setConfirmPassword] = useState();
   const [Type, setType] = useState();
 
+  /**Errores */
+  const [ErrPassword, setErrPassword] = useState(false);
+  const [ErrConfirmPassword, setErrConfirmPassword] = useState(false);
+  /**end */
   const navigate = useNavigate();
 
   const token = localStorage.getItem("token_user");
@@ -54,11 +58,15 @@ const EditUser = () => {
     confirmpass,
     type
   ) => {
+    if (!Password) setErrPassword(!ErrPassword);
+    if (ConfirmPassword != Password) setErrConfirmPassword(!ErrConfirmPassword);
+
     if (confirmpass == password) {
       fetch(import.meta.env.VITE_APIURL + "Users/" + id, {
         method: "PUT",
         headers: {
           "Content-Type": "application/Json",
+          Authorization: "Bearer " + token,
         },
         body: JSON.stringify({
           name_User: name,
@@ -124,14 +132,24 @@ const EditUser = () => {
           <TextField
             type="password"
             placeholder="password..."
+            error={ErrPassword}
+            helperText={ErrPassword ? "falta password" : null}
             fullWidth
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setErrPassword(false);
+            }}
           />
           <TextField
             type="password"
             placeholder="confirm password..."
+            error={ErrConfirmPassword}
+            helperText={ErrConfirmPassword ? "Confirme el password" : null}
             fullWidth
-            onChange={(e) => setConfirmPassword(e.target.value)}
+            onChange={(e) => {
+              setConfirmPassword(e.target.value);
+              setErrConfirmPassword(false);
+            }}
           />
           <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">Type</InputLabel>
