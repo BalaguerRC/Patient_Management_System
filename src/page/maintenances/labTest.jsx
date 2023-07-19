@@ -9,6 +9,7 @@ import {
   TableRow,
 } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const LabTest = () => {
   const [LabTests, setLabTests] = useState([]);
@@ -19,6 +20,12 @@ const LabTest = () => {
       .then((data) => setLabTests(data.data));
   };
 
+  const navigate = useNavigate();
+
+  const Delete=(id)=>{
+    console.log("Delete", id);
+  }
+
   useEffect(() => {
     getLabTests();
   }, []);
@@ -26,6 +33,7 @@ const LabTest = () => {
   return (
     <div>
       Lab Test
+      <Button onClick={()=>navigate("addLabTest")}>Add</Button>
       <TableContainer component={Paper}>
         <Table sx={{ width: "100%", minWidth: 800 }}>
           <TableHead>
@@ -41,8 +49,8 @@ const LabTest = () => {
                 <TableCell>{data.name_LabTest}</TableCell>
                 <TableCell>{data.date_LabTest}</TableCell>
                 <TableCell>
-                  <Button variant="contained">Edit</Button>
-                  <Button variant="contained">Delete</Button>
+                  <Button variant="contained" onClick={()=>navigate(""+data.id_LabTest)}>Edit</Button>
+                  <Button variant="contained" onClick={()=>Delete(data.id_LabTest)}>Delete</Button>
                 </TableCell>
               </TableRow>
             ))}

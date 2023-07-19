@@ -39,6 +39,23 @@ const EditDoctor = () => {
 
   const Update=(name,lastname,mail,phone,identity,image)=>{
     console.log(name,lastname,mail,phone,identity,image)
+
+    fetch(import.meta.env.VITE_APIURL + "Doctors/" + id, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/Json",
+        Authorization: "Bearer " + token,
+      },
+      body: JSON.stringify({
+        name_Doctor: name,
+        lastName_Doctor: lastname,
+        email_Doctor: mail,
+        phone_Doctor: phone,
+        identity_Doctor: identity,
+        img_Doctor: image,
+      }),
+    })
+      .then((res) => res.json()).then(data=>console.log(data))
   }
   return (
     <div>
@@ -55,7 +72,7 @@ const EditDoctor = () => {
           <TextField type="text" placeholder="lastname..." fullWidth value={LastName} onChange={(e)=>setLastName(e.target.value)}/>
           <TextField type="text" placeholder="mail..." fullWidth value={Mail} onChange={(e)=>setMail(e.target.value)}/>
           <TextField type="text" placeholder="phone..." fullWidth value={Phone} onChange={(e)=>setPhone(e.target.value)}/>
-          <TextField type="text" placeholder="identity..." fullWidth value={Identity} onChange={(e)=>Identity(e.target.value)}/>
+          <TextField type="text" placeholder="identity..." fullWidth value={Identity} onChange={(e)=>setIdentity(e.target.value)}/>
           <TextField type="file" />
 
           <Button onClick={()=>Update(Name,LastName,Mail,Phone,Identity,Image)}>Save</Button>

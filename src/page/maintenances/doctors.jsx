@@ -29,6 +29,20 @@ const Doctors = () => {
       .then((data) => setDoctores(data.data));
   };
 
+  const deleteDoctor=(id)=>{
+    fetch(import.meta.env.VITE_APIURL + "Doctors/"+id, {
+      method: "DELETE",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data)
+        GetDoctors();
+      });
+  }
+
   useEffect(() => {
     GetDoctors();
   }, []);
@@ -61,7 +75,7 @@ const Doctors = () => {
                 <TableCell>{data.img_Doctor}</TableCell>
                 <TableCell>
                   <Button variant="contained" onClick={()=>navigate(""+data.id_Doctor)}>Edit</Button>
-                  <Button variant="contained">Delete</Button>
+                  <Button variant="contained" onClick={()=>deleteDoctor(data.id_Doctor)}>Delete</Button>
                 </TableCell>
               </TableRow>
             ))}
