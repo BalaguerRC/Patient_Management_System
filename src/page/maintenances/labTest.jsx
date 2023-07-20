@@ -22,9 +22,20 @@ const LabTest = () => {
 
   const navigate = useNavigate();
 
-  const Delete=(id)=>{
+  const Delete = (id) => {
     console.log("Delete", id);
-  }
+    fetch(import.meta.env.VITE_APIURL + "LabTest/" + id, {
+      method: "DELETE",
+      /*headers: {
+        Authorization: "Bearer " + token,
+      },*/
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        getLabTests();
+      });
+  };
 
   useEffect(() => {
     getLabTests();
@@ -33,7 +44,7 @@ const LabTest = () => {
   return (
     <div>
       Lab Test
-      <Button onClick={()=>navigate("addLabTest")}>Add</Button>
+      <Button onClick={() => navigate("addLabTest")}>Add</Button>
       <TableContainer component={Paper}>
         <Table sx={{ width: "100%", minWidth: 800 }}>
           <TableHead>
@@ -49,8 +60,18 @@ const LabTest = () => {
                 <TableCell>{data.name_LabTest}</TableCell>
                 <TableCell>{data.date_LabTest}</TableCell>
                 <TableCell>
-                  <Button variant="contained" onClick={()=>navigate(""+data.id_LabTest)}>Edit</Button>
-                  <Button variant="contained" onClick={()=>Delete(data.id_LabTest)}>Delete</Button>
+                  <Button
+                    variant="contained"
+                    onClick={() => navigate("" + data.id_LabTest)}
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    variant="contained"
+                    onClick={() => Delete(data.id_LabTest)}
+                  >
+                    Delete
+                  </Button>
                 </TableCell>
               </TableRow>
             ))}

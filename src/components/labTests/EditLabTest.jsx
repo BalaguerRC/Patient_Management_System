@@ -11,11 +11,28 @@ const EditLabTest = () => {
 
   const Edit = (name) => {
     console.log(name);
+    fetch(import.meta.env.VITE_APIURL + "LabTest/" + id, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/Json",
+        //Authorization: "Bearer " + token,
+      },
+      body: JSON.stringify({
+        name_LabTest: name,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data)
+        navigate("/labTests")
+      });
   };
 
-  const getLabTest=()=>{
-    fetch(import.meta.env.VITE_APIURL + "LabTest/"+id).then(resp=>resp.json()).then(data=>setName(data.data.name_LabTest))
-  }
+  const getLabTest = () => {
+    fetch(import.meta.env.VITE_APIURL + "LabTest/" + id)
+      .then((resp) => resp.json())
+      .then((data) => setName(data.data.name_LabTest));
+  };
 
   useEffect(() => {
     getLabTest();
@@ -31,10 +48,17 @@ const EditLabTest = () => {
         justifyContent={"center"}
         alignItems={"center"}
       >
-        <form>
+        <form onSubmit={(e)=>{
+          e.preventDefault();
+          Edit(Name);
+        }}>
           <FormControl>
-            <TextField placeholder="name" value={Name} onChange={(e) => setName(e.target.value)}/>
-            <Button onClick={() => Edit(Name)}>Save</Button>
+            <TextField
+              placeholder="name"
+              value={Name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            <Button type="submit">Save</Button>
           </FormControl>
         </form>
       </Grid>
