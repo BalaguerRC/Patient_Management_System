@@ -23,17 +23,17 @@ const Home = () => {
               </Button>
             </li>
             <li>
-              <Button variant="contained" onClick={() => navigate("users")}>
+              <Button variant="contained" onClick={() => navigate("users")} disabled>
                 Users
               </Button>
             </li>
             <li>
-              <Button variant="contained" onClick={() => navigate("doctors")}>
+              <Button variant="contained" onClick={() => navigate("doctors")} disabled>
                 Doctors
               </Button>
             </li>
             <li>
-              <Button variant="contained" onClick={() => navigate("labTests")}>
+              <Button variant="contained" onClick={() => navigate("labTests")} disabled>
                 Lab Tests
               </Button>
             </li>
@@ -41,7 +41,6 @@ const Home = () => {
               <Button
                 variant="contained"
                 onClick={() => navigate("patients")}
-                disabled
               >
                 Patients
               </Button>
@@ -50,7 +49,6 @@ const Home = () => {
               <Button
                 variant="contained"
                 onClick={() => navigate("medicalAppointments")}
-                disabled
               >
                 Medical Appointments
               </Button>
@@ -59,7 +57,6 @@ const Home = () => {
               <Button
                 variant="contained"
                 onClick={() => navigate("labTestResults")}
-                disabled
               >
                 Lab test Results
               </Button>

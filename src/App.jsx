@@ -16,6 +16,8 @@ import AddDoctors from "./components/doctors/AddDoctors";
 import EditDoctor from "./components/doctors/EditDoctor";
 import AddLabTest from "./components/labTests/AddLabTest";
 import EditLabTest from "./components/labTests/EditLabTest";
+import AddPatients from "./components/patients/AddPatients";
+import EditPatients from "./components/patients/EditPatients";
 
 function App() {
   const router = createBrowserRouter([
@@ -79,7 +81,20 @@ function App() {
             },
             {
               path: "patients",
-              element: <Patients />,
+              children: [
+                {
+                  index: true,
+                  element: <Patients />,
+                },
+                {
+                  path: "addPatients",
+                  element: <AddPatients/>  //test token <AddPatients token=token/>
+                },
+                {
+                  path: ":id",
+                  element: <EditPatients/>
+                }
+              ]
             },
             {
               path: "medicalAppointments",
