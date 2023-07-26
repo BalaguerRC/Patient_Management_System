@@ -18,6 +18,7 @@ import AddLabTest from "./components/labTests/AddLabTest";
 import EditLabTest from "./components/labTests/EditLabTest";
 import AddPatients from "./components/patients/AddPatients";
 import EditPatients from "./components/patients/EditPatients";
+import AddMA from "./components/medical appointments/addMA";
 
 function App() {
   const router = createBrowserRouter([
@@ -98,7 +99,16 @@ function App() {
             },
             {
               path: "medicalAppointments",
-              element: <MedicalAppointments />,
+              children: [
+                {
+                  index: true,
+                  element: <MedicalAppointments />,
+                },
+                {
+                  path: "addMedicalAppointments",
+                  element: <AddMA/>
+                }
+              ]
             },
             {
               path: "labTestResults",

@@ -1,4 +1,5 @@
 import {
+  Button,
   Paper,
   Table,
   TableBody,
@@ -7,11 +8,31 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const MedicalAppointments = () => {
+  const [MAppointmets, setMAppointmets] = useState();
+
+  const navigate = useNavigate();
+
+  const getMAppointmets = () => {
+    fetch(import.meta.env.VITE_APIURL + "MedicalAppointments")
+      .then((resp) => resp.json())
+      .then((data) => {
+        setMAppointmets(data.data);
+        //console.log(data.data)
+      });
+  };
+
+  useEffect(() => {
+    getMAppointmets();
+  }, []);
+
   return (
     <div>
       Medical Appointments
+      <Button onClick={()=> navigate("addMedicalAppointments")}>Add</Button>
       <TableContainer component={Paper}>
         <Table sx={{ width: "100%", minWidth: 800 }}>
           <TableHead>
@@ -25,16 +46,23 @@ const MedicalAppointments = () => {
             <TableCell>Actions</TableCell>
           </TableHead>
           <TableBody>
-            <TableRow>
-              <TableCell>1</TableCell>
-              <TableCell>Marcos Castro</TableCell>
-              <TableCell>jhoncena</TableCell>
-              <TableCell>15-06-2023</TableCell>
-              <TableCell>11:09</TableCell>
-              <TableCell>Una causa</TableCell>
-              <TableCell>Activa</TableCell>
-              <TableCell></TableCell>
-            </TableRow>
+            {MAppointmets?.map((data) => (
+              <TableRow key={data.id_MA}>
+                <TableCell>{data.id_MA}</TableCell>
+                <TableCell>{data.id_Patient}</TableCell>
+                <TableCell>{data.id_Doctros}</TableCell>
+                <TableCell>{data.date_MA.slice(0, 10)}</TableCell>
+                <TableCell>{data.date_MA.slice(11, 16)}</TableCell>
+                <TableCell>{data.cause_MA}</TableCell>
+                <TableCell>
+                  {data.state_MA === 0 ? "Inactiva" : "Activa"}
+                </TableCell>
+                <TableCell>
+                  <Button disabled>Edit</Button>
+                  <Button disabled>Delete</Button>
+                </TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </TableContainer>

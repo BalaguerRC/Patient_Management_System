@@ -44,6 +44,29 @@ const EditPatients = () => {
           setImg(data.data.img_Patient)
         });
   }
+
+  const put=(name,lastName,phone,address,identity,birthday,smoker,allergies,img)=>{
+    console.log(name,lastName,phone,address,identity,birthday,smoker,allergies,img)
+    fetch(import.meta.env.VITE_APIURL + "Patients/" + id, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/Json",
+        //Authorization: "Bearer " + token,
+      },
+      body: JSON.stringify({
+        name_Patient: name,
+        lastName_Patient: lastName,
+        phone_Patient: phone,
+        address_Patient: address,
+        identity_Patient: identity,
+        birthdate_Patient: birthday,
+        smoker_Patient: smoker ? "1" : "0",
+        allergies_Patient: allergies,
+        img_Patient: img
+      }),
+    })
+      .then((res) => res.json()).then(data=>console.log(data))
+  }
   useEffect(() => {
     getPatientById()
   }, []);
@@ -114,7 +137,7 @@ const EditPatients = () => {
             onChange={(e) => setAllergies(e.target.value)}
           />
           <TextField type="file" />
-          <Button disabled
+          <Button onClick={()=>put(Name,LastName,Phone,Address,Identity,Birthday,Smoker,Allergies,Img)}
           >
             Save
           </Button>
