@@ -97,8 +97,23 @@ const AddMA = () => {
     getDoctors();
   }, []);
 
-  const [RadioSelect, setRadioSelect] = useState(1);
-  const [RadioSelect2, setRadioSelect2] = useState(1);
+  const [RadioSelect, setRadioSelect] = useState(0);
+  const [RadioSelect2, setRadioSelect2] = useState(0);
+
+  const getPatientById = (id) => {
+    fetch(import.meta.env.VITE_APIURL + "PatientsMa/" + id)
+      .then((resp) => resp.json())
+      .then((data) => {
+        setPatient(data.data.name_Patient);
+      });
+  }; //DoctorsMA
+  const getDoctorById = (id) => {
+    fetch(import.meta.env.VITE_APIURL + "DoctorsMA/" + id)
+      .then((resp) => resp.json())
+      .then((data) => {
+        setDoctor(data.data.name_Doctor);
+      });
+  };
 
   return (
     <div>
@@ -145,7 +160,11 @@ const AddMA = () => {
                 <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
                   <Box sx={{ flex: "1 1 auto" }} />
                   <Button onClick={handleReset}>Reset</Button>
-                  <Button onClick={() => Save(Patient, Doctor, DateMA, Cause)}>
+                  <Button
+                    onClick={() =>
+                      Save(RadioSelect, RadioSelect, DateMA, Cause)
+                    }
+                  >
                     Guardar
                   </Button>
                   {/**clicking on it sends us to the main menu.*/}
@@ -163,8 +182,16 @@ const AddMA = () => {
                     <h2>Patients</h2>
                     <RadioGroup
                       value={RadioSelect}
-                      onChange={(e) => setRadioSelect(e.target.value)}
+                      onChange={(e) => {
+                        setRadioSelect(e.target.value);
+                        getPatientById(e.target.value);
+                      }}
                     >
+                      <FormControlLabel
+                        value={0}
+                        control={<Radio />}
+                        sx={{ visibility: "hidden" }}
+                      />
                       <TableContainer component={Paper}>
                         <Table sx={{ width: "100%", minWidth: 800 }}>
                           <TableHead>
@@ -173,7 +200,6 @@ const AddMA = () => {
                             <TableCell>Last Name</TableCell>
                             <TableCell>IDPerson</TableCell>
                           </TableHead>
-
                           <TableBody>
                             {Patients?.map((data) => (
                               <>
@@ -199,9 +225,17 @@ const AddMA = () => {
                   <>
                     <h2>Doctors</h2>
                     <RadioGroup
-                      value={RadioSelect}
-                      onChange={(e) => setRadioSelect(e.target.value)}
+                      value={RadioSelect2}
+                      onChange={(e) => {
+                        setRadioSelect2(e.target.value);
+                        getDoctorById(e.target.value);
+                      }}
                     >
+                      <FormControlLabel
+                        value={0}
+                        control={<Radio />}
+                        sx={{ visibility: "hidden" }}
+                      />
                       <TableContainer component={Paper}>
                         <Table sx={{ width: "100%", minWidth: 800 }}>
                           <TableHead>
@@ -241,16 +275,16 @@ const AddMA = () => {
                       alignItems={"center"}
                     >
                       <TextField
-                        placeholder="patient..."
-                        value={"josep"}
+                        label="Patient"
+                        value={Patient}
+                        disabled
                         fullWidth
-                        onChange={(e) => setPatient(e.target.value)}
                       />
                       <TextField
-                        placeholder="doctor..."
+                        label="Doctor"
+                        value={Doctor}
+                        disabled
                         fullWidth
-                        value={"carso"}
-                        onChange={(e) => setDoctor(e.target.value)}
                       />
                       <TextField
                         type="datetime-local"
@@ -283,7 +317,7 @@ const AddMA = () => {
               </Button>
             )}*/}
 
-                  <Button onClick={handleNext}>
+                  <Button onClick={handleNext} disabled={RadioSelect==0 ? true: false}>
                     {activeStep === steps.length - 1 ? "Finish" : "Next"}
                   </Button>
                 </Box>
