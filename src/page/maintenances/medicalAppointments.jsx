@@ -55,11 +55,10 @@ const MedicalAppointments = () => {
                 <TableCell>{data.date_MA.slice(11, 16)}</TableCell>
                 <TableCell>{data.cause_MA}</TableCell>
                 <TableCell>
-                  {data.state_MA === 0 ? "Inactiva" : "Activa"}
+                  {data.state_MA === 0 ? "pending consultation" : "pending results"}
                 </TableCell>
                 <TableCell>
-                  <Button disabled>Edit</Button>
-                  <Button disabled>Delete</Button>
+                  <Button onClick={()=>navigate("pending_consultation/"+data.id_MA)}>Check</Button>
                 </TableCell>
               </TableRow>
             ))}

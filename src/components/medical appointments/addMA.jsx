@@ -85,6 +85,23 @@ const AddMA = () => {
 
   const Save = (patient, doctor, date, cause) => {
     console.log(patient, doctor, date, cause);
+    fetch(import.meta.env.VITE_APIURL + "MedicalAppointments", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/Json",
+        /*Authorization: "Bearer " + token,*/
+      },
+      body: JSON.stringify({
+        id_Patient: patient,
+        id_Doctros: doctor,
+        date_MA: date,
+        cause_MA: cause,
+      })
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+        console.log(data);
+      });
   };
 
   const handleReset = () => {
