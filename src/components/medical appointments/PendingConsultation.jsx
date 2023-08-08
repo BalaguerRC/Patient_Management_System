@@ -1,9 +1,26 @@
-import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
-import { useEffect, useState } from "react";
+import {
+  Button,
+  FormControlLabel,
+  Paper,
+  Radio,
+  RadioGroup,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from "@mui/material";
+import { Fragment, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 const PendingConsultation = () => {
   const [LabTests, setLabTests] = useState([]);
+  const [LabTestById, setLabTestById] = useState(0);
+  const [RadioSelect, setRadioSelect] = useState(0);
+  const [IdMA, setIdMA] = useState(0);
+  const [IdPatient, setIdPatient] = useState(0);
+  const [IdDoctor, setIdDoctor] = useState(0);
 
   const getLabTests = () => {
     fetch(import.meta.env.VITE_APIURL + "LabTest")
@@ -20,9 +37,29 @@ const PendingConsultation = () => {
       .then((resp) => resp.json())
       .then((data) => {
         console.log(data);
+        setIdMA(data.data.id_MA);
+        setIdPatient(data.data.id_Patient);
+        setIdDoctor(data.data.id_Doctros);
         //console.log(data.data)
       });
   };
+  const save =(patient,ma,labTest,doctor)=>{
+    console.log(patient,ma,labTest,doctor)
+    fetch(import.meta.env.VITE_APIURL + "LabTestResult", {
+      method: "POST",
+      headers:{
+        "Content-Type": "application/Json",
+      },
+      body: JSON.stringify({
+        id_Patient: patient,
+        id_MedicalAppointment: ma,
+        id_LabTest: labTest,
+        id_Doctor: doctor
+      })
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data)).catch(err=>console.log(err));
+  }
 
   useEffect(() => {
     getLabTests();
@@ -33,24 +70,47 @@ const PendingConsultation = () => {
     <div>
       Pending Consultation {id}
       <Button onClick={() => navigate("/medicalAppointments")}>Back</Button>
-      <TableContainer component={Paper}>
-        <Table sx={{ width: "100%", minWidth: 800 }}>
-          <TableHead>
-            <TableCell>Id</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>Date</TableCell>
-          </TableHead>
-          <TableBody>
-            {LabTests?.map((data) => (
-              <TableRow key={data.id_LabTest}>
-                <TableCell>{data.id_LabTest}</TableCell>
-                <TableCell>{data.name_LabTest}</TableCell>
-                <TableCell>{data.date_LabTest}</TableCell>
+      <RadioGroup
+        value={RadioSelect}
+        onChange={(e) => {
+          setRadioSelect(e.target.value);
+          setLabTestById(e.target.value);
+        }}
+      >
+        <FormControlLabel
+          value={0}
+          control={<Radio />}
+          sx={{ visibility: "hidden" }}
+        />
+        <TableContainer component={Paper}>
+          <Table sx={{ width: "100%", minWidth: 800 }}>
+            <TableHead>
+              <TableRow>
+                <TableCell>Select</TableCell>
+                <TableCell>Id</TableCell>
+                <TableCell>Name</TableCell>
+                <TableCell>Date</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </TableHead>
+            <TableBody>
+              {LabTests?.map((data) => (
+                <TableRow key={data.id_LabTest}>
+                  <TableCell>
+                    <FormControlLabel
+                      value={data.id_LabTest}
+                      control={<Radio />}
+                    />
+                  </TableCell>
+                  <TableCell>{data.id_LabTest}</TableCell>
+                  <TableCell>{data.name_LabTest}</TableCell>
+                  <TableCell>{data.date_LabTest}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </RadioGroup>
+      <Button variant="contained" onClick={()=>save(IdPatient,IdMA,LabTestById,IdDoctor)} disabled={RadioSelect ===0 ? true: false}>Save</Button>
     </div>
   );
 };
