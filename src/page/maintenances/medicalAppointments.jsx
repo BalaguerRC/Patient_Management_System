@@ -58,7 +58,7 @@ const MedicalAppointments = () => {
                   {data.state_MA === 0 ? "pending consultation" : "pending results"}
                 </TableCell>
                 <TableCell>
-                  <Button onClick={()=>navigate("pending_consultation/"+data.id_MA)}>Check</Button>
+                  <Button onClick={data.state_MA === 0 ? ()=>navigate("pending_consultation/"+data.id_MA) : ()=>navigate("pending_results/"+data.id_MA)}>{data.state_MA === 0 ? "Check consultation" : "Check results"}</Button>
                 </TableCell>
               </TableRow>
             ))}

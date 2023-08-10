@@ -20,6 +20,7 @@ import AddPatients from "./components/patients/AddPatients";
 import EditPatients from "./components/patients/EditPatients";
 import AddMA from "./components/medical appointments/addMA";
 import PendingConsultation from "./components/medical appointments/PendingConsultation";
+import PendingResults from "./components/medical appointments/PendingResults";
 
 function App() {
   const router = createBrowserRouter([
@@ -112,6 +113,10 @@ function App() {
                 {
                   path : "pending_consultation/:id",
                   element: <PendingConsultation/>
+                },
+                {
+                  path : "pending_results/:id",
+                  element: <PendingResults/>
                 }
               ]
             },

@@ -10,6 +10,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
 } from "@mui/material";
 import { Fragment, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -58,7 +59,22 @@ const PendingConsultation = () => {
       })
     })
       .then((res) => res.json())
-      .then((data) => console.log(data)).catch(err=>console.log(err));
+      .then((data) => {
+        if(data) PutMedicalAppointmen()
+        console.log(data)
+      }).catch(err=>console.log(err));
+  }
+
+  const PutMedicalAppointmen=()=>{
+    //MedicalAppointments
+    fetch(import.meta.env.VITE_APIURL + "MedicalAppointments/" + id,{
+      method: "PUT"
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+        console.log("PutMedicalAppointmen",data);
+        //console.log(data.data)
+      });
   }
 
   useEffect(() => {
@@ -77,6 +93,7 @@ const PendingConsultation = () => {
           setLabTestById(e.target.value);
         }}
       >
+      <Typography variant="h5" gutterBottom>Select a Lab Test</Typography>
         <FormControlLabel
           value={0}
           control={<Radio />}
