@@ -32,7 +32,7 @@ const MedicalAppointments = () => {
   return (
     <div>
       Medical Appointments
-      <Button onClick={()=> navigate("addMedicalAppointments")}>Add</Button>
+      <Button onClick={() => navigate("addMedicalAppointments")}>Add</Button>
       <TableContainer component={Paper}>
         <Table sx={{ width: "100%", minWidth: 800 }}>
           <TableHead>
@@ -55,10 +55,27 @@ const MedicalAppointments = () => {
                 <TableCell>{data.date_MA.slice(11, 16)}</TableCell>
                 <TableCell>{data.cause_MA}</TableCell>
                 <TableCell>
-                  {data.state_MA === 0 ? "pending consultation" : "pending results"}
+                  {data.state_MA === 0
+                    ? "pending consultation"
+                    : data.state_MA === 2
+                    ? "completed"
+                    : "pending results"}
                 </TableCell>
                 <TableCell>
-                  <Button onClick={data.state_MA === 0 ? ()=>navigate("pending_consultation/"+data.id_MA) : ()=>navigate("pending_results/"+data.id_MA)}>{data.state_MA === 0 ? "Check consultation" : "Check results"}</Button>
+                  <Button
+                    onClick={
+                      data.state_MA === 0
+                        ? () => navigate("pending_consultation/" + data.id_Patient)
+                        : data.state_MA === 2
+                        ? () => navigate("results/" + data.id_Patient)
+                        : () => navigate("pending_results/" + data.id_Patient)
+                    }
+                  >
+                    {data.state_MA === 0
+                      ? "Check consultation"
+                      : data.state_MA === 2
+                      ? "Check completed results" : "Check results"}
+                  </Button>
                 </TableCell>
               </TableRow>
             ))}

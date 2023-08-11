@@ -48,7 +48,9 @@ const LabTestResults = () => {
                 <TableCell>{data.id_LabTest}</TableCell>
                 <TableCell>{data.id_Doctor}</TableCell>
                 <TableCell>{data.test_Result}</TableCell>
-                <TableCell>{data.state_Result==0? "pending": "completed"}</TableCell>
+                <TableCell>
+                  {data.state_Result == 0 ? "pending" : "completed"}
+                </TableCell>
                 <TableCell>{data.date_TestResult}</TableCell>
               </TableRow>
             ))}
