@@ -51,18 +51,20 @@ const Patients = () => {
       <TableContainer component={Paper}>
         <Table sx={{ width: "100%", minWidth: 800 }}>
           <TableHead>
-            <TableCell>Id</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>Last Name</TableCell>
-            <TableCell>Phone</TableCell>
-            <TableCell>Address</TableCell>
-            <TableCell>IDPerson</TableCell>
-            <TableCell>Birthday</TableCell>
-            <TableCell>Smoker</TableCell>
-            <TableCell>Allergies</TableCell>
-            <TableCell>Img</TableCell>
-            <TableCell>Registration date</TableCell>
-            <TableCell>Actions</TableCell>
+            <TableRow>
+              <TableCell>Id</TableCell>
+              <TableCell>Name</TableCell>
+              <TableCell>Last Name</TableCell>
+              <TableCell>Phone</TableCell>
+              <TableCell>Address</TableCell>
+              <TableCell>IDPerson</TableCell>
+              <TableCell>Birthday</TableCell>
+              <TableCell>Smoker</TableCell>
+              <TableCell>Allergies</TableCell>
+              <TableCell>Img</TableCell>
+              <TableCell>Registration date</TableCell>
+              <TableCell>Actions</TableCell>
+            </TableRow>
           </TableHead>
           <TableBody>
             {Patients?.map((data) => (
@@ -74,12 +76,11 @@ const Patients = () => {
                 <TableCell>{data.address_Patient}</TableCell>
                 <TableCell>{data.identity_Patient}</TableCell>
                 <TableCell>{data.birthdate_Patient.slice(0, 10)}</TableCell>
-                <TableCell>{data.smoker_Patient}</TableCell> {/**yes or no */}
+                <TableCell>{data.smoker_Patient===0 ? "No": "Yes"}</TableCell>
                 <TableCell>{data.allergies_Patient}</TableCell>
-                {/**yes or no */}
                 <TableCell>{data.img_Patient}</TableCell>
                 <TableCell>
-                  {data.date_Patient.slice(0, 10)} -{" "}
+                  {data.date_Patient.slice(0, 10)} -
                   {data.date_Patient.slice(11, 16)}
                 </TableCell>
                 <TableCell>

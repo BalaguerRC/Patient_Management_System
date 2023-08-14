@@ -29,9 +29,10 @@ const LabTestResults = () => {
         <Table sx={{ width: "100%", minWidth: 800 }}>
           <TableHead>
             <TableRow>
-              <TableCell>Id</TableCell>
+              <TableCell>ID</TableCell>
+              <TableCell>ID_Patient</TableCell>
               <TableCell>PatientName</TableCell>
-              <TableCell>MedicalAppointment</TableCell>
+              <TableCell>ID_MA</TableCell>
               <TableCell>LabTest</TableCell>
               <TableCell>Doctor</TableCell>
               <TableCell>Test_Result</TableCell>
@@ -44,9 +45,10 @@ const LabTestResults = () => {
               <TableRow key={data.id_LabTestResult}>
                 <TableCell>{data.id_LabTestResult}</TableCell>
                 <TableCell>{data.id_Patient}</TableCell>
+                <TableCell>{data.patient}</TableCell>
                 <TableCell>{data.id_MedicalAppointment}</TableCell>
-                <TableCell>{data.id_LabTest}</TableCell>
-                <TableCell>{data.id_Doctor}</TableCell>
+                <TableCell>{data.labTest}</TableCell>
+                <TableCell>{data.doctor}</TableCell>
                 <TableCell>{data.test_Result}</TableCell>
                 <TableCell>
                   {data.state_Result == 0 ? "pending" : "completed"}

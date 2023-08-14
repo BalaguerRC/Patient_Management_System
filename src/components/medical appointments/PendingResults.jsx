@@ -104,8 +104,8 @@ const PendingResults = () => {
                     />
                   </TableCell>
                   <TableCell>{data.id_LabTestResult}</TableCell>
-                  <TableCell>{data.id_Patient}</TableCell>
-                  <TableCell>{data.id_LabTest}</TableCell>
+                  <TableCell>{data.patient}</TableCell>
+                  <TableCell>{data.labTest}</TableCell>
                   <TableCell>
                     {data.state_Result == 0 ? "pending" : "completed"}
                   </TableCell>
