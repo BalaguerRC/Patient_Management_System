@@ -48,10 +48,12 @@ const LabTest = () => {
       <TableContainer component={Paper}>
         <Table sx={{ width: "100%", minWidth: 800 }}>
           <TableHead>
-            <TableCell>Id</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>Date</TableCell>
-            <TableCell>Actions</TableCell>
+            <TableRow>
+              <TableCell>Id</TableCell>
+              <TableCell>Name</TableCell>
+              <TableCell>Date</TableCell>
+              <TableCell>Actions</TableCell>
+            </TableRow>
           </TableHead>
           <TableBody>
             {LabTests?.map((data) => (

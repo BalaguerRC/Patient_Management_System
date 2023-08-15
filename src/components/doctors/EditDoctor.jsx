@@ -3,11 +3,11 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 const EditDoctor = () => {
-  const [Name, setName] = useState();
-  const [LastName, setLastName] = useState();
-  const [Mail, setMail] = useState();
-  const [Phone, setPhone] = useState();
-  const [Identity, setIdentity] = useState();
+  const [Name, setName] = useState("");
+  const [LastName, setLastName] = useState("");
+  const [Mail, setMail] = useState("");
+  const [Phone, setPhone] = useState("");
+  const [Identity, setIdentity] = useState("");
   const [Image, setImage] = useState();
 
   const { id } = useParams();

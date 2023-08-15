@@ -14,13 +14,13 @@ import { useNavigate, useParams } from "react-router-dom";
 
 const EditUser = () => {
   //const [SecActive, setSecActive] = useState(false);
-  const [Name, setName] = useState();
-  const [LastName, setLastName] = useState();
-  const [Mail, setMail] = useState();
-  const [Username, setUsername] = useState();
-  const [Password, setPassword] = useState();
-  const [ConfirmPassword, setConfirmPassword] = useState();
-  const [Type, setType] = useState();
+  const [Name, setName] = useState("");
+  const [LastName, setLastName] = useState("");
+  const [Mail, setMail] = useState("");
+  const [Username, setUsername] = useState("");
+  const [Password, setPassword] = useState("");
+  const [ConfirmPassword, setConfirmPassword] = useState("");
+  const [Type, setType] = useState(2);
 
   /**Errores */
   const [ErrPassword, setErrPassword] = useState(false);

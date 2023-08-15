@@ -55,15 +55,17 @@ const Users = () => {
       <TableContainer component={Paper} sx={{ width: 1000 }}>
         <Table sx={{ width: "30%", minWidth: 800 }}>
           <TableHead>
-            <TableCell>Id</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>Last Name</TableCell>
-            <TableCell>Email</TableCell>
-            <TableCell>UserName</TableCell>
-            <TableCell>Password</TableCell>
-            <TableCell>Date</TableCell>
-            <TableCell>Type</TableCell>
-            <TableCell>Actions</TableCell>
+            <TableRow>
+              <TableCell>Id</TableCell>
+              <TableCell>Name</TableCell>
+              <TableCell>Last Name</TableCell>
+              <TableCell>Email</TableCell>
+              <TableCell>UserName</TableCell>
+              <TableCell>Password</TableCell>
+              <TableCell>Date</TableCell>
+              <TableCell>Type</TableCell>
+              <TableCell>Actions</TableCell>
+            </TableRow>
           </TableHead>
           <TableBody>
             {Usuarios?.map((data) => {

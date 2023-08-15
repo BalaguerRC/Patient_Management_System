@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const AddLabTest = () => {
-  const [Name, setName] = useState();
+  const [Name, setName] = useState("");
 
   const navigate = useNavigate();
 

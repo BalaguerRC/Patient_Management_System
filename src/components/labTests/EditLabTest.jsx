@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 const EditLabTest = () => {
-  const [Name, setName] = useState();
+  const [Name, setName] = useState("");
 
   const { id } = useParams();
 
