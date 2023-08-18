@@ -50,7 +50,7 @@ const Home = () => {
             "& .MuiDrawer-paper": {
               width: drawerWidth,
               boxSizing: "border-box",
-              background: "#1976d2",
+              background: "#81BDF7",
             },
           }}
           variant="permanent"
