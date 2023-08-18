@@ -1,10 +1,22 @@
-import { Box, Button, Checkbox, FormControlLabel, Grid, Link, Paper, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Checkbox,
+  FormControlLabel,
+  Grid,
+  Link,
+  Paper,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import LockIcon from "@mui/icons-material/Lock";
 
 const Login = () => {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
 
   const navigate = useNavigate();
 
@@ -26,9 +38,15 @@ const Login = () => {
           localStorage.setItem("data_user", JSON.stringify(data.data));
           localStorage.setItem("token_user", data.token);
           navigate("/");
+        } else {
+          //console.log(data)
+          setError(data.message);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        setError("Error");
+      });
   };
 
   return (
@@ -49,7 +67,8 @@ const Login = () => {
           <Box sx={{ p: 5 }}>
             <form onSubmit={(e) => SingUp(e)}>
               <Grid container direction={"column"} spacing={2}>
-                <Grid item sx={{textAlign: "center", pb: 5}}>
+                <Grid item sx={{ textAlign: "center", pb: 5 }}>
+                  <LockIcon />
                   <Typography variant="h5" gutterBottom>
                     Sign in
                   </Typography>
@@ -62,7 +81,10 @@ const Login = () => {
                     type="text"
                     label="Username"
                     required
-                    onChange={(e) => setUserName(e.target.value)}
+                    onChange={(e) => {
+                      setUserName(e.target.value);
+                      setError(null);
+                    }}
                     fullWidth
                   />
                 </Grid>
@@ -71,12 +93,25 @@ const Login = () => {
                     type="password"
                     label="Password"
                     required
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                      setError(null);
+                    }}
                     fullWidth
                   />
                 </Grid>
+                {error != null ? (
+                  <Grid item sx={{ textAlign: "center" }}>
+                    <Typography variant="caption" sx={{ color: "red" }}>
+                      {error}
+                    </Typography>
+                  </Grid>
+                ) : null}
                 <Grid item>
-                  <FormControlLabel control={<Checkbox/>} label={"Remember me"}/>
+                  <FormControlLabel
+                    control={<Checkbox />}
+                    label={"Remember me"}
+                  />
                 </Grid>
                 <Grid item>
                   <Button type="submit" variant="contained" fullWidth>
