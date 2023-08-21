@@ -30,39 +30,6 @@ import EditIcon from "@mui/icons-material/Edit";
 import { StyledTableCell } from "../../../components/users/style/table";
 import { DialogComponent } from "../../../components/users/DeleteUser";
 
-/*const DialogComponent = () => {
-  const [openDialog, setOpenDialog] = useState(false);
-
-  return (
-    <div>
-      <IconButton onClick={() => setOpenDialog(true)}>
-        <DeleteIcon />
-      </IconButton>
-      <Dialog
-        open={openDialog}
-        onClose={() => setOpenDialog(!openDialog)}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {"Use Google's location service?"}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Let Google help apps determine location. This means sending
-            anonymous location data to Google, even when no apps are running.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOpenDialog(!openDialog)}>Disagree</Button>
-          <Button onClick={() => setOpenDialog(!openDialog)} autoFocus>
-            Agree
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </div>
-  );
-};*/
 
 const Users = () => {
   const [Usuarios, setUsuarios] = useState([]);
@@ -248,57 +215,7 @@ const Users = () => {
           </TableContainer>
         </Grid>
       </Grid>
-      {/*<Button variant="outlined" onClick={() => navigate("addUser")}>
-        Add
-      </Button>
-      <TableContainer component={Paper} sx={{ width: 1000 }}>
-        <Table sx={{ width: "30%", minWidth: 800 }}>
-          <TableHead>
-            <TableRow>
-              <TableCell>Id</TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell>Last Name</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>UserName</TableCell>
-              <TableCell>Password</TableCell>
-              <TableCell>Date</TableCell>
-              <TableCell>Type</TableCell>
-              <TableCell>Actions</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {Usuarios?.map((data) => {
-              return (
-                <TableRow key={data.id_User}>
-                  <TableCell>{data.id_User}</TableCell>
-                  <TableCell>{data.name_User}</TableCell>
-                  <TableCell>{data.lastName_User}</TableCell>
-                  <TableCell>{data.email_User}m</TableCell>
-                  <TableCell>{data.userName}</TableCell>
-                  <TableCell>{data.password_User}</TableCell>
-                  <TableCell>{data.date_User}</TableCell>
-                  <TableCell>{data.type_User}</TableCell>
-                  <TableCell>
-                    <Button
-                      variant="contained"
-                      onClick={() => navigate("" + data.id_User)}
-                    >
-                      Edit
-                    </Button>
-                    <Button
-                      variant="contained"
-                      onClick={() => deleteUser(data.id_User)}
-                    >
-                      Delete
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      */}
+      
     </div>
   );
 };

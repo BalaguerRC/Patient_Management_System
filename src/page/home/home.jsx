@@ -1,5 +1,6 @@
 import {
   AppBar,
+  Avatar,
   Box,
   Button,
   CssBaseline,
@@ -27,6 +28,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 const Home = () => {
   const navigate = useNavigate();
   const data = JSON.parse(localStorage.getItem("data_user"));
+
   const drawerWidth = 195;
   return (
     <div>
@@ -56,7 +58,18 @@ const Home = () => {
           variant="permanent"
           anchor="left"
         >
-          <Toolbar />
+          <Grid container direction={"column"} justifyContent={"center"} alignItems={"center"} sx={{pt:2}}>
+            <Grid item>
+              <Avatar alt={data.name} src="a"/>
+            </Grid>
+            <Grid item>
+              <Typography variant="subtitle1">{data.name} {data.lastName}</Typography>
+            </Grid>
+            <Grid item>
+              <Typography variant="caption">{data.email}</Typography>
+            </Grid>
+          </Grid>
+          <Divider/>
           <List>
             <ListItem disablePadding>
               <ListItemButton onClick={() => navigate("/")}>
