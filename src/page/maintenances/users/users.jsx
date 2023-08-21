@@ -1,10 +1,15 @@
 import {
-  Box,
   Breadcrumbs,
   Button,
   Chip,
-  Divider,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  FormControl,
   Grid,
+  IconButton,
   Link,
   Paper,
   Table,
@@ -14,36 +19,55 @@ import {
   TableHead,
   TableRow,
   TextField,
-  Toolbar,
+  Tooltip,
   Typography,
-  styled,
-  tableCellClasses,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
+import EditIcon from "@mui/icons-material/Edit";
+//import DeleteIcon from "@mui/icons-material/Delete";
+import { StyledTableCell } from "../../../components/users/style/table";
+import { DialogComponent } from "../../../components/users/DeleteUser";
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: "#1976d2",
-    color: theme.palette.common.white,
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-  },
-}));
-/*const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
-    backgroundColor: theme.palette.action.hover,
-  },
-  // hide last border
-  '&:last-child td, &:last-child th': {
-    border: 0,
-  },
-}));*/
+/*const DialogComponent = () => {
+  const [openDialog, setOpenDialog] = useState(false);
+
+  return (
+    <div>
+      <IconButton onClick={() => setOpenDialog(true)}>
+        <DeleteIcon />
+      </IconButton>
+      <Dialog
+        open={openDialog}
+        onClose={() => setOpenDialog(!openDialog)}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Use Google's location service?"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Let Google help apps determine location. This means sending
+            anonymous location data to Google, even when no apps are running.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpenDialog(!openDialog)}>Disagree</Button>
+          <Button onClick={() => setOpenDialog(!openDialog)} autoFocus>
+            Agree
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </div>
+  );
+};*/
 
 const Users = () => {
   const [Usuarios, setUsuarios] = useState([]);
+  const [name, setName] = useState("");
+  //const [openDialog, setOpenDialog] = useState(false);
 
   const token = localStorage.getItem("token_user");
 
@@ -57,11 +81,29 @@ const Users = () => {
       .then((data) => setUsuarios(data.data));
   };
 
+  const GetUsersByName = (name) => {
+    fetch(import.meta.env.VITE_APIURL + "Users/byName", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/Json",
+        Authorization: "Bearer " + token,
+      },
+      body: JSON.stringify({
+        name_User: name,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setUsuarios(data.data)
+        if(data.data.length===0) GetUsers();
+      });
+  };
+
   useEffect(() => {
     GetUsers();
   }, []);
 
-  const deleteUser = (id) => {
+  /* const deleteUser = (id) => {
     console.log(id);
     fetch(import.meta.env.VITE_APIURL + "Users/" + id, {
       method: "DELETE",
@@ -74,7 +116,7 @@ const Users = () => {
         console.log(data);
         GetUsers();
       });
-  };
+  };*/
 
   const navigate = useNavigate();
   return (
@@ -115,14 +157,23 @@ const Users = () => {
               <Chip label={"Users"} />
             </Link>
           </Breadcrumbs>
-          <TextField
-            label={"Search"}
-            size="small"
-            placeholder="name..."
-            InputProps={{
-              startAdornment: <SearchIcon fontSize="small" />,
-            }}
-          />
+          <FormControl sx={{ display: "flex", flexDirection: "row" }}>
+            <TextField
+              label={"Search"}
+              size="small"
+              placeholder="name..."
+              value={name}
+              InputProps={{
+                startAdornment: <SearchIcon fontSize="small" />,
+              }}
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
+            />
+            <IconButton onClick={() => GetUsersByName(name)}>
+              <SearchIcon fontSize="small" />
+            </IconButton>
+          </FormControl>
         </Grid>
 
         <Grid item sx={{ pt: 2 }}>
@@ -138,6 +189,7 @@ const Users = () => {
                   <StyledTableCell align="right">Password</StyledTableCell>
                   <StyledTableCell align="right">Date</StyledTableCell>
                   <StyledTableCell align="right">Type</StyledTableCell>
+                  <StyledTableCell align="right">Actions</StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -156,19 +208,38 @@ const Users = () => {
                       <TableCell align="right">{data.email_User}m</TableCell>
                       <TableCell align="right">{data.userName}</TableCell>
                       <TableCell align="right">
-                        <Chip
-                          variant="filled"
-                          label={
-                            <Typography variant="caption" noWrap>
-                              {data.password_User}
-                            </Typography>
-                          }/>
+                        <Tooltip title={data.password_User}>
+                          {/*data.password_User*/}
+                          <Chip variant="filled" label={"..."} />
+                        </Tooltip>
                       </TableCell>
                       <TableCell align="right">
                         {data.date_User.slice(0, 10)}
                       </TableCell>
                       <TableCell align="right">{data.type_User}</TableCell>
-                      <TableCell align="right"></TableCell>
+                      <TableCell align="right">
+                        <Grid
+                          container
+                          direction={"row"}
+                          justifyContent={"right"}
+                        >
+                          <Grid item>
+                            <IconButton
+                              onClick={() => navigate("" + data.id_User)}
+                            >
+                              <EditIcon />
+                            </IconButton>
+                          </Grid>
+                          <Grid item>
+                            <DialogComponent
+                              id={data.id_User}
+                              name={data.name_User}
+                              lastname={data.lastName_User}
+                              token={token}
+                            />
+                          </Grid>
+                        </Grid>
+                      </TableCell>
                     </TableRow>
                   );
                 })}
@@ -226,7 +297,8 @@ const Users = () => {
             })}
           </TableBody>
         </Table>
-      </TableContainer>*/}
+      </TableContainer>
+      */}
     </div>
   );
 };
