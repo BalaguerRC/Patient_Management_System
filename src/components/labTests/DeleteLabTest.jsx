@@ -8,18 +8,18 @@ import {
   Divider,
   IconButton,
 } from "@mui/material";
-import { useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export const DeleteDoctor = ({ id, name, lastname, token }) => {
+const DeleteLabTest = ({ id, name, token }) => {
   const [openDialog, setOpenDialog] = useState(false);
   const navigate = useNavigate();
 
-  const deleteUser = (id) => {
-    console.log(id);
-    setOpenDialog(!openDialog);
-    fetch(import.meta.env.VITE_APIURL + "Doctors/" + id, {
+  const Delete = (id) => {
+    console.log("Delete", id);
+
+    fetch(import.meta.env.VITE_APIURL + "LabTest/" + id, {
       method: "DELETE",
       headers: {
         Authorization: "Bearer " + token,
@@ -28,11 +28,9 @@ export const DeleteDoctor = ({ id, name, lastname, token }) => {
       .then((res) => res.json())
       .then((data) => {
         if (data) {
-          navigate("/doctors");
+          navigate("/labTests");
           setOpenDialog(!openDialog);
-        } else {
-          console.log(data);
-        }
+        } else console.log(data);
       });
   };
 
@@ -50,9 +48,7 @@ export const DeleteDoctor = ({ id, name, lastname, token }) => {
         <DialogTitle>Delete - {id}</DialogTitle>
         <Divider />
         <DialogContent>
-          <DialogContentText>
-            Are you sure to delete {name} {lastname}?
-          </DialogContentText>
+          <DialogContentText>Are you sure to delete {name}?</DialogContentText>
         </DialogContent>
         <Divider />
         <DialogActions>
@@ -62,7 +58,7 @@ export const DeleteDoctor = ({ id, name, lastname, token }) => {
               variant="contained"
               onClick={() =>
                 setTimeout(() => {
-                  deleteUser(id);
+                  Delete(id);
                 }, 2000)
               }
               autoFocus
@@ -75,3 +71,5 @@ export const DeleteDoctor = ({ id, name, lastname, token }) => {
     </div>
   );
 };
+
+export default DeleteLabTest;
