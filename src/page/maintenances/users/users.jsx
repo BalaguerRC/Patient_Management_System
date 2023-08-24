@@ -30,7 +30,6 @@ import EditIcon from "@mui/icons-material/Edit";
 import { StyledTableCell } from "../../../components/users/style/table";
 import { DialogComponent } from "../../../components/users/DeleteUser";
 
-
 const Users = () => {
   const [Usuarios, setUsuarios] = useState([]);
   const [name, setName] = useState("");
@@ -61,8 +60,8 @@ const Users = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        setUsuarios(data.data)
-        if(data.data.length===0) GetUsers();
+        setUsuarios(data.data);
+        if (data.data.length === 0) GetUsers();
       });
   };
 
@@ -183,7 +182,12 @@ const Users = () => {
                       <TableCell align="right">
                         {data.date_User.slice(0, 10)}
                       </TableCell>
-                      <TableCell align="right">{data.type_User}</TableCell>
+                      <TableCell align="right">
+                        <Chip
+                          label={data.type_User === 1 ? "Admin" : "Doctor"}
+                          variant={data.type_User === 1 ? "outlined" : "filled"}
+                        />
+                      </TableCell>
                       <TableCell align="right">
                         <Grid
                           container
@@ -215,7 +219,6 @@ const Users = () => {
           </TableContainer>
         </Grid>
       </Grid>
-      
     </div>
   );
 };

@@ -21,6 +21,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { StyledTableCell } from "../../components/table";
 import SearchIcon from "@mui/icons-material/Search";
 import EditIcon from "@mui/icons-material/Edit";
+import DeletePatient from "../../components/patients/DeletePatient";
 
 const Patients = () => {
   const [Patients, setPatients] = useState();
@@ -38,21 +39,38 @@ const Patients = () => {
         console.log(data.data);
       });
   };
+  const GetPatientByNameOrIdentity = (name) => {
+    fetch(import.meta.env.VITE_APIURL + "Patients/byName", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/Json",
+        Authorization: "Bearer " + token,
+      },
+      body: JSON.stringify({
+        name_Patient: name,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setPatients(data.data);
+        if (data.data.length === 0) GetPatients();
+      });
+  };
 
-  const deletePatient = (id) => {
+  /*const deletePatient = (id) => {
     console.log(id);
     fetch(import.meta.env.VITE_APIURL + "Patients/" + id, {
       method: "DELETE",
-      /*headers: {
+      headers: {
         Authorization: "Bearer " + token,
-      },*/
+      },
     })
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
         GetPatients();
       });
-  };
+  };*/
 
   useEffect(() => {
     GetPatients();
@@ -74,7 +92,7 @@ const Patients = () => {
           <Typography variant="h6" gutterBottom>
             Patients
           </Typography>
-          <Button variant="contained" onClick={() => navigate("addPatiens")}>
+          <Button variant="contained" onClick={() => navigate("addPatients")}>
             Add
           </Button>
         </Grid>
@@ -107,7 +125,7 @@ const Patients = () => {
               }}
               onChange={(e) => setName(e.target.value)}
             />
-            <IconButton>
+            <IconButton onClick={()=>GetPatientByNameOrIdentity(Name)}>
               <SearchIcon fontSize="small" />
             </IconButton>
           </FormControl>
@@ -189,7 +207,14 @@ const Patients = () => {
                               <EditIcon />
                             </IconButton>
                           </Grid>
-                          <Grid item></Grid>
+                          <Grid item>
+                            <DeletePatient
+                              id={data.id_Patient}
+                              name={data.name_Patient}
+                              lastname={data.lastName_Patient}
+                              token={token}
+                            />
+                          </Grid>
                         </Grid>
                       </TableCell>
                     </TableRow>

@@ -61,20 +61,6 @@ const Doctors = () => {
       });
   };
 
-  /*const deleteDoctor = (id) => {
-    fetch(import.meta.env.VITE_APIURL + "Doctors/" + id, {
-      method: "DELETE",
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        GetDoctors();
-      });
-  };*/
-
   useEffect(() => {
     GetDoctors();
   }, []);

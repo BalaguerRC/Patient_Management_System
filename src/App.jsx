@@ -22,6 +22,13 @@ import AddMA from "./components/medical appointments/addMA";
 import PendingConsultation from "./components/medical appointments/PendingConsultation";
 import PendingResults from "./components/medical appointments/PendingResults";
 import Results from "./components/medical appointments/Results";
+import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
+
+const darkTheme = createTheme({
+  palette: {
+    mode: "light",
+  },
+});
 
 function App() {
   const router = createBrowserRouter([
@@ -41,13 +48,13 @@ function App() {
                 },
                 {
                   path: "addUser",
-                  element: <AddUser/>
+                  element: <AddUser />,
                 },
                 {
                   path: ":id",
-                  element: <EditUser/>
-                }
-              ]
+                  element: <EditUser />,
+                },
+              ],
             },
             {
               path: "doctors",
@@ -57,14 +64,14 @@ function App() {
                   element: <Doctors />,
                 },
                 {
-                  path: 'addDoctors',
-                  element: <AddDoctors/>
+                  path: "addDoctors",
+                  element: <AddDoctors />,
                 },
                 {
                   path: ":id",
-                  element: <EditDoctor/>
-                }
-              ]
+                  element: <EditDoctor />,
+                },
+              ],
             },
             {
               path: "labTests",
@@ -75,13 +82,13 @@ function App() {
                 },
                 {
                   path: "addLabTest",
-                  element: <AddLabTest/>
+                  element: <AddLabTest />,
                 },
                 {
                   path: ":id",
-                  element: <EditLabTest/>
-                }
-              ]
+                  element: <EditLabTest />,
+                },
+              ],
             },
             {
               path: "patients",
@@ -92,13 +99,13 @@ function App() {
                 },
                 {
                   path: "addPatients",
-                  element: <AddPatients/>  //test token <AddPatients token=token/>
+                  element: <AddPatients />, //test token <AddPatients token=token/>
                 },
                 {
                   path: ":id",
-                  element: <EditPatients/>
-                }
-              ]
+                  element: <EditPatients />,
+                },
+              ],
             },
             {
               path: "medicalAppointments",
@@ -109,21 +116,21 @@ function App() {
                 },
                 {
                   path: "addMedicalAppointments",
-                  element: <AddMA/>
+                  element: <AddMA />,
                 },
                 {
-                  path : "pending_consultation/:id",
-                  element: <PendingConsultation/>
+                  path: "pending_consultation/:id",
+                  element: <PendingConsultation />,
                 },
                 {
-                  path : "pending_results/:id",
-                  element: <PendingResults/>
+                  path: "pending_results/:id",
+                  element: <PendingResults />,
                 },
                 {
-                  path : "results/:id",
-                  element: <Results/>
-                }
-              ]
+                  path: "results/:id",
+                  element: <Results />,
+                },
+              ],
             },
             {
               path: "labTestResults",
@@ -151,7 +158,10 @@ function App() {
   return (
     <>
       <div className="containerApp">
-        <RouterProvider router={router}></RouterProvider>
+        <ThemeProvider theme={darkTheme}>
+          <CssBaseline />
+          <RouterProvider router={router}></RouterProvider>
+        </ThemeProvider>
       </div>
     </>
   );
