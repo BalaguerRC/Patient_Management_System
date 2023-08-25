@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Divider,
   FormControlLabel,
   Grid,
   Paper,
@@ -14,6 +15,7 @@ import {
   TableCell,
   TableContainer,
   TableHead,
+  TableRow,
   TextField,
   Typography,
 } from "@mui/material";
@@ -21,6 +23,7 @@ import { Fragment, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import TablePatients from "./TablePatients";
 import TableDoctor from "./TableDoctor";
+import { StyledTableCell } from "../table";
 
 const steps = ["Select a Patient", "Select a Doctor", "Last Step"];
 
@@ -69,6 +72,7 @@ const AddMA = () => {
       /**only in test cases */
       newSkipped = new Set(newSkipped.values());
       newSkipped.delete(activeStep);
+      console.log("finish");
     }
 
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -78,6 +82,7 @@ const AddMA = () => {
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
+
   const [Patient, setPatient] = useState();
   const [Doctor, setDoctor] = useState();
   const [DateMA, setDateMA] = useState();
@@ -85,29 +90,26 @@ const AddMA = () => {
 
   const Save = (patient, doctor, date, cause) => {
     console.log(patient, doctor, date, cause);
-    fetch(import.meta.env.VITE_APIURL + "MedicalAppointments", {
+    /*fetch(import.meta.env.VITE_APIURL + "MedicalAppointments", {
       method: "POST",
       headers: {
         "Content-Type": "application/Json",
-        /*Authorization: "Bearer " + token,*/
+        Authorization: "Bearer " + token,
       },
       body: JSON.stringify({
         id_Patient: patient,
         id_Doctros: doctor,
         date_MA: date,
         cause_MA: cause,
-      })
+      }),
     })
       .then((resp) => resp.json())
       .then((data) => {
         console.log(data);
-      });
+      });*/
   };
 
-  const handleReset = () => {
-    /**main menu */
-    setActiveStep(0);
-  };
+  
 
   useEffect(() => {
     getPatients();
@@ -115,7 +117,7 @@ const AddMA = () => {
   }, []);
 
   const [RadioSelect, setRadioSelect] = useState(0);
-  const [RadioSelect2, setRadioSelect2] = useState(0);
+  const [RadioSelect2, setRadioSelect2] = useState(1);
 
   const getPatientById = (id) => {
     fetch(import.meta.env.VITE_APIURL + "PatientsMa/" + id)
@@ -132,219 +134,328 @@ const AddMA = () => {
       });
   };
 
+  const handleReset = () => {
+    /**main menu */
+    setActiveStep(0);
+    setRadioSelect(0);
+    setRadioSelect2(1);
+  };
   return (
     <div>
-      Add Medical Appointments
-      <Button onClick={() => navigate("/medicalAppointments")}>Back</Button>
-      <Paper sx={{ width: "100%", minWidth: 800 }}>
-        <Grid
-          container
-          direction={"column"}
-          justifyContent={"center"}
-          alignItems={"center"}
-        >
-          <Box sx={{ width: "100%" }}>
-            <Stepper activeStep={activeStep}>
-              {/**top */}
-              {steps.map((label, index) => {
-                const stepProps = {};
-                const labelProps = {};
-                {
-                  /*if (isStepOptional(index)) { optionalstep
+      <Grid item>
+        <Paper>
+          <Grid
+            container
+            direction={"row"}
+            justifyContent={"left"}
+            alignItems={"center"}
+            sx={{ p: 1 }}
+          >
+            <Grid item>
+              <Button onClick={() => navigate("/medicalAppointments")}>
+                {"<"}
+              </Button>
+            </Grid>
+            <Grid item>
+              <Typography variant="h6">Add Medical Appointments</Typography>
+            </Grid>
+          </Grid>
+          <Divider />
+
+          <Grid
+            container
+            direction={"column"}
+            justifyContent={"center"}
+            alignItems={"center"}
+            p={4}
+          >
+            <Box sx={{ width: "100%" }}>
+              <Stepper activeStep={activeStep}>
+                {/**top */}
+                {steps.map((label, index) => {
+                  const stepProps = {};
+                  const labelProps = {};
+                  {
+                    /*if (isStepOptional(index)) { optionalstep
                   labelProps.optional = (
                     <Typography variant="caption">Optional</Typography>
                   );
                 }*/
-                }
-                if (isStepSkipped(index)) {
-                  /**nothing changes */
-                  stepProps.completed = false;
-                }
+                  }
+                  if (isStepSkipped(index)) {
+                    /**nothing changes */
+                    stepProps.completed = false;
+                  }
 
-                return (
-                  <Step key={label} {...stepProps}>
-                    <StepLabel {...labelProps}>{label}</StepLabel>
-                  </Step>
-                );
-              })}
-            </Stepper>
+                  return (
+                    <Step key={label} {...stepProps}>
+                      <StepLabel {...labelProps}>{label}</StepLabel>
+                    </Step>
+                  );
+                })}
+              </Stepper>
 
-            {activeStep === steps.length ? (
-              <Fragment>
-                <Typography sx={{ mt: 2, mb: 1 }}>
-                  All steps completed - you&apos;re finished
-                </Typography>
-                <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-                  <Box sx={{ flex: "1 1 auto" }} />
-                  <Button onClick={handleReset}>Reset</Button>
-                  <Button
-                    onClick={() =>
-                      Save(RadioSelect, RadioSelect, DateMA, Cause)
-                    }
-                  >
-                    Guardar
-                  </Button>
-                  {/**clicking on it sends us to the main menu.*/}
-                </Box>
-              </Fragment>
-            ) : (
-              <Fragment>
-                <Typography sx={{ mt: 2, mb: 1 }}>
-                  {/**steps */}
-                  Step {activeStep + 1} test
-                </Typography>
-
-                {activeStep === 0 ? (
-                  <>
-                    <h2>Patients</h2>
-                    <RadioGroup
-                      value={RadioSelect}
-                      onChange={(e) => {
-                        setRadioSelect(e.target.value);
-                        getPatientById(e.target.value);
-                      }}
+              {activeStep === steps.length ? (
+                <Fragment>
+                  <Typography sx={{ mt: 2, mb: 1 }}>
+                    All steps completed - you&apos;re finished
+                  </Typography>
+                  <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+                    {/*<Box sx={{ flex: "1 1 auto" }} />
+                    <Button onClick={handleReset}>Reset</Button>
+                    <Button
+                      onClick={() =>
+                        Save(RadioSelect, RadioSelect, DateMA, Cause)
+                      }
                     >
-                      <FormControlLabel
-                        value={0}
-                        control={<Radio />}
-                        sx={{ visibility: "hidden" }}
-                      />
-                      <TableContainer component={Paper}>
-                        <Table sx={{ width: "100%", minWidth: 800 }}>
-                          <TableHead>
-                            <TableCell>Id</TableCell>
-                            <TableCell>Name</TableCell>
-                            <TableCell>Last Name</TableCell>
-                            <TableCell>IDPerson</TableCell>
-                          </TableHead>
-                          <TableBody>
-                            {Patients?.map((data) => (
-                              <>
-                                <FormControlLabel
-                                  value={data.id_Patient}
-                                  control={<Radio />}
-                                />
-                                <TablePatients
+                      Guardar
+                    </Button>*/}
+                    {/**clicking on it sends us to the main menu.*/}
+                  </Box>
+                </Fragment>
+              ) : (
+                <Fragment>
+                  <Typography sx={{ mt: 2, mb: 1 }}>
+                    {/**steps */}
+                    Step {activeStep === 2 ? "Final" : activeStep + 1}
+                  </Typography>
+
+                  {activeStep === 0 ? (
+                    <>
+                      <RadioGroup
+                        value={RadioSelect}
+                        onChange={(e) => {
+                          setRadioSelect(e.target.value);
+                          getPatientById(e.target.value);
+                        }}
+                      >
+                        <FormControlLabel
+                          value={0}
+                          control={<Radio />}
+                          sx={{ visibility: "hidden", display: "none" }}
+                        />
+                        <TableContainer component={Paper}>
+                          <Table sx={{ width: "100%", minWidth: 800 }}>
+                            <TableHead>
+                              <TableRow>
+                                <StyledTableCell align="right">
+                                  Select
+                                </StyledTableCell>
+                                <StyledTableCell align="right">
+                                  Id
+                                </StyledTableCell>
+                                <StyledTableCell align="right">
+                                  Name
+                                </StyledTableCell>
+                                <StyledTableCell align="right">
+                                  Last Name
+                                </StyledTableCell>
+                                <StyledTableCell align="right">
+                                  IDPerson
+                                </StyledTableCell>
+                              </TableRow>
+                            </TableHead>
+                            <TableBody>
+                              {Patients?.map((data) => (
+                                <TableRow
                                   key={data.id_Patient}
-                                  id={data.id_Patient}
-                                  name={data.name_Patient}
-                                  lastname={data.lastName_Patient}
-                                  identity={data.identity_Patient}
-                                />
-                              </>
-                            ))}
-                          </TableBody>
-                        </Table>
-                      </TableContainer>
-                    </RadioGroup>
-                  </>
-                ) : activeStep === 1 ? (
-                  <>
-                    <h2>Doctors</h2>
-                    <RadioGroup
-                      value={RadioSelect2}
-                      onChange={(e) => {
-                        setRadioSelect2(e.target.value);
-                        getDoctorById(e.target.value);
-                      }}
-                    >
-                      <FormControlLabel
-                        value={0}
-                        control={<Radio />}
-                        sx={{ visibility: "hidden" }}
-                      />
-                      <TableContainer component={Paper}>
-                        <Table sx={{ width: "100%", minWidth: 800 }}>
-                          <TableHead>
-                            <TableCell>Id</TableCell>
-                            <TableCell>Name</TableCell>
-                            <TableCell>Last Name</TableCell>
-                            <TableCell>IDDoctor</TableCell>
-                          </TableHead>
-                          <TableBody>
-                            {Doctors?.map((data) => (
-                              <>
-                                <FormControlLabel
-                                  value={data.id_Doctor}
-                                  control={<Radio />}
-                                />
-                                <TableDoctor
+                                  sx={{
+                                    "&:last-child td, &:last-child th": {
+                                      border: 0,
+                                    },
+                                    ":hover": { background: "#81BDF7" },
+                                  }}
+                                >
+                                  <TableCell align="right">
+                                    <FormControlLabel
+                                      value={data.id_Patient}
+                                      control={<Radio />}
+                                    />
+                                  </TableCell>
+
+                                  <TablePatients
+                                    id={data.id_Patient}
+                                    name={data.name_Patient}
+                                    lastname={data.lastName_Patient}
+                                    identity={data.identity_Patient}
+                                  />
+                                </TableRow>
+                              ))}
+                            </TableBody>
+                          </Table>
+                        </TableContainer>
+                      </RadioGroup>
+                    </>
+                  ) : activeStep === 1 ? (
+                    <>
+                      <RadioGroup
+                        value={RadioSelect2}
+                        onChange={(e) => {
+                          setRadioSelect2(e.target.value);
+                          getDoctorById(e.target.value);
+                        }}
+                      >
+                        <FormControlLabel
+                          value={0}
+                          control={<Radio />}
+                          sx={{ visibility: "hidden", display: "none" }}
+                        />
+                        <TableContainer component={Paper}>
+                          <Table sx={{ width: "100%", minWidth: 800 }}>
+                            <TableHead>
+                              <TableRow>
+                                <StyledTableCell align="right">
+                                  Select
+                                </StyledTableCell>
+                                <StyledTableCell align="right">
+                                  Id
+                                </StyledTableCell>
+                                <StyledTableCell align="right">
+                                  Name
+                                </StyledTableCell>
+                                <StyledTableCell align="right">
+                                  Last Name
+                                </StyledTableCell>
+                                <StyledTableCell align="right">
+                                  IDDoctor
+                                </StyledTableCell>
+                              </TableRow>
+                            </TableHead>
+                            <TableBody>
+                              {Doctors?.map((data) => (
+                                <TableRow
                                   key={data.id_Doctor}
-                                  id={data.id_Doctor}
-                                  name={data.name_Doctor}
-                                  lastname={data.lastName_Doctor}
-                                  identity={data.identity_Doctor}
-                                />
-                              </>
-                            ))}
-                          </TableBody>
-                        </Table>
-                      </TableContainer>
-                    </RadioGroup>
-                  </>
-                ) : activeStep === 2 ? (
-                  <>
-                    <h2>Final</h2>
-                    <Grid
-                      container
-                      direction={"column"}
-                      justifyContent={"center"}
-                      alignItems={"center"}
-                    >
-                      <TextField
-                        label="Patient"
-                        value={Patient}
-                        disabled
-                        fullWidth
-                      />
-                      <TextField
-                        label="Doctor"
-                        value={Doctor}
-                        disabled
-                        fullWidth
-                      />
-                      <TextField
-                        type="datetime-local"
-                        placeholder="date"
-                        fullWidth
-                        onChange={(e) => setDateMA(e.target.value)}
-                      />
-                      <TextField
-                        type="text"
-                        placeholder="cause..."
-                        fullWidth
-                        onChange={(e) => setCause(e.target.value)}
-                      />
-                    </Grid>
-                  </>
-                ) : null}
-                <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-                  <Button
-                    color="inherit"
-                    disabled={activeStep === 0}
-                    onClick={handleBack}
-                    sx={{ mr: 1 }}
-                  >
-                    Back
-                  </Button>
-                  <Box sx={{ flex: "1 1 auto" }} />
-                  {/**{isStepOptional(activeStep) && (
+                                  sx={{
+                                    "&:last-child td, &:last-child th": {
+                                      border: 0,
+                                    },
+                                    ":hover": { background: "#81BDF7" },
+                                  }}
+                                >
+                                  <TableCell align="right">
+                                    <FormControlLabel
+                                      value={data.id_Doctor}
+                                      control={<Radio />}
+                                    />
+                                  </TableCell>
+                                  <TableDoctor
+                                    id={data.id_Doctor}
+                                    name={data.name_Doctor}
+                                    lastname={data.lastName_Doctor}
+                                    identity={data.identity_Doctor}
+                                  />
+                                </TableRow>
+                              ))}
+                            </TableBody>
+                          </Table>
+                        </TableContainer>
+                      </RadioGroup>
+                    </>
+                  ) : activeStep === 2 ? (
+                    <>
+                      <Grid
+                        container
+                        rowSpacing={1}
+                        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                        pt={2}
+                      >
+                        <Grid item xs={6}>
+                          <TextField
+                            label="Patient"
+                            value={Patient}
+                            disabled
+                            fullWidth
+                          />
+                        </Grid>
+                        <Grid item xs={6}>
+                          <TextField
+                            label="Doctor"
+                            value={Doctor}
+                            disabled
+                            fullWidth
+                          />
+                        </Grid>
+
+                        <Grid item xs={4}>
+                          <TextField
+                            type="datetime-local"
+                            placeholder="date"
+                            fullWidth
+                            onChange={(e) => setDateMA(e.target.value)}
+                          />
+                        </Grid>
+
+                        <Grid item xs={8}>
+                          <TextField
+                            type="text"
+                            placeholder="cause..."
+                            label="Cause"
+                            fullWidth
+                            onChange={(e) => setCause(e.target.value)}
+                          />
+                        </Grid>
+                      </Grid>
+                    </>
+                  ) : null}
+                </Fragment>
+              )}
+            </Box>
+
+            {/*<Button disabled>Save</Button>*/}
+          </Grid>
+
+          <Divider />
+
+          {activeStep === steps.length ? (
+            <Grid
+              container
+              direction={"row"}
+              justifyContent={"right"}
+              sx={{ p: 2 }}
+            >
+              <Grid item>
+                <Button onClick={handleReset} sx={{ mr: 2 }} variant="outlined">
+                  Reset
+                </Button>
+                <Button
+                  variant="contained"
+                  type="submit"
+                  onClick={() => Save(RadioSelect, RadioSelect, DateMA, Cause)}
+                >
+                  Save
+                </Button>
+              </Grid>
+            </Grid>
+          ) : (
+            <Box sx={{ display: "flex", flexDirection: "row", p: 2 }}>
+              <Button
+                color="inherit"
+                disabled={activeStep === 0}
+                onClick={handleBack}
+                sx={{ mr: 1 }}
+              >
+                Back
+              </Button>
+              <Box sx={{ flex: "1 1 auto" }} />
+              {/**{isStepOptional(activeStep) && (
               <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
                 Skip
               </Button>
             )}*/}
 
-                  <Button onClick={handleNext} disabled={RadioSelect==0 ? true: false}>
-                    {activeStep === steps.length - 1 ? "Finish" : "Next"}
-                  </Button>
-                </Box>
-              </Fragment>
-            )}
-          </Box>
+              <Button
+                variant="contained"
+                onClick={handleNext}
+                disabled={RadioSelect == 0 ? true : false}
+              >
+                {activeStep === steps.length - 1 ? "Finish" : "Next"}
+              </Button>
+            </Box>
+          )}
 
-          {/*<Button disabled>Save</Button>*/}
-        </Grid>
-      </Paper>
+          {/**/}
+        </Paper>
+      </Grid>
     </div>
   );
 };

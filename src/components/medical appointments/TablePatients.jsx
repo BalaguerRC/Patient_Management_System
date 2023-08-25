@@ -1,13 +1,13 @@
-import {Radio, TableCell, TableRow } from "@mui/material";
+import { TableCell } from "@mui/material";
 
 const TablePatients = ({ id, name, lastname, identity }) => {
   return (
-      <TableRow>
-        <TableCell>{id}</TableCell>
-        <TableCell>{name}</TableCell>
-        <TableCell>{lastname}</TableCell>
-        <TableCell>{identity}</TableCell>
-      </TableRow>
+    <>
+      <TableCell align="right">{id}</TableCell>
+      <TableCell align="right">{name}</TableCell>
+      <TableCell align="right">{lastname}</TableCell>
+      <TableCell align="right">{identity}</TableCell>
+    </>
   );
 };
 
