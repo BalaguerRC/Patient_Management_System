@@ -33,7 +33,6 @@ const AddMA = () => {
   const navigate = useNavigate();
 
   const [activeStep, setActiveStep] = useState(0);
-  const [skipped, setSkipped] = useState(new Set());
   const [Patients, setPatients] = useState();
   const [Doctors, setDoctors] = useState();
 
@@ -44,6 +43,7 @@ const AddMA = () => {
         setPatients(data.data);
       });
   };
+
   const getDoctors = () => {
     fetch(import.meta.env.VITE_APIURL + "Doctors/getDoctorsMA", {
       headers: {
@@ -53,30 +53,19 @@ const AddMA = () => {
       .then((resp) => resp.json())
       .then((data) => {
         setDoctors(data.data);
-        console.log(data);
       });
   };
 
-  /*const isStepOptional = (step) => {
-    return step === 1;
-  };*/
-
-  const isStepSkipped = (step) => {
-    /**when starting choose the value that has the usestate, 0, or if it has a value then go to the next step */
-    return skipped.has(step);
-  };
-
   const handleNext = () => {
-    let newSkipped = skipped;
-    if (isStepSkipped(activeStep)) {
-      /**only in test cases */
-      newSkipped = new Set(newSkipped.values());
-      newSkipped.delete(activeStep);
-      console.log("finish");
+    if (activeStep == 2) {
+      if (!DateMA || DateMA === "") setErrDateMa(!ErrDateMa);
+      else if (!Cause || Cause === "") setErrCause(!ErrCause);
+      else {
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      }
+    } else {
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
     }
-
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped(newSkipped);
   };
 
   const handleBack = () => {
@@ -85,12 +74,16 @@ const AddMA = () => {
 
   const [Patient, setPatient] = useState();
   const [Doctor, setDoctor] = useState();
-  const [DateMA, setDateMA] = useState();
-  const [Cause, setCause] = useState();
+  const [DateMA, setDateMA] = useState("");
+  const [Cause, setCause] = useState("");
+
+  /**Errors */
+  const [ErrDateMa, setErrDateMa] = useState(false);
+  const [ErrCause, setErrCause] = useState(false);
 
   const Save = (patient, doctor, date, cause) => {
     console.log(patient, doctor, date, cause);
-    /*fetch(import.meta.env.VITE_APIURL + "MedicalAppointments", {
+    fetch(import.meta.env.VITE_APIURL + "MedicalAppointments", {
       method: "POST",
       headers: {
         "Content-Type": "application/Json",
@@ -105,11 +98,10 @@ const AddMA = () => {
     })
       .then((resp) => resp.json())
       .then((data) => {
-        console.log(data);
-      });*/
+        if (data) navigate("/medicalAppointments");
+        else console.log(data);
+      });
   };
-
-  
 
   useEffect(() => {
     getPatients();
@@ -181,10 +173,6 @@ const AddMA = () => {
                     <Typography variant="caption">Optional</Typography>
                   );
                 }*/
-                  }
-                  if (isStepSkipped(index)) {
-                    /**nothing changes */
-                    stepProps.completed = false;
                   }
 
                   return (
@@ -380,8 +368,13 @@ const AddMA = () => {
                           <TextField
                             type="datetime-local"
                             placeholder="date"
+                            error={ErrDateMa}
+                            helperText={ErrDateMa ? "falta fecha" : null}
                             fullWidth
-                            onChange={(e) => setDateMA(e.target.value)}
+                            onChange={(e) => {
+                              setDateMA(e.target.value);
+                              setErrDateMa(false);
+                            }}
                           />
                         </Grid>
 
@@ -389,9 +382,14 @@ const AddMA = () => {
                           <TextField
                             type="text"
                             placeholder="cause..."
+                            error={ErrCause}
+                            helperText={ErrCause ? "falta causa" : null}
                             label="Cause"
                             fullWidth
-                            onChange={(e) => setCause(e.target.value)}
+                            onChange={(e) => {
+                              setCause(e.target.value);
+                              setErrCause(false);
+                            }}
                           />
                         </Grid>
                       </Grid>
@@ -437,12 +435,6 @@ const AddMA = () => {
                 Back
               </Button>
               <Box sx={{ flex: "1 1 auto" }} />
-              {/**{isStepOptional(activeStep) && (
-              <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
-                Skip
-              </Button>
-            )}*/}
-
               <Button
                 variant="contained"
                 onClick={handleNext}
@@ -452,8 +444,6 @@ const AddMA = () => {
               </Button>
             </Box>
           )}
-
-          {/**/}
         </Paper>
       </Grid>
     </div>
