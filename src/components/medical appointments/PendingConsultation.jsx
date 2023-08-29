@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Divider,
   FormControlLabel,
@@ -109,58 +110,60 @@ const PendingConsultation = () => {
             </Grid>
           </Grid>
           <Divider />
-          <RadioGroup
-            value={RadioSelect}
-            onChange={(e) => {
-              setRadioSelect(e.target.value);
-              setLabTestById(e.target.value);
-            }}
-            sx={{ p: 4 }}
-          >
-            <FormControlLabel
-              value={0}
-              control={<Radio />}
-              sx={{ visibility: "hidden", display: "none" }}
-            />
-            <TableContainer component={Paper}>
-              <Table sx={{ width: "100%", minWidth: 800 }}>
-                <TableHead>
-                  <TableRow>
-                    <StyledTableCell align="right">Select</StyledTableCell>
-                    <StyledTableCell align="right">Id</StyledTableCell>
-                    <StyledTableCell align="right">Name</StyledTableCell>
-                    <StyledTableCell align="right">Date</StyledTableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {LabTests?.map((data) => (
-                    <TableRow
-                      key={data.id_LabTest}
-                      sx={{
-                        "&:last-child td, &:last-child th": {
-                          border: 0,
-                        },
-                        ":hover": { background: "#81BDF7" },
-                      }}
-                    >
-                      <TableCell align="right">
-                        <FormControlLabel
-                          value={data.id_LabTest}
-                          control={<Radio />}
-                        />
-                      </TableCell>
-
-                      <TableLabTest
-                        id={data.id_LabTest}
-                        name={data.name_LabTest}
-                        date={data.date_LabTest.slice(0, 10)}
-                      />
+          <Box p={2}>
+            <Typography variant="h6" gutterBottom>Select a Lab Test</Typography>
+            <RadioGroup
+              value={RadioSelect}
+              onChange={(e) => {
+                setRadioSelect(e.target.value);
+                setLabTestById(e.target.value);
+              }}
+            >
+              <FormControlLabel
+                value={0}
+                control={<Radio />}
+                sx={{ visibility: "hidden", display: "none" }}
+              />
+              <TableContainer component={Paper}>
+                <Table sx={{ width: "100%", minWidth: 800 }}>
+                  <TableHead>
+                    <TableRow>
+                      <StyledTableCell align="right">Select</StyledTableCell>
+                      <StyledTableCell align="right">Id</StyledTableCell>
+                      <StyledTableCell align="right">Name</StyledTableCell>
+                      <StyledTableCell align="right">Date</StyledTableCell>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </RadioGroup>
+                  </TableHead>
+                  <TableBody>
+                    {LabTests?.map((data) => (
+                      <TableRow
+                        key={data.id_LabTest}
+                        sx={{
+                          "&:last-child td, &:last-child th": {
+                            border: 0,
+                          },
+                          ":hover": { background: "#81BDF7" },
+                        }}
+                      >
+                        <TableCell align="right">
+                          <FormControlLabel
+                            value={data.id_LabTest}
+                            control={<Radio />}
+                          />
+                        </TableCell>
+
+                        <TableLabTest
+                          id={data.id_LabTest}
+                          name={data.name_LabTest}
+                          date={data.date_LabTest.slice(0, 10)}
+                        />
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </RadioGroup>
+          </Box>
 
           <Divider />
           <Grid

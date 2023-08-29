@@ -1,4 +1,11 @@
 import {
+  Breadcrumbs,
+  Button,
+  Chip,
+  FormControl,
+  Grid,
+  IconButton,
+  Link,
   Paper,
   Table,
   TableBody,
@@ -6,11 +13,19 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  TextField,
+  Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { StyledTableCell } from "../../components/table";
+import SearchIcon from "@mui/icons-material/Search";
 
 const LabTestResults = () => {
   const [LabTestResults, setLabTestResults] = useState([]);
+  const [Name, setName] = useState("");
+
+  const navigate = useNavigate();
 
   const GetLabTestResults = () => {
     fetch(import.meta.env.VITE_APIURL + "LabTestResult")
@@ -24,6 +39,120 @@ const LabTestResults = () => {
 
   return (
     <div>
+      <Grid container direction={"column"} justifyContent={"center"}>
+        <Grid
+          item
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            flexDirection: "row",
+            alignItems: "center",
+            pb: 5,
+          }}
+        >
+          <Typography variant="h6" gutterBottom>
+            Lab Test Results
+          </Typography>
+          <Button variant="contained" onClick={() => navigate("/medicalAppointments")}>
+            Add
+          </Button>
+        </Grid>
+
+        <Grid
+          item
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
+          <Breadcrumbs separator="-›">
+            <Link underline="hover" onClick={() => navigate("/")}>
+              <Chip label={"Home"} />
+            </Link>
+            <Link underline="hover" href="#">
+              <Chip label={"Lab Test Results"} />
+            </Link>
+          </Breadcrumbs>
+          <FormControl sx={{ display: "flex", flexDirection: "row" }}>
+            <TextField
+              label={"Search"}
+              size="small"
+              placeholder="name..."
+              value={Name}
+              InputProps={{
+                startAdornment: <SearchIcon fontSize="small" sx={{mr:1}}/>,
+              }}
+              onChange={(e) => setName(e.target.value)}
+            />
+            <IconButton>
+              <SearchIcon fontSize="small" />
+            </IconButton>
+          </FormControl>
+        </Grid>
+
+        <Grid item sx={{ pt: 2 }}>
+          <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 650 }} size="small" stickyHeader>
+              <TableHead>
+                <TableRow>
+                  <StyledTableCell align="right">ID</StyledTableCell>
+                  <StyledTableCell align="right">
+                    {"(ID)"}PatientName
+                  </StyledTableCell>
+                  <StyledTableCell align="right">ID_MA</StyledTableCell>
+                  <StyledTableCell align="right">LabTest</StyledTableCell>
+                  <StyledTableCell align="right">Doctor</StyledTableCell>
+                  <StyledTableCell align="right">Test_Result</StyledTableCell>
+                  <StyledTableCell align="right">State</StyledTableCell>
+                  <StyledTableCell align="right">Date</StyledTableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {LabTestResults?.map((data) => {
+                  return (
+                    <TableRow
+                      key={data.id_LabTestResult}
+                      sx={{
+                        "&:last-child td, &:last-child th": { border: 0 },
+                        ":hover": { background: "#81BDF7" },
+                      }}
+                    >
+                      <TableCell align="right">
+                        {data.id_LabTestResult}
+                      </TableCell>
+                      <TableCell align="left">
+                        ({data.id_Patient}) {data.patient}
+                      </TableCell>
+                      <TableCell align="right">
+                        {data.id_MedicalAppointment}
+                      </TableCell>
+                      <TableCell align="right">{data.labTest}</TableCell>
+                      <TableCell align="right">{data.doctor}</TableCell>
+                      <TableCell align="right">{data.test_Result}</TableCell>
+                      <TableCell align="right">
+                        {data.state_Result == 0 ? "pending" : "completed"}
+                      </TableCell>
+                      <TableCell align="right">
+                        {data.date_TestResult.slice(0, 10)} (
+                        {data.date_TestResult.slice(11, 16)})
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Grid>
+      </Grid>
+    </div>
+  );
+};
+
+{
+  /**
+  <div>
       Lab Tests Results
       <TableContainer component={Paper}>
         <Table sx={{ width: "100%", minWidth: 800 }}>
@@ -60,7 +189,6 @@ const LabTestResults = () => {
         </Table>
       </TableContainer>
     </div>
-  );
-};
-
+   */
+}
 export default LabTestResults;

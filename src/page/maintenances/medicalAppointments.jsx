@@ -36,6 +36,24 @@ const MedicalAppointments = () => {
       });
   };
 
+  const GetMaByPatientOrDoctor = (name) => {
+    fetch(import.meta.env.VITE_APIURL + "MedicalAppointments/byName", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/Json",
+        //Authorization: "Bearer " + token,
+      },
+      body: JSON.stringify({
+        patientOrDoctor: name,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setMAppointmets(data.data);
+        if (data.data.length === 0) getMAppointmets();
+      });
+  };
+
   useEffect(() => {
     getMAppointmets();
   }, []);
@@ -85,14 +103,14 @@ const MedicalAppointments = () => {
             <TextField
               label={"Search"}
               size="small"
-              placeholder="name or identity"
+              placeholder="Patient or doctor"
               value={Name}
               InputProps={{
-                startAdornment: <SearchIcon fontSize="small" />,
+                startAdornment: <SearchIcon fontSize="small" sx={{mr:1}}/>,
               }}
               onChange={(e) => setName(e.target.value)}
             />
-            <IconButton>
+            <IconButton onClick={() => GetMaByPatientOrDoctor(Name)}>
               <SearchIcon fontSize="small" />
             </IconButton>
           </FormControl>
@@ -160,9 +178,7 @@ const MedicalAppointments = () => {
                           onClick={
                             data.state_MA === 0
                               ? () =>
-                                  navigate(
-                                    "pending_consultation/" + data.id_Patient
-                                  )
+                                  navigate("pending_consultation/" + data.id_MA)
                               : data.state_MA === 2
                               ? () => navigate("results/" + data.id_Patient)
                               : () =>

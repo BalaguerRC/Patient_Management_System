@@ -118,7 +118,7 @@ const LabTest = () => {
               placeholder="name..."
               value={Name}
               InputProps={{
-                startAdornment: <SearchIcon fontSize="small" />,
+                startAdornment: <SearchIcon fontSize="small" sx={{mr:1}}/>,
               }}
               onChange={(e) => setName(e.target.value)}
             />
