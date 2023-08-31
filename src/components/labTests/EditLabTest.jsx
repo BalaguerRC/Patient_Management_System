@@ -1,3 +1,4 @@
+import { LoadingButton } from "@mui/lab";
 import {
   Button,
   Dialog,
@@ -17,6 +18,8 @@ import { useNavigate, useParams } from "react-router-dom";
 const EditLabTest = () => {
   const [Name, setName] = useState("");
   const [open, setOpen] = useState(true);
+  const [time, setTime] = useState(false);
+
   const [ErrName, setErrName] = useState(false);
 
   const { id } = useParams();
@@ -61,7 +64,7 @@ const EditLabTest = () => {
     <div>
       <Dialog
         open={open}
-        onClose={() => navigate("/users")}
+        onClose={() => navigate("/labTests")}
         maxWidth={"sm"}
         fullWidth
         sx={{
@@ -110,15 +113,31 @@ const EditLabTest = () => {
         <Divider />
         <DialogActions>
           <Button
-            variant="contained"
+            variant="outlined"
             type="submit"
             onClick={() => navigate("/labTests")}
           >
             Cancel
           </Button>
-          <Button variant="outlined" type="submit" onClick={() => Edit(Name)}>
-            Save
-          </Button>
+          {time ? (
+            <LoadingButton loading variant="outlined">
+              Save
+            </LoadingButton>
+          ) : (
+            <Button
+              variant="contained"
+              type="submit"
+              onClick={() => {
+                setTime(!time);
+                setTimeout(() => {
+                  setTime(time);
+                  Edit(Name);
+                }, 1000);
+              }}
+            >
+              Save
+            </Button>
+          )}
         </DialogActions>
       </Dialog>
     </div>

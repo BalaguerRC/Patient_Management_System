@@ -28,10 +28,12 @@ import SearchIcon from "@mui/icons-material/Search";
 import EditIcon from "@mui/icons-material/Edit";
 import { StyledTableCell } from "../../../components/users/style/table";
 import { DialogComponent } from "../../../components/users/DeleteUser";
+import { LoadingButton } from "@mui/lab";
 
 const Users = () => {
   const [Usuarios, setUsuarios] = useState([]);
   const [name, setName] = useState("");
+  const [time, setTime] = useState(false);
 
   const token = localStorage.getItem("token_user");
 
@@ -99,9 +101,24 @@ const Users = () => {
           <Typography variant="h6" gutterBottom>
             Users
           </Typography>
-          <Button variant="contained" onClick={() => navigate("addUser")}>
-            Add
-          </Button>
+          {time ? (
+            <LoadingButton loading variant="contained">
+              Add
+            </LoadingButton>
+          ) : (
+            <Button
+              variant="contained"
+              onClick={() => {
+                setTime(!time);
+                setTimeout(() => {
+                  setTime(time);
+                  navigate("addUser");
+                }, 500);
+              }}
+            >
+              Add
+            </Button>
+          )}
         </Grid>
 
         <Grid
@@ -128,7 +145,7 @@ const Users = () => {
               placeholder="name..."
               value={name}
               InputProps={{
-                startAdornment: <SearchIcon fontSize="small" sx={{mr:1}}/>,
+                startAdornment: <SearchIcon fontSize="small" sx={{ mr: 1 }} />,
               }}
               onChange={(e) => {
                 setName(e.target.value);

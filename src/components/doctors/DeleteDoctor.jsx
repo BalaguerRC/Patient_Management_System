@@ -11,9 +11,12 @@ import {
 import { useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useNavigate } from "react-router-dom";
+import { LoadingButton } from "@mui/lab";
 
 export const DeleteDoctor = ({ id, name, lastname, token }) => {
   const [openDialog, setOpenDialog] = useState(false);
+  const [time, setTime] = useState(false);
+
   const navigate = useNavigate();
 
   const deleteUser = (id) => {
@@ -58,17 +61,24 @@ export const DeleteDoctor = ({ id, name, lastname, token }) => {
         <DialogActions>
           <form onChange={(e) => e.preventDefault()}>
             <Button onClick={() => setOpenDialog(!openDialog)}>Disagree</Button>
-            <Button
-              variant="contained"
-              onClick={() =>
-                setTimeout(() => {
-                  deleteUser(id);
-                }, 2000)
-              }
-              autoFocus
-            >
-              Agree
-            </Button>
+            {time ? (
+              <LoadingButton loading variant="outlined">
+                Agree
+              </LoadingButton>
+            ) : (
+              <Button
+                variant="contained"
+                onClick={() => {
+                  setTime(!time);
+                  setTimeout(() => {
+                    setTime(time);
+                    deleteUser(id);
+                  }, 1000);
+                }}
+              >
+                Agree
+              </Button>
+            )}
           </form>
         </DialogActions>
       </Dialog>

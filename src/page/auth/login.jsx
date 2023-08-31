@@ -12,16 +12,19 @@ import {
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LockIcon from "@mui/icons-material/Lock";
+import { LoadingButton } from "@mui/lab";
 
 const Login = () => {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const [time, setTime] = useState(false);
 
   const navigate = useNavigate();
 
-  const SingUp = (e) => {
-    e.preventDefault();
+  const SingUp = () => {
+    setTime(time);
+    //console.log("Login");
     fetch(import.meta.env.VITE_APIURL + "Login", {
       method: "POST",
       headers: {
@@ -65,7 +68,15 @@ const Login = () => {
         </Grid>
         <Grid item xs sm>
           <Box sx={{ p: 5 }}>
-            <form onSubmit={(e) => SingUp(e)}>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                setTime(!time);
+                setTimeout(() => {
+                  SingUp();
+                }, 2000);
+              }}
+            >
               <Grid container direction={"column"} spacing={2}>
                 <Grid item sx={{ textAlign: "center", pb: 5 }}>
                   <LockIcon />
@@ -114,9 +125,15 @@ const Login = () => {
                   />
                 </Grid>
                 <Grid item>
-                  <Button type="submit" variant="contained" fullWidth>
-                    Sing Up
-                  </Button>
+                  {time ? (
+                    <LoadingButton variant="contained" loading fullWidth>
+                      Sing Up
+                    </LoadingButton>
+                  ) : (
+                    <Button type="submit" variant="contained" fullWidth>
+                      Sing Up
+                    </Button>
+                  )}
                 </Grid>
                 <Grid item>
                   <Link>Forgot my password</Link>

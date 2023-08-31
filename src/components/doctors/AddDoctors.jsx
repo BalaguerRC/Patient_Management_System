@@ -1,3 +1,4 @@
+import { LoadingButton } from "@mui/lab";
 import {
   Button,
   Dialog,
@@ -22,6 +23,7 @@ const AddDoctors = () => {
     "https://assets.stickpng.com/images/5a4613ddd099a2ad03f9c994.png"
   );
   const [open, setOpen] = useState(true);
+  const [time, setTime] = useState(false);
 
   /**Errors */
 
@@ -226,21 +228,31 @@ const AddDoctors = () => {
         <Divider />
         <DialogActions>
           <Button
-            variant="contained"
+            variant="outlined"
             type="submit"
             onClick={() => navigate("/doctors")}
           >
             Cancel
           </Button>
-          <Button
-            variant="outlined"
-            type="submit"
-            onClick={() =>
-              AddDoctors(Name, LastName, Mail, Phone, Identity, Image)
-            }
-          >
-            Save
-          </Button>
+          {time ? (
+            <LoadingButton loading variant="outlined">
+              Save
+            </LoadingButton>
+          ) : (
+            <Button
+              variant="contained"
+              type="submit"
+              onClick={() => {
+                setTime(!time);
+                setTimeout(() => {
+                  setTime(time);
+                  AddDoctors(Name, LastName, Mail, Phone, Identity, Image);
+                }, 1000);
+              }}
+            >
+              Save
+            </Button>
+          )}
         </DialogActions>
       </Dialog>
     </div>

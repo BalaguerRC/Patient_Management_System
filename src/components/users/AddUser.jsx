@@ -1,3 +1,4 @@
+import { LoadingButton } from "@mui/lab";
 import {
   Button,
   Dialog,
@@ -27,6 +28,7 @@ const AddUser = () => {
   const [Type, setType] = useState(2);
   const [Err, setErr] = useState();
   const [open, setOpen] = useState(true);
+  const [time, setTime] = useState(false);
 
   /**errores */
 
@@ -57,10 +59,11 @@ const AddUser = () => {
     else if (!Mail || Mail === "") setErrMail(!ErrMail);
     else if (!Username || Username === "") setErrUsername(!ErrUsername);
     else if (!Password || Password === "") setErrPassword(!ErrPassword);
-    else if (ConfirmPassword != Password) setErrConfirmPassword(!ErrConfirmPassword);
+    else if (ConfirmPassword != Password)
+      setErrConfirmPassword(!ErrConfirmPassword);
     //if(!Type) setErrType(!ErrType)
     else {
-      console.log(true)
+      console.log(true);
       if (ConfirmPassword === Password) {
         fetch(import.meta.env.VITE_APIURL + "Users", {
           method: "POST",
@@ -270,26 +273,40 @@ const AddUser = () => {
         </DialogContent>
         <Divider />
         <DialogActions>
-          <Button variant="contained" type="submit" onClick={() => navigate("/users")}>
-            Cancel
-          </Button>
           <Button
             variant="outlined"
             type="submit"
-            onClick={() =>
-              AddUser(
-                Name,
-                LastName,
-                Mail,
-                Username,
-                Password,
-                ConfirmPassword,
-                Type
-              )
-            }
+            onClick={() => navigate("/users")}
           >
-            Save
+            Cancel
           </Button>
+          {time ? (
+            <LoadingButton loading variant="outlined">
+              Save
+            </LoadingButton>
+          ) : (
+            <Button
+              variant="contained"
+              type="submit"
+              onClick={() => {
+                setTime(!time);
+                setTimeout(() => {
+                  setTime(time);
+                  AddUser(
+                    Name,
+                    LastName,
+                    Mail,
+                    Username,
+                    Password,
+                    ConfirmPassword,
+                    Type
+                  );
+                }, 1000);
+              }}
+            >
+              Save
+            </Button>
+          )}
         </DialogActions>
       </Dialog>
     </div>

@@ -1,3 +1,4 @@
+import { LoadingButton } from "@mui/lab";
 import {
   Button,
   Dialog,
@@ -27,6 +28,7 @@ const EditUser = () => {
   const [ConfirmPassword, setConfirmPassword] = useState(null);
   const [Type, setType] = useState(2);
   const [open, setOpen] = useState(true);
+  const [time, setTime] = useState(false);
 
   /**Errores */
 
@@ -297,29 +299,39 @@ const EditUser = () => {
         <Divider />
         <DialogActions>
           <Button
-            variant="contained"
+            variant="outlined"
             type="submit"
             onClick={() => navigate("/users")}
           >
             Cancel
           </Button>
-          <Button
-            variant="outlined"
-            type="submit"
-            onClick={() =>
-              Post(
-                Name,
-                LastName,
-                Mail,
-                Username,
-                Password,
-                ConfirmPassword,
-                Type
-              )
-            }
-          >
-            Save
-          </Button>
+          {time ? (
+            <LoadingButton loading variant="outlined">
+              Save
+            </LoadingButton>
+          ) : (
+            <Button
+              variant="contained"
+              type="submit"
+              onClick={() => {
+                setTime(!time);
+                setTimeout(() => {
+                  setTime(time);
+                  Post(
+                    Name,
+                    LastName,
+                    Mail,
+                    Username,
+                    Password,
+                    ConfirmPassword,
+                    Type
+                  );
+                }, 1000);
+              }}
+            >
+              Save
+            </Button>
+          )}
         </DialogActions>
       </Dialog>
     </div>

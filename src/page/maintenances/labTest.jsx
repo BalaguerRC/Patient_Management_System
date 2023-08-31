@@ -22,10 +22,12 @@ import { StyledTableCell } from "../../components/table";
 import SearchIcon from "@mui/icons-material/Search";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteLabTest from "../../components/labTests/DeleteLabTest";
+import { LoadingButton } from "@mui/lab";
 
 const LabTest = () => {
   const [LabTests, setLabTests] = useState([]);
   const [Name, setName] = useState("");
+  const [time, setTime] = useState(false);
 
   const token = localStorage.getItem("token_user");
 
@@ -89,9 +91,24 @@ const LabTest = () => {
           <Typography variant="h6" gutterBottom>
             Lab Test
           </Typography>
-          <Button variant="contained" onClick={() => navigate("addLabTest")}>
-            Add
-          </Button>
+          {time ? (
+            <LoadingButton loading variant="contained">
+              Add
+            </LoadingButton>
+          ) : (
+            <Button
+              variant="contained"
+              onClick={() => {
+                setTime(!time);
+                setTimeout(() => {
+                  setTime(time);
+                  navigate("addLabTest");
+                }, 500);
+              }}
+            >
+              Add
+            </Button>
+          )}
         </Grid>
 
         <Grid

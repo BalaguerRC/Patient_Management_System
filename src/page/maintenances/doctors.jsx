@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Breadcrumbs,
   Button,
   Chip,
@@ -23,11 +22,13 @@ import { StyledTableCell } from "../../components/table";
 import SearchIcon from "@mui/icons-material/Search";
 import EditIcon from "@mui/icons-material/Edit";
 import { DeleteDoctor } from "../../components/doctors/DeleteDoctor";
+import { LoadingButton } from "@mui/lab";
 //import DeleteIcon from "@mui/icons-material/Delete";
 
 const Doctors = () => {
   const [Doctores, setDoctores] = useState([]);
   const [Name, setName] = useState("");
+  const [time, setTime] = useState(false);
 
   const token = localStorage.getItem("token_user");
 
@@ -81,9 +82,24 @@ const Doctors = () => {
           <Typography variant="h6" gutterBottom>
             Doctors
           </Typography>
-          <Button variant="contained" onClick={() => navigate("addDoctors")}>
-            Add
-          </Button>
+          {time ? (
+            <LoadingButton loading variant="contained">
+              Add
+            </LoadingButton>
+          ) : (
+            <Button
+              variant="contained"
+              onClick={() => {
+                setTime(!time);
+                setTimeout(() => {
+                  setTime(time);
+                  navigate("addDoctors");
+                }, 500);
+              }}
+            >
+              Add
+            </Button>
+          )}
         </Grid>
 
         <Grid
