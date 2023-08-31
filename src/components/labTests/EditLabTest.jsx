@@ -1,5 +1,9 @@
 import {
   Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   Divider,
   FormControl,
   Grid,
@@ -12,6 +16,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 const EditLabTest = () => {
   const [Name, setName] = useState("");
+  const [open, setOpen] = useState(true);
   const [ErrName, setErrName] = useState(false);
 
   const { id } = useParams();
@@ -54,7 +59,75 @@ const EditLabTest = () => {
 
   return (
     <div>
-      <Grid item>
+      <Dialog
+        open={open}
+        onClose={() => navigate("/users")}
+        maxWidth={"sm"}
+        fullWidth
+        sx={{
+          ".css-yiavyu-MuiBackdrop-root-MuiDialog-backdrop": {
+            backgroundColor: "rgba(0, 0, 0, 0.91)",
+          },
+        }}
+      >
+        <DialogTitle>
+          <Grid
+            container
+            direction={"row"}
+            justifyContent={"left"}
+            alignItems={"center"}
+          >
+            <Grid item>
+              <Button onClick={() => navigate("/labTests")}>{"<"}</Button>
+            </Grid>
+            <Grid item>
+              <Typography variant="h6">Update Lab Test: {id}</Typography>
+            </Grid>
+          </Grid>
+        </DialogTitle>
+        <Divider />
+        <DialogContent>
+          <Grid container direction={"column"} justifyContent={"center"}>
+            <Grid item sx={{ pb: 2 }}>
+              <TextField
+                type="text"
+                error={ErrName}
+                helperText={ErrName ? "falta name" : null}
+                placeholder="name..."
+                label={"Name"}
+                value={Name}
+                variant="standard"
+                fullWidth
+                required
+                onChange={(e) => {
+                  setName(e.target.value);
+                  setErrName(false);
+                }}
+              />
+            </Grid>
+          </Grid>
+        </DialogContent>
+        <Divider />
+        <DialogActions>
+          <Button
+            variant="contained"
+            type="submit"
+            onClick={() => navigate("/labTests")}
+          >
+            Cancel
+          </Button>
+          <Button variant="outlined" type="submit" onClick={() => Edit(Name)}>
+            Save
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </div>
+  );
+};
+
+{
+  /**
+  <Grid item>
         <Paper>
           <Grid
             container
@@ -80,7 +153,6 @@ const EditLabTest = () => {
             >
               <TextField
                 type="text"
-                /*error*/
                 error={ErrName}
                 helperText={ErrName ? "falta name" : null}
                 placeholder="name..."
@@ -118,36 +190,6 @@ const EditLabTest = () => {
           </Grid>
         </Paper>
       </Grid>
-    </div>
-  );
-};
-
-{
-  /**
-  <div>
-      EditLabTest {id}
-      <Button onClick={() => navigate("/labTests")}>Back</Button>
-      <Grid
-        container
-        direction={"column"}
-        justifyContent={"center"}
-        alignItems={"center"}
-      >
-        <form onSubmit={(e)=>{
-          e.preventDefault();
-          Edit(Name);
-        }}>
-          <FormControl>
-            <TextField
-              placeholder="name"
-              value={Name}
-              onChange={(e) => setName(e.target.value)}
-            />
-            <Button type="submit">Save</Button>
-          </FormControl>
-        </form>
-      </Grid>
-    </div>
    */
 }
 

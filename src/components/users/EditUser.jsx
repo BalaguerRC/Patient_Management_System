@@ -1,5 +1,9 @@
 import {
   Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   Divider,
   FormControl,
   Grid,
@@ -22,6 +26,7 @@ const EditUser = () => {
   const [Password, setPassword] = useState("");
   const [ConfirmPassword, setConfirmPassword] = useState(null);
   const [Type, setType] = useState(2);
+  const [open, setOpen] = useState(true);
 
   /**Errores */
 
@@ -65,9 +70,9 @@ const EditUser = () => {
     type
   ) => {
     if (!Name || Name === "") setErrName(!ErrName);
-    if (!LastName || LastName === "") setErrLastName(!ErrLastName);
-    if (!Mail || Mail === "") setErrMail(!ErrMail);
-    if (!Username || Username === "") setErrUsername(!ErrUsername);
+    else if (!LastName || LastName === "") setErrLastName(!ErrLastName);
+    else if (!Mail || Mail === "") setErrMail(!ErrMail);
+    else if (!Username || Username === "") setErrUsername(!ErrUsername);
     else {
       if (!Password || Password === "") setErrPassword(!ErrPassword);
       if (ConfirmPassword != Password)
@@ -113,7 +118,217 @@ const EditUser = () => {
 
   return (
     <div>
-      <Grid item>
+      <Dialog
+        open={open}
+        onClose={() => navigate("/users")}
+        maxWidth={"md"}
+        fullWidth
+        sx={{
+          ".css-yiavyu-MuiBackdrop-root-MuiDialog-backdrop": {
+            backgroundColor: "rgba(0, 0, 0, 0.91)",
+          },
+        }}
+      >
+        <DialogTitle>
+          <Grid
+            container
+            direction={"row"}
+            justifyContent={"left"}
+            alignItems={"center"}
+          >
+            <Grid item>
+              <Button onClick={() => navigate("/users")}>{"<"}</Button>
+            </Grid>
+            <Grid item>
+              <Typography variant="h6">Update User: {id}</Typography>
+            </Grid>
+          </Grid>
+        </DialogTitle>
+        <Divider />
+        <DialogContent>
+          <Grid
+            container
+            rowSpacing={1}
+            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+          >
+            <Grid
+              item
+              //sx={{ display: "flex", justifyContent: "space-between", pb: 4 }}
+              sx={{ pb: 2 }}
+              xs={6}
+            >
+              <TextField
+                type="text"
+                error={ErrName}
+                helperText={ErrName ? "falta name" : null}
+                placeholder="name..."
+                label={"Name"}
+                variant="standard"
+                value={Name}
+                fullWidth
+                required
+                onChange={(e) => {
+                  setName(e.target.value);
+                  setErrName(false);
+                }}
+              />
+            </Grid>
+            <Grid
+              item
+              //sx={{ display: "flex", justifyContent: "space-between", pb: 4 }}
+              sx={{ pb: 2 }}
+              xs={6}
+            >
+              <TextField
+                type="text"
+                placeholder="lastname..."
+                error={ErrLastName}
+                helperText={ErrLastName ? "falta lastname" : null}
+                required
+                label={"Last Name"}
+                fullWidth
+                variant="standard"
+                value={LastName}
+                onChange={(e) => {
+                  setLastName(e.target.value);
+                  setErrLastName(false);
+                }}
+              />
+            </Grid>
+            <Grid
+              item
+              //sx={{ display: "flex", justifyContent: "space-between", pb: 4 }}
+              sx={{ pb: 2 }}
+              xs={6}
+            >
+              <TextField
+                type="text"
+                error={ErrMail}
+                helperText={ErrMail ? "falta mail" : null}
+                placeholder="mail..."
+                label={"Email"}
+                fullWidth
+                variant="standard"
+                value={Mail}
+                onChange={(e) => {
+                  setMail(e.target.value);
+                  setErrMail(false);
+                }}
+              />
+            </Grid>
+            <Grid
+              item
+              //sx={{ display: "flex", justifyContent: "space-between", pb: 4 }}
+              sx={{ pb: 2 }}
+              xs={6}
+            >
+              <TextField
+                type="text"
+                error={ErrUsername}
+                helperText={ErrUsername ? "falta username" : null}
+                placeholder="username..."
+                label={"Username"}
+                fullWidth
+                variant="standard"
+                value={Username}
+                onChange={(e) => {
+                  setUsername(e.target.value);
+                  setErrUsername(false);
+                }}
+              />
+            </Grid>
+          </Grid>
+          <Grid
+            container
+            rowSpacing={1}
+            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+          >
+            <Grid item xs>
+              <TextField
+                type="password"
+                error={ErrPassword}
+                helperText={ErrPassword ? "falta password" : null}
+                placeholder="password..."
+                label={"Password"}
+                fullWidth
+                variant="standard"
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  setErrPassword(false);
+                }}
+              />
+            </Grid>
+            <Grid item xs>
+              <TextField
+                type="password"
+                placeholder="confirm password..."
+                error={ErrConfirmPassword}
+                helperText={ErrConfirmPassword ? "Confirme el password" : null}
+                label={"Confirm Password"}
+                variant="standard"
+                fullWidth
+                onChange={(e) => {
+                  setConfirmPassword(e.target.value);
+                  setErrConfirmPassword(false);
+                }}
+              />
+            </Grid>
+
+            <Grid item xs>
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label" variant="standard">
+                  Type
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  label="Type"
+                  value={Type}
+                  onChange={(e) => setType(e.target.value)}
+                  variant="standard"
+                >
+                  <MenuItem value={1}>Admin</MenuItem>
+                  <MenuItem value={2}>Doctor</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+          </Grid>
+        </DialogContent>
+        <Divider />
+        <DialogActions>
+          <Button
+            variant="contained"
+            type="submit"
+            onClick={() => navigate("/users")}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="outlined"
+            type="submit"
+            onClick={() =>
+              Post(
+                Name,
+                LastName,
+                Mail,
+                Username,
+                Password,
+                ConfirmPassword,
+                Type
+              )
+            }
+          >
+            Save
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </div>
+  );
+};
+
+{
+  /**
+  <Grid item>
         <Paper>
           <Grid
             container
@@ -223,7 +438,7 @@ const EditUser = () => {
                 }}
               />
             </Grid>
-          </Grid>
+          </Grid>////
           <Grid
             container
             rowSpacing={1}
@@ -312,7 +527,6 @@ const EditUser = () => {
           </Grid>
         </Paper>
       </Grid>
-    </div>
-  );
-};
+   */
+}
 export default EditUser;

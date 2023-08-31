@@ -26,14 +26,12 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import EditIcon from "@mui/icons-material/Edit";
-//import DeleteIcon from "@mui/icons-material/Delete";
 import { StyledTableCell } from "../../../components/users/style/table";
 import { DialogComponent } from "../../../components/users/DeleteUser";
 
 const Users = () => {
   const [Usuarios, setUsuarios] = useState([]);
   const [name, setName] = useState("");
-  //const [openDialog, setOpenDialog] = useState(false);
 
   const token = localStorage.getItem("token_user");
 
@@ -130,7 +128,7 @@ const Users = () => {
               placeholder="name..."
               value={name}
               InputProps={{
-                startAdornment: <SearchIcon fontSize="small" />,
+                startAdornment: <SearchIcon fontSize="small" sx={{mr:1}}/>,
               }}
               onChange={(e) => {
                 setName(e.target.value);

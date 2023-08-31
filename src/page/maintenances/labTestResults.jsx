@@ -53,7 +53,10 @@ const LabTestResults = () => {
           <Typography variant="h6" gutterBottom>
             Lab Test Results
           </Typography>
-          <Button variant="contained" onClick={() => navigate("/medicalAppointments")}>
+          <Button
+            variant="contained"
+            onClick={() => navigate("/medicalAppointments")}
+          >
             Add
           </Button>
         </Grid>
@@ -82,7 +85,7 @@ const LabTestResults = () => {
               placeholder="name..."
               value={Name}
               InputProps={{
-                startAdornment: <SearchIcon fontSize="small" sx={{mr:1}}/>,
+                startAdornment: <SearchIcon fontSize="small" sx={{ mr: 1 }} />,
               }}
               onChange={(e) => setName(e.target.value)}
             />
@@ -98,7 +101,7 @@ const LabTestResults = () => {
               <TableHead>
                 <TableRow>
                   <StyledTableCell align="right">ID</StyledTableCell>
-                  <StyledTableCell align="right">
+                  <StyledTableCell align="left">
                     {"(ID)"}PatientName
                   </StyledTableCell>
                   <StyledTableCell align="right">ID_MA</StyledTableCell>
@@ -132,7 +135,19 @@ const LabTestResults = () => {
                       <TableCell align="right">{data.doctor}</TableCell>
                       <TableCell align="right">{data.test_Result}</TableCell>
                       <TableCell align="right">
-                        {data.state_Result == 0 ? "pending" : "completed"}
+                        {data.state_Result == 0 ? (
+                          <Chip
+                            label={"pending"}
+                            variant="filled"
+                            color="warning"
+                          />
+                        ) : (
+                          <Chip
+                            label={"completed"}
+                            variant="filled"
+                            color="success"
+                          />
+                        )}
                       </TableCell>
                       <TableCell align="right">
                         {data.date_TestResult.slice(0, 10)} (

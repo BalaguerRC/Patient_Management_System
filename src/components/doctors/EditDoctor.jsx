@@ -1,8 +1,11 @@
 import {
   Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   Divider,
   Grid,
-  Paper,
   TextField,
   Typography,
 } from "@mui/material";
@@ -16,6 +19,7 @@ const EditDoctor = () => {
   const [Phone, setPhone] = useState("");
   const [Identity, setIdentity] = useState("");
   const [Image, setImage] = useState();
+  const [open, setOpen] = useState(true);
 
   /**Errors */
 
@@ -53,15 +57,13 @@ const EditDoctor = () => {
   }, []);
 
   const Update = (name, lastname, mail, phone, identity, image) => {
-
     if (!Name || Name === "") setErrName(!ErrName);
     else if (!LastName || LastName === "") setErrLastName(!ErrLastName);
     else if (!Mail || Mail === "") setErrMail(!ErrMail);
     else if (!Phone || Phone === "") setErrPhone(!ErrPhone);
     else if (!Identity || Identity === "") setErrIdentity(!ErrIdentity);
     else {
-      //console.log(name, lastname, mail, phone, identity, image);
-
+      console.log(name, lastname, mail, phone, identity, image);
       fetch(import.meta.env.VITE_APIURL + "Doctors/" + id, {
         method: "PUT",
         headers: {
@@ -79,15 +81,169 @@ const EditDoctor = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          if(data.success) navigate("/doctors")
-          else console.log(data)
+          if (data.success) navigate("/doctors");
+          else console.log(data);
         });
     }
   };
 
   return (
     <div>
-      <Grid item>
+      <Dialog
+        open={open}
+        onClose={() => navigate("/doctors")}
+        maxWidth={"md"}
+        fullWidth
+        sx={{
+          ".css-yiavyu-MuiBackdrop-root-MuiDialog-backdrop": {
+            backgroundColor: "rgba(0, 0, 0, 0.91)",
+          },
+        }}
+      >
+        <DialogTitle>
+          <Grid
+            container
+            direction={"row"}
+            justifyContent={"left"}
+            alignItems={"center"}
+          >
+            <Grid item>
+              <Button onClick={() => navigate("/doctors")}>{"<"}</Button>
+            </Grid>
+            <Grid item>
+              <Typography variant="h6">Update Doctor: {id}</Typography>
+            </Grid>
+          </Grid>
+        </DialogTitle>
+        <Divider />
+        <DialogContent>
+          <Grid
+            container
+            rowSpacing={1}
+            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+          >
+            <Grid item sx={{ pb: 2 }} xs={6}>
+              <TextField
+                type="text"
+                error={ErrName}
+                helperText={ErrName ? "falta name" : null}
+                placeholder="name..."
+                label={"Name"}
+                variant="standard"
+                value={Name}
+                fullWidth
+                required
+                onChange={(e) => {
+                  setName(e.target.value);
+                  setErrName(false);
+                }}
+              />
+            </Grid>
+            <Grid item sx={{ pb: 2 }} xs={6}>
+              <TextField
+                type="text"
+                placeholder="lastname..."
+                error={ErrLastName}
+                helperText={ErrLastName ? "falta lastname" : null}
+                value={LastName}
+                required
+                label={"Last Name"}
+                fullWidth
+                variant="standard"
+                onChange={(e) => {
+                  setLastName(e.target.value);
+                  setErrLastName(false);
+                }}
+              />
+            </Grid>
+            <Grid item sx={{ pb: 2 }} xs={6}>
+              <TextField
+                type="text"
+                error={ErrMail}
+                helperText={ErrMail ? "falta mail" : null}
+                value={Mail}
+                placeholder="mail..."
+                label={"Email"}
+                fullWidth
+                variant="standard"
+                onChange={(e) => {
+                  setMail(e.target.value);
+                  setErrMail(false);
+                }}
+              />
+            </Grid>
+            <Grid item sx={{ pb: 2 }} xs={6}>
+              <TextField
+                type="text"
+                error={ErrPhone}
+                helperText={ErrPhone ? "falta Phone" : null}
+                value={Phone}
+                placeholder="Phone..."
+                label={"Phone"}
+                fullWidth
+                variant="standard"
+                onChange={(e) => {
+                  setPhone(e.target.value);
+                  setErrPhone(false);
+                }}
+              />
+            </Grid>
+            <Grid item sx={{ pb: 2 }} xs={6}>
+              <TextField
+                type="text"
+                error={ErrIdentity}
+                helperText={ErrIdentity ? "falta Identity" : null}
+                value={Identity}
+                placeholder="identity..."
+                label={"Identity"}
+                fullWidth
+                variant="standard"
+                onChange={(e) => {
+                  setIdentity(e.target.value);
+                  setErrIdentity(false);
+                }}
+              />
+            </Grid>
+            <Grid item sx={{ pb: 2 }} xs={6}>
+              <TextField
+                type="text"
+                placeholder="img..."
+                label={"Img"}
+                fullWidth
+                variant="standard"
+                onChange={(e) => {
+                  setImage(e.target.value);
+                }}
+                disabled
+              />
+            </Grid>
+          </Grid>
+        </DialogContent>
+        <Divider />
+        <DialogActions>
+          <Button
+            variant="contained"
+            type="submit"
+            onClick={() => navigate("/doctors")}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="outlined"
+            type="submit"
+            onClick={() => Update(Name, LastName, Mail, Phone, Identity, Image)}
+          >
+            Save
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </div>
+  );
+};
+
+{
+  /**
+  <Grid item>
         <Paper>
           <Grid
             container
@@ -119,7 +275,6 @@ const EditDoctor = () => {
             >
               <TextField
                 type="text"
-                /*error*/
                 error={ErrName}
                 helperText={ErrName ? "falta name" : null}
                 placeholder="name..."
@@ -262,33 +417,6 @@ const EditDoctor = () => {
           </Grid>
         </Paper>
       </Grid>
-    </div>
-  );
-};
-
-{
-  /**
-  <div>
-      Edit {id}
-      <Button onClick={() => navigate("/doctors")}>{"<-"}Back</Button>
-      <Paper>
-        <Grid
-          container
-          direction={"column"}
-          justifyContent={"center"}
-          alignItems={"center"}
-        >
-          <TextField type="text" placeholder="name..." fullWidth value={Name} onChange={(e)=>setName(e.target.value)}/>
-          <TextField type="text" placeholder="lastname..." fullWidth value={LastName} onChange={(e)=>setLastName(e.target.value)}/>
-          <TextField type="text" placeholder="mail..." fullWidth value={Mail} onChange={(e)=>setMail(e.target.value)}/>
-          <TextField type="text" placeholder="phone..." fullWidth value={Phone} onChange={(e)=>setPhone(e.target.value)}/>
-          <TextField type="text" placeholder="identity..." fullWidth value={Identity} onChange={(e)=>setIdentity(e.target.value)}/>
-          <TextField type="file" />
-
-          <Button onClick={()=>Update(Name,LastName,Mail,Phone,Identity,Image)}>Save</Button>
-        </Grid>
-      </Paper>
-    </div>
    */
 }
 

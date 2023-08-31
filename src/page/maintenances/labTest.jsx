@@ -118,7 +118,7 @@ const LabTest = () => {
               placeholder="name..."
               value={Name}
               InputProps={{
-                startAdornment: <SearchIcon fontSize="small" sx={{mr:1}}/>,
+                startAdornment: <SearchIcon fontSize="small" sx={{ mr: 1 }} />,
               }}
               onChange={(e) => setName(e.target.value)}
             />
@@ -152,8 +152,8 @@ const LabTest = () => {
                       <TableCell align="right">{data.id_LabTest}</TableCell>
                       <TableCell align="right">{data.name_LabTest}</TableCell>
                       <TableCell align="right">
-                        {data.date_LabTest.slice(0, 10)} /{" "}
-                        {data.date_LabTest.slice(11, 16)}
+                        {data.date_LabTest.slice(0, 10)} (
+                        {data.date_LabTest.slice(11, 16)})
                       </TableCell>
                       <TableCell align="right">
                         <Grid
