@@ -23,6 +23,7 @@ import PendingConsultation from "./components/medical appointments/PendingConsul
 import PendingResults from "./components/medical appointments/PendingResults";
 import Results from "./components/medical appointments/Results";
 import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
+import Dashboard from "./components/Dashboard";
 
 const darkTheme = createTheme({
   palette: {
@@ -39,6 +40,11 @@ function App() {
           path: "/",
           element: <Home />,
           children: [
+            {
+              index:true,
+              element: <Dashboard/>
+            }
+            ,
             {
               path: "users",
               children: [

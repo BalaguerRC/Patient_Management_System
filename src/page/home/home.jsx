@@ -24,6 +24,7 @@ import AccessibilityIcon from "@mui/icons-material/Accessibility";
 import MedicationIcon from "@mui/icons-material/Medication";
 import VaccinesIcon from "@mui/icons-material/Vaccines";
 import LogoutIcon from "@mui/icons-material/Logout";
+import Dashboard from "../../components/Dashboard";
 
 const Home = () => {
   const navigate = useNavigate();
