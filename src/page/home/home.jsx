@@ -2,11 +2,10 @@ import {
   AppBar,
   Avatar,
   Box,
-  Button,
-  CssBaseline,
   Divider,
   Drawer,
   Grid,
+  LinearProgress,
   List,
   ListItem,
   ListItemButton,
@@ -24,11 +23,18 @@ import AccessibilityIcon from "@mui/icons-material/Accessibility";
 import MedicationIcon from "@mui/icons-material/Medication";
 import VaccinesIcon from "@mui/icons-material/Vaccines";
 import LogoutIcon from "@mui/icons-material/Logout";
-import Dashboard from "../../components/Dashboard";
+import { useEffect, useState } from "react";
 
 const Home = () => {
+  const [loading, setloading] = useState(true);
   const navigate = useNavigate();
   const data = JSON.parse(localStorage.getItem("data_user"));
+
+  useEffect(() => {
+    setTimeout(() => {
+      setloading(!loading);
+    }, 500);
+  }, []);
 
   const drawerWidth = 195;
   return (
@@ -52,9 +58,8 @@ const Home = () => {
             flexShrink: 0,
             "& .MuiDrawer-paper": {
               width: drawerWidth,
-              boxSizing: "border-box"
+              boxSizing: "border-box",
             },
-            
           }}
           variant="permanent"
           anchor="left"
@@ -81,7 +86,15 @@ const Home = () => {
           <Divider />
           <List>
             <ListItem disablePadding>
-              <ListItemButton onClick={() => navigate("/")}>
+              <ListItemButton
+                onClick={() => {
+                  setloading(!loading);
+                  navigate("/");
+                  setTimeout(() => {
+                    setloading(loading);
+                  }, 500);
+                }}
+              >
                 <ListItemIcon>
                   <HomeIcon />
                 </ListItemIcon>
@@ -91,7 +104,15 @@ const Home = () => {
             {data.type === 1 ? (
               <>
                 <ListItem disablePadding>
-                  <ListItemButton onClick={() => navigate("users")}>
+                  <ListItemButton
+                    onClick={() => {
+                      setloading(!loading);
+                      navigate("users");
+                      setTimeout(() => {
+                        setloading(loading);
+                      }, 500);
+                    }}
+                  >
                     <ListItemIcon>
                       <PersonIcon />
                     </ListItemIcon>
@@ -164,12 +185,30 @@ const Home = () => {
             </form>
           </List>
         </Drawer>
-        <Box sx={{ flexGrow: 1, bgcolor: "background.default", p: 3}}>
+        <Box sx={{ flexGrow: 1, bgcolor: "background.default", p: 3 }}>
           <Toolbar />
-          <Outlet/>
+          {loading ? (
+            <Box
+              /*container
+              direction={"columns"}
+              justifyContent={"center"}
+              alignContent={"center"}*/
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignContent: "center",
+              }}
+            >
+              <LinearProgress
+                sx={{ marginTop: "40vh", ml: "20vh", mr: "20vh" }}
+              />
+            </Box>
+          ) : (
+            <Outlet />
+          )}
         </Box>
       </Box>
-      
     </div>
   );
 };

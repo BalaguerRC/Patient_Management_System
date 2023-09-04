@@ -418,7 +418,7 @@ const AddMA = () => {
                 <Button
                   variant="contained"
                   type="submit"
-                  onClick={() => Save(RadioSelect, RadioSelect, DateMA, Cause)}
+                  onClick={() => Save(RadioSelect, RadioSelect2, DateMA, Cause)}
                 >
                   Save
                 </Button>

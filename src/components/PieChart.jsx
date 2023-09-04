@@ -1,20 +1,56 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 
 const PieChart = () => {
+  const data = JSON.parse(localStorage.getItem("dashboard"));
+
   const [state, setstate] = useState({
     series: [
+      data[0].pending_Results,
+      data[0].results,
+      data[0].pending_Consultation,
+    ],
+    options: {
+      chart: {
+        width: 380,
+        type: "donut",
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      labels: ["Pending Results", "Results", "Pending Consultation"],
+      responsive: [
+        {
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200,
+            },
+            legend: {
+              show: false,
+            },
+          },
+        },
+      ],
+      legend: {
+        position: "right",
+        offsetY: 0,
+        height: 230,
+      },
+    },
+
+    /*series: [
       {
-        name: "Pending Result",
-        data: [44, 55, 57],
+        name: "Pending_Consultation",
+        data: [pending_Consultation],
       },
       {
-        name: "Completed",
-        data: [35, 41, 36],
+        name: "Pending_Results",
+        data: [0, pending_Results],
       },
       {
-        name: "Pending Consultation",
-        data: [35, 41, 36],
+        name: "Results",
+        data: [0, 0, results],
       },
     ],
     options: {
@@ -25,7 +61,7 @@ const PieChart = () => {
       plotOptions: {
         bar: {
           horizontal: false,
-          columnWidth: "25%",
+          columnWidth: "55%",
           endingShape: "rounded",
         },
       },
@@ -38,11 +74,11 @@ const PieChart = () => {
         colors: ["transparent"],
       },
       xaxis: {
-        categories: ["1", "2", "3"],
+        categories: ["Feb", "Mar", "Apr"],
       },
       yaxis: {
         title: {
-          text: "amount",
+          text: "$ (thousands)",
         },
       },
       fill: {
@@ -51,20 +87,21 @@ const PieChart = () => {
       tooltip: {
         y: {
           formatter: function (val) {
-            return "" + val + "";
+            return "$ " + val + " thousands";
           },
         },
       },
-    },
+    },*/
   });
+
   return (
     <div>
       <div id="chart">
         <ReactApexChart
           options={state.options}
           series={state.series}
-          type="bar"
-          height={350}
+          type="donut"
+          height={300}
         />
       </div>
     </div>
