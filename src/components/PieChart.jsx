@@ -16,7 +16,7 @@ const PieChart = () => {
         type: "donut",
       },
       dataLabels: {
-        enabled: false,
+        enabled: true,
       },
       labels: ["Pending Results", "Results", "Pending Consultation"],
       responsive: [

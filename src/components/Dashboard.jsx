@@ -1,6 +1,8 @@
-import { Box, Divider, Grid, Paper, Typography } from "@mui/material";
+import { Avatar, Box, Divider, Grid, Paper, Typography } from "@mui/material";
 import PieChart from "./PieChart";
 import { useEffect, useState } from "react";
+import Top4Patients from "./Top4Patients";
+import DashboardAdmin from "./DashboardAdmin";
 
 const doctors = [
   { name: "jose" },
@@ -10,6 +12,8 @@ const doctors = [
 ];
 const Dashboard = () => {
   const [dashboard, setdashboard] = useState({});
+  const data = JSON.parse(localStorage.getItem("data_user"));
+
   const GetDashboard = () => {
     fetch(import.meta.env.VITE_APIURL + "MedicalAppointments/dashboard")
       .then((resp) => resp.json())
@@ -18,6 +22,7 @@ const Dashboard = () => {
         localStorage.setItem("dashboard", JSON.stringify(data.data));
       });
   };
+
   useEffect(() => {
     GetDashboard();
   }, [dashboard]);
@@ -33,59 +38,8 @@ const Dashboard = () => {
         <Grid item>
           <Divider />
         </Grid>
-        <Grid item>
-          <Typography variant="subtitle1" gutterBottom>
-            {"> "}Administration Board
-          </Typography>
-          <Grid container direction={"row"} alignContent={"center"} spacing={2}>
-            <Grid item xs>
-              <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-                <Typography variant="button" gutterBottom>
-                  Users
-                </Typography>
-                <Typography variant="caption" gutterBottom>
-                  Amount: 0
-                </Typography>
-              </Paper>
-            </Grid>
-            <Grid item xs>
-              <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-                <Typography variant="button" gutterBottom>
-                  Doctors
-                </Typography>
-                <Typography variant="caption" gutterBottom>
-                  Amount: 0
-                </Typography>
-              </Paper>
-            </Grid>
-            <Grid item xs>
-              <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-                <Typography variant="button" gutterBottom>
-                  LabTest
-                </Typography>
-                <Typography variant="caption" gutterBottom>
-                  Amount: 0
-                </Typography>
-              </Paper>
-            </Grid>
-          </Grid>
-        </Grid>
-        {/*<Grid item>
-          <Typography variant="subtitle1" gutterBottom>
-            {"> "}Doctors Board
-          </Typography>
-          <Grid container direction={"row"} alignContent={"center"} spacing={2}>
-            <Grid item xs>
-              <Paper sx={{ p: 2 }}>xs=8</Paper>
-            </Grid>
-            <Grid item xs>
-              <Paper sx={{ p: 2 }}>xs=8</Paper>
-            </Grid>
-            <Grid item xs>
-              <Paper sx={{ p: 2 }}>xs=8</Paper>
-            </Grid>
-          </Grid>
-        </Grid>*/}
+        <DashboardAdmin />
+
         <Grid item>
           <Grid container direction={"row"} spacing={2}>
             <Grid item xs={8}>
@@ -108,17 +62,13 @@ const Dashboard = () => {
                   justifyContent: "center",
                 }}
               >
-                <Typography variant="subtitle2" gutterBottom>
-                  New Patients
-                </Typography>
-                <Grid container direction={"column"} spacing={1}>
-                  {doctors.map((data, index) => (
-                    <Grid item key={index}>
-                      <Paper sx={{ p: 1 }}>
-                        <Typography>{data.name}</Typography>
-                      </Paper>
-                    </Grid>
-                  ))}
+                <Grid
+                  container
+                  direction={"column"}
+                  justifyContent={"center"}
+                  spacing={1}
+                >
+                  <Top4Patients />
                 </Grid>
               </Paper>
             </Grid>
