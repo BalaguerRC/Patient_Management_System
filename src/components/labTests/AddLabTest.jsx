@@ -6,9 +6,7 @@ import {
   DialogContent,
   DialogTitle,
   Divider,
-  FormControl,
   Grid,
-  Paper,
   TextField,
   Typography,
 } from "@mui/material";
@@ -129,72 +127,5 @@ const AddLabTest = () => {
     </div>
   );
 };
-
-{
-  /**
-  <Grid item>
-        <Paper>
-          <Grid
-            container
-            direction={"row"}
-            justifyContent={"left"}
-            alignItems={"center"}
-            sx={{ p: 1 }}
-          >
-            <Grid item>
-              <Button onClick={() => navigate("/labTests")}>{"<"}</Button>
-            </Grid>
-            <Grid item>
-              <Typography variant="h6">Add Lab Test</Typography>
-            </Grid>
-          </Grid>
-          <Divider />
-
-          <Grid container direction={"column"} justifyContent={"center"} p={2}>
-            <Grid
-              item
-              //sx={{ display: "flex", justifyContent: "space-between", pb: 4 }}
-              sx={{ pb: 2 }}
-            >
-              <TextField
-                type="text"
-                error={ErrName}
-                helperText={ErrName ? "falta name" : null}
-                placeholder="name..."
-                label={"Name"}
-                variant="standard"
-                fullWidth
-                required
-                onChange={(e) => {
-                  setName(e.target.value);
-                  setErrName(false);
-                }}
-              />
-            </Grid>
-          </Grid>
-          <Divider />
-          <Grid
-            container
-            direction={"row"}
-            justifyContent={"right"}
-            sx={{ p: 2 }}
-          >
-            <Grid item>
-              <Button variant="contained" type="submit" disabled sx={{ mr: 2 }}>
-                Cancel
-              </Button>
-              <Button
-                variant="outlined"
-                type="submit"
-                onClick={() => Post(Name)}
-              >
-                Save
-              </Button>
-            </Grid>
-          </Grid>
-        </Paper>
-      </Grid>
-   */
-}
 
 export default AddLabTest;

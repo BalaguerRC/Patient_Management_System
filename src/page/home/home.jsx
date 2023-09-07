@@ -29,8 +29,16 @@ const Home = () => {
   const [loading, setloading] = useState(true);
   const navigate = useNavigate();
   const data = JSON.parse(localStorage.getItem("data_user"));
+  const GetDashboard = () => {
+    fetch(import.meta.env.VITE_APIURL + "MedicalAppointments/dashboard")
+      .then((resp) => resp.json())
+      .then((data) => {
+        localStorage.setItem("dashboard", JSON.stringify(data.data));
+      });
+  };
 
   useEffect(() => {
+    GetDashboard()
     setTimeout(() => {
       setloading(!loading);
     }, 500);

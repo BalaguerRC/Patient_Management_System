@@ -22,10 +22,12 @@ import { StyledTableCell } from "../../components/table";
 import SearchIcon from "@mui/icons-material/Search";
 import EditIcon from "@mui/icons-material/Edit";
 import DeletePatient from "../../components/patients/DeletePatient";
+import { LoadingButton } from "@mui/lab";
 
 const Patients = () => {
   const [Patients, setPatients] = useState();
   const [Name, setName] = useState("");
+  const [time, setTime] = useState(false);
 
   const token = localStorage.getItem("token_user");
 
@@ -57,21 +59,6 @@ const Patients = () => {
       });
   };
 
-  /*const deletePatient = (id) => {
-    console.log(id);
-    fetch(import.meta.env.VITE_APIURL + "Patients/" + id, {
-      method: "DELETE",
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        GetPatients();
-      });
-  };*/
-
   useEffect(() => {
     GetPatients();
   }, []);
@@ -92,9 +79,24 @@ const Patients = () => {
           <Typography variant="h6" gutterBottom>
             Patients
           </Typography>
-          <Button variant="contained" onClick={() => navigate("addPatients")}>
-            Add
-          </Button>
+          {time ? (
+            <LoadingButton loading variant="contained">
+              Add
+            </LoadingButton>
+          ) : (
+            <Button
+              variant="contained"
+              onClick={() => {
+                setTime(!time);
+                setTimeout(() => {
+                  setTime(time);
+                  navigate("addPatients");
+                }, 500);
+              }}
+            >
+              Add
+            </Button>
+          )}
         </Grid>
 
         <Grid
@@ -121,7 +123,7 @@ const Patients = () => {
               placeholder="name or identity"
               value={Name}
               InputProps={{
-                startAdornment: <SearchIcon fontSize="small" sx={{mr:1}}/>,
+                startAdornment: <SearchIcon fontSize="small" sx={{ mr: 1 }} />,
               }}
               onChange={(e) => setName(e.target.value)}
             />
@@ -191,8 +193,8 @@ const Patients = () => {
                         </Tooltip>
                       </TableCell>
                       <TableCell align="right">
-                        {data.date_Patient.slice(0, 10)} /
-                        {data.date_Patient.slice(11, 16)}
+                        {data.date_Patient.slice(0, 10)} (
+                        {data.date_Patient.slice(11, 16)})
                       </TableCell>
                       <TableCell align="right">
                         <Grid

@@ -20,10 +20,12 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { StyledTableCell } from "../../components/table";
 import SearchIcon from "@mui/icons-material/Search";
+import { LoadingButton } from "@mui/lab";
 
 const MedicalAppointments = () => {
   const [Name, setName] = useState("");
   const [MAppointmets, setMAppointmets] = useState();
+  const [time, setTime] = useState(false);
 
   const navigate = useNavigate();
 
@@ -74,12 +76,24 @@ const MedicalAppointments = () => {
           <Typography variant="h6" gutterBottom>
             Medical Appointments
           </Typography>
-          <Button
-            variant="contained"
-            onClick={() => navigate("addMedicalAppointments")}
-          >
-            Add
-          </Button>
+          {time ? (
+            <LoadingButton loading variant="contained">
+              Add
+            </LoadingButton>
+          ) : (
+            <Button
+              variant="contained"
+              onClick={() => {
+                setTime(!time);
+                setTimeout(() => {
+                  setTime(time);
+                  navigate("addMedicalAppointments");
+                }, 500);
+              }}
+            >
+              Add
+            </Button>
+          )}
         </Grid>
 
         <Grid
