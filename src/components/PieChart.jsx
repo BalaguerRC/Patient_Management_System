@@ -3,12 +3,26 @@ import ReactApexChart from "react-apexcharts";
 
 const PieChart = () => {
   const data = JSON.parse(localStorage.getItem("dashboard"));
+  const [dashboard, setdashboard] = useState({});
 
+  const GetDashboard = () => {
+    fetch(import.meta.env.VITE_APIURL + "MedicalAppointments/dashboard")
+      .then((resp) => resp.json())
+      .then((data) => {
+        setdashboard(data.data);
+        localStorage.setItem("dashboard", JSON.stringify(data.data));
+      });
+  };
+
+  useEffect(() => {
+    GetDashboard();
+  }, [dashboard]);
+  //console.log("pending",dashboard[0]?.pending_Results)
   const [state, setstate] = useState({
     series: [
-      data[0].pending_Results,
-      data[0].results,
-      data[0].pending_Consultation,
+      data[0]?.pending_Results,
+      data[0]?.results,
+      data[0]?.pending_Consultation,
     ],
     options: {
       chart: {
@@ -17,6 +31,32 @@ const PieChart = () => {
       },
       dataLabels: {
         enabled: true,
+      },
+      plotOptions: {
+        pie: {
+          borderRadius: 10,
+          customScale: 0.8,
+          expandOnClick: true,
+          donut: {
+            size: "75%",
+            labels: {
+              show: true,
+              name: {},
+              value: {
+                color: "undefined",
+              },
+              total: {
+                show: true,
+                color: "#undefined",
+              },
+            },
+          },
+        },
+      },
+      stroke: {
+        show: true,
+        colors: "#fff",
+        width: 5,
       },
       labels: ["Pending Results", "Results", "Pending Consultation"],
       responsive: [

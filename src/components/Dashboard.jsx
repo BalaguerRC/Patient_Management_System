@@ -1,8 +1,8 @@
-import { Avatar, Box, Divider, Grid, Paper, Typography } from "@mui/material";
+import { Divider, Grid, Paper, Typography } from "@mui/material";
 import PieChart from "./PieChart";
-import { useEffect, useState } from "react";
 import Top4Patients from "./Top4Patients";
-import DashboardAdmin from "./DashboardAdmin";
+import DashboardAdmin from "./Dashboards/DashboardAdmin";
+import DashboardDoctor from "./Dashboards/DashboardDoctor";
 
 const doctors = [
   { name: "jose" },
@@ -11,21 +11,7 @@ const doctors = [
   { name: "garcia" },
 ];
 const Dashboard = () => {
-  const [dashboard, setdashboard] = useState({});
   const data = JSON.parse(localStorage.getItem("data_user"));
-
-  const GetDashboard = () => {
-    fetch(import.meta.env.VITE_APIURL + "MedicalAppointments/dashboard")
-      .then((resp) => resp.json())
-      .then((data) => {
-        setdashboard(data.data);
-        localStorage.setItem("dashboard", JSON.stringify(data.data));
-      });
-  };
-
-  useEffect(() => {
-    GetDashboard();
-  }, [dashboard]);
 
   return (
     <div>
@@ -38,7 +24,7 @@ const Dashboard = () => {
         <Grid item>
           <Divider />
         </Grid>
-        <DashboardAdmin />
+        {data?.type === 1 ? <DashboardAdmin /> : <DashboardDoctor />}
 
         <Grid item>
           <Grid container direction={"row"} spacing={2}>
@@ -46,7 +32,7 @@ const Dashboard = () => {
               <Typography variant="subtitle1" gutterBottom>
                 {"> "}Medical Appointments
               </Typography>
-              <Paper>
+              <Paper sx={{p:1}}>
                 <PieChart />
               </Paper>
             </Grid>

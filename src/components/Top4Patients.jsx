@@ -1,8 +1,14 @@
-import { Avatar, Chip, Grid, Paper, Typography } from "@mui/material";
+import { Avatar, Button, Chip, Grid, Paper, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Top4Patients = () => {
   const [patients, setPatients] = useState([]);
+
+  const data = JSON.parse(localStorage.getItem("data_user"));
+
+  const navigate = useNavigate();
+
   const GetTop4Patients = () => {
     fetch(import.meta.env.VITE_APIURL + "Patients/top4")
       .then((resp) => resp.json())
@@ -25,13 +31,18 @@ const Top4Patients = () => {
               p: 1,
             }}
           >
-            <Grid container direction={"row"} alignItems={"center"} justifyContent={"space-between"}>
+            <Grid
+              container
+              direction={"row"}
+              alignItems={"center"}
+              justifyContent={"space-between"}
+            >
               <Grid
                 item
                 sx={{
                   display: "flex",
                   flexDirection: "row",
-                  alignItems: "center"
+                  alignItems: "center",
                 }}
               >
                 <Avatar src={data.img_Patient} alt={data.name_Patient} />
@@ -46,6 +57,20 @@ const Top4Patients = () => {
           </Paper>
         </Grid>
       ))}
+      {data?.type === 1 ? null : (
+        <Grid
+          item
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Button size="small" fullWidth onClick={()=>navigate("/patients")}>
+            View More
+          </Button>
+        </Grid>
+      )}
     </>
   );
 };
