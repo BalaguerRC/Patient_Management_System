@@ -1,6 +1,10 @@
 import {
   Box,
   Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   Divider,
   FormControlLabel,
   Grid,
@@ -19,6 +23,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { StyledTableCell } from "../table";
 import TableLabTest from "./table/TableLabTest";
+import { LoadingButton } from "@mui/lab";
 
 const PendingConsultation = () => {
   const [LabTests, setLabTests] = useState([]);
@@ -27,6 +32,9 @@ const PendingConsultation = () => {
   const [IdMA, setIdMA] = useState(0);
   const [IdPatient, setIdPatient] = useState(0);
   const [IdDoctor, setIdDoctor] = useState(0);
+
+  const [open, setOpen] = useState(true);
+  const [time, setTime] = useState(false);
 
   const getLabTests = () => {
     fetch(import.meta.env.VITE_APIURL + "LabTest")
@@ -79,7 +87,8 @@ const PendingConsultation = () => {
     })
       .then((resp) => resp.json())
       .then((data) => {
-        console.log("PutMedicalAppointmen", data);
+        if (data) navigate("/medicalAppointments");
+        else console.log("PutMedicalAppointmen", data);
         //console.log(data.data)
       });
   };
@@ -91,7 +100,130 @@ const PendingConsultation = () => {
 
   return (
     <div>
-      <Grid item>
+      <Dialog
+        open={open}
+        onClose={() => navigate("/medicalAppointments")}
+        maxWidth={"md"}
+        fullWidth
+        sx={{
+          ".css-yiavyu-MuiBackdrop-root-MuiDialog-backdrop": {
+            backgroundColor: "rgba(0, 0, 0, 0.91)",
+          },
+        }}
+      >
+        <DialogTitle>
+          <Grid
+            container
+            direction={"row"}
+            justifyContent={"left"}
+            alignItems={"center"}
+          >
+            <Grid item>
+              <Button onClick={() => navigate("/medicalAppointments")}>
+                {"<"}
+              </Button>
+            </Grid>
+            <Grid item>
+              <Typography variant="h6">Pending Consultation</Typography>
+            </Grid>
+          </Grid>
+        </DialogTitle>
+        <Divider />
+        <DialogContent>
+          <Box>
+            <Typography variant="h6" gutterBottom>
+              Select a Lab Test
+            </Typography>
+            <RadioGroup
+              value={RadioSelect}
+              onChange={(e) => {
+                setRadioSelect(e.target.value);
+                setLabTestById(e.target.value);
+              }}
+            >
+              <FormControlLabel
+                value={0}
+                control={<Radio />}
+                sx={{ visibility: "hidden", display: "none" }}
+              />
+              <TableContainer component={Paper}>
+                <Table sx={{ width: "100%", minWidth: 800 }}>
+                  <TableHead>
+                    <TableRow>
+                      <StyledTableCell align="right">Select</StyledTableCell>
+                      <StyledTableCell align="right">Id</StyledTableCell>
+                      <StyledTableCell align="right">Name</StyledTableCell>
+                      <StyledTableCell align="right">Date</StyledTableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {LabTests?.map((data) => (
+                      <TableRow
+                        key={data.id_LabTest}
+                        sx={{
+                          "&:last-child td, &:last-child th": {
+                            border: 0,
+                          },
+                          ":hover": { background: "#81BDF7" },
+                        }}
+                      >
+                        <TableCell align="right">
+                          <FormControlLabel
+                            value={data.id_LabTest}
+                            control={<Radio />}
+                          />
+                        </TableCell>
+
+                        <TableLabTest
+                          id={data.id_LabTest}
+                          name={data.name_LabTest}
+                          date={data.date_LabTest.slice(0, 10)}
+                        />
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </RadioGroup>
+          </Box>
+        </DialogContent>
+        <Divider />
+        <DialogActions sx={{ mr: 2, ml: 2 }}>
+          <Button
+            variant="outlined"
+            type="submit"
+            onClick={() => navigate("/medicalAppointments")}
+          >
+            Cancel
+          </Button>
+          {time ? (
+            <LoadingButton loading variant="outlined">
+              Save
+            </LoadingButton>
+          ) : (
+            <Button
+              variant="contained"
+              type="submit"
+              onClick={() => {
+                setTime(!time);
+                setTimeout(() => {
+                  setTime(time);
+                  save(IdPatient, IdMA, LabTestById, IdDoctor);
+                }, 1000);
+              }}
+            >
+              Save
+            </Button>
+          )}
+        </DialogActions>
+      </Dialog>
+    </div>
+  );
+};
+
+{
+  /**
+  <Grid item>
         <Paper>
           <Grid
             container
@@ -188,58 +320,6 @@ const PendingConsultation = () => {
           </Grid>
         </Paper>
       </Grid>
-    </div>
-  );
-};
-
-{
-  /**
-  <div>
-      Pending Consultation {id}
-      <Button onClick={() => navigate("/medicalAppointments")}>Back</Button>
-      <RadioGroup
-        value={RadioSelect}
-        onChange={(e) => {
-          setRadioSelect(e.target.value);
-          setLabTestById(e.target.value);
-        }}
-      >
-      <Typography variant="h5" gutterBottom>Select a Lab Test</Typography>
-        <FormControlLabel
-          value={0}
-          control={<Radio />}
-          sx={{ visibility: "hidden" }}
-        />
-        <TableContainer component={Paper}>
-          <Table sx={{ width: "100%", minWidth: 800 }}>
-            <TableHead>
-              <TableRow>
-                <TableCell>Select</TableCell>
-                <TableCell>Id</TableCell>
-                <TableCell>Name</TableCell>
-                <TableCell>Date</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {LabTests?.map((data) => (
-                <TableRow key={data.id_LabTest}>
-                  <TableCell>
-                    <FormControlLabel
-                      value={data.id_LabTest}
-                      control={<Radio />}
-                    />
-                  </TableCell>
-                  <TableCell>{data.id_LabTest}</TableCell>
-                  <TableCell>{data.name_LabTest}</TableCell>
-                  <TableCell>{data.date_LabTest}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </RadioGroup>
-      <Button variant="contained" onClick={()=>save(IdPatient,IdMA,LabTestById,IdDoctor)} disabled={RadioSelect ===0 ? true: false}>Save</Button>
-    </div>
    */
 }
 

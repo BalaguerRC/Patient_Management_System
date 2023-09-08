@@ -1,5 +1,6 @@
+import { LoadingButton } from "@mui/lab";
 import { Button, Chip, TableCell } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const TableTestResultByPatient = ({
@@ -10,6 +11,7 @@ const TableTestResultByPatient = ({
   RadioSelect,
   idMedicalAppointment,
 }) => {
+  const [time, setTime] = useState(false);
   const navigate = useNavigate();
   const complete_MA = (id_MA, id_LabTestResult) => {
     console.log(
@@ -51,14 +53,26 @@ const TableTestResultByPatient = ({
         )}
       </TableCell>
       <TableCell align="right">
-        <Button
-          variant="contained"
-          disabled={state === "completed" ? true : false}
-          onClick={() => complete_MA(idMedicalAppointment, idLabTest)}
-          size="small"
-        >
-          complete appointment
-        </Button>
+        {time ? (
+          <LoadingButton loading variant="outlined">
+            complete appointment
+          </LoadingButton>
+        ) : (
+          <Button
+            variant="contained"
+            disabled={state === "completed" ? true : false}
+            type="submit"
+            onClick={() => {
+              setTime(!time);
+              setTimeout(() => {
+                setTime(time);
+                complete_MA(idMedicalAppointment, idLabTest);
+              }, 1000);
+            }}
+          >
+            complete appointment
+          </Button>
+        )}
       </TableCell>
     </>
   );

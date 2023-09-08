@@ -34,7 +34,6 @@ const MedicalAppointments = () => {
       .then((resp) => resp.json())
       .then((data) => {
         setMAppointmets(data.data);
-        console.log(data.data);
       });
   };
 
