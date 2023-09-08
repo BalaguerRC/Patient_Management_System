@@ -25,14 +25,13 @@ const Dashboard = () => {
           <Divider />
         </Grid>
         {data?.type === 1 ? <DashboardAdmin /> : <DashboardDoctor />}
-
         <Grid item>
           <Grid container direction={"row"} spacing={2}>
             <Grid item xs={8}>
               <Typography variant="subtitle1" gutterBottom>
                 {"> "}Medical Appointments
               </Typography>
-              <Paper sx={{p:1}}>
+              <Paper sx={{ p: 1 }}>
                 <PieChart />
               </Paper>
             </Grid>

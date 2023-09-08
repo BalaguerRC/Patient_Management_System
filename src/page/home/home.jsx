@@ -5,6 +5,7 @@ import {
   Divider,
   Drawer,
   Grid,
+  IconButton,
   LinearProgress,
   List,
   ListItem,
@@ -24,6 +25,8 @@ import MedicationIcon from "@mui/icons-material/Medication";
 import VaccinesIcon from "@mui/icons-material/Vaccines";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useEffect, useState } from "react";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
+import LightModeIcon from "@mui/icons-material/LightMode";
 
 const Home = () => {
   const [loading, setloading] = useState(true);
@@ -36,9 +39,10 @@ const Home = () => {
         localStorage.setItem("dashboard", JSON.stringify(data.data));
       });
   };
+  const theme = localStorage.getItem("theme");
 
   useEffect(() => {
-    GetDashboard()
+    GetDashboard();
     setTimeout(() => {
       setloading(!loading);
     }, 500);
@@ -55,9 +59,32 @@ const Home = () => {
           }}
         >
           <Toolbar>
-            <Typography variant="h6" noWrap component="div">
-              Welcome, User!
-            </Typography>
+            <Grid container direction={"row"} justifyContent={"space-between"}>
+              <Grid item>
+                <Typography variant="h6" noWrap component="div">
+                  Welcome, User!
+                </Typography>
+              </Grid>
+              <Grid item>
+                <form>
+                  {theme == 1 ? (
+                    <IconButton
+                      type="submit"
+                      onClick={() => localStorage.setItem("theme", 0)}
+                    >
+                      <DarkModeIcon />
+                    </IconButton>
+                  ) : (
+                    <IconButton>
+                      <LightModeIcon
+                        type="submit"
+                        onClick={() => localStorage.setItem("theme", 1)}
+                      />
+                    </IconButton>
+                  )}
+                </form>
+              </Grid>
+            </Grid>
           </Toolbar>
         </AppBar>
         <Drawer

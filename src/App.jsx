@@ -24,10 +24,17 @@ import PendingResults from "./components/medical appointments/PendingResults";
 import Results from "./components/medical appointments/Results";
 import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 import Dashboard from "./components/Dashboard";
+import "@fontsource/roboto/500.css";
+/*import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';*/
 
+//localStorage.setItem("theme", 1);
+const theme = localStorage.getItem("theme");
+if (!theme) localStorage.setItem("theme", 1);
 const darkTheme = createTheme({
   palette: {
-    mode: "light",
+    mode: theme == 1 ? "light" : "dark",
   },
 });
 
@@ -41,10 +48,9 @@ function App() {
           element: <Home />,
           children: [
             {
-              index:true,
-              element: <Dashboard/>
-            }
-            ,
+              index: true,
+              element: <Dashboard />,
+            },
             {
               path: "users",
               children: [
