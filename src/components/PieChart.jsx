@@ -15,6 +15,7 @@ const PieChart = () => {
   };
 
   useEffect(() => {
+    if (data === undefined) GetDashboard();
     GetDashboard();
   }, [dashboard]);
   //console.log("pending",dashboard[0]?.pending_Results)

@@ -24,7 +24,7 @@ import PendingResults from "./components/medical appointments/PendingResults";
 import Results from "./components/medical appointments/Results";
 import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 import Dashboard from "./components/Dashboard";
-import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/400.css";
 /*import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';*/
@@ -36,6 +36,7 @@ const darkTheme = createTheme({
   palette: {
     mode: theme == 1 ? "light" : "dark",
   },
+  
 });
 
 function App() {

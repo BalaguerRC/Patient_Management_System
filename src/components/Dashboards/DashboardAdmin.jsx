@@ -32,7 +32,7 @@ const DashboardAdmin = () => {
 
   return (
     <Grid item>
-      <Typography variant="subtitle1" gutterBottom>
+      <Typography variant="subtitle1" gutterBottom sx={{ fontWeight:600}}>
         {"> "}Administration Board
       </Typography>
       <Grid container direction={"row"} alignContent={"center"} spacing={2}>
@@ -53,10 +53,10 @@ const DashboardAdmin = () => {
                     flexDirection: "column",
                   }}
                 >
-                  <Typography variant="h6" gutterBottom>
+                  <Typography variant="h6" gutterBottom sx={{ fontWeight:600}}>
                     {data.name}
                   </Typography>
-                  <Typography variant="h4" gutterBottom>
+                  <Typography variant="h4" gutterBottom sx={{ fontWeight:700}}>
                     {data.amount}
                   </Typography>
                 </Box>

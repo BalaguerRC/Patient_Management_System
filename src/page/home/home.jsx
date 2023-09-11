@@ -120,6 +120,9 @@ const Home = () => {
           </Grid>
           <Divider />
           <List>
+            <Typography variant="caption" sx={{ ml: 2 }}>
+              Overview
+            </Typography>
             <ListItem disablePadding>
               <ListItemButton
                 onClick={() => {
@@ -145,7 +148,7 @@ const Home = () => {
                       navigate("users");
                       setTimeout(() => {
                         setloading(loading);
-                      }, 500);
+                      }, 400);
                     }}
                   >
                     <ListItemIcon>
@@ -155,7 +158,15 @@ const Home = () => {
                   </ListItemButton>
                 </ListItem>
                 <ListItem disablePadding>
-                  <ListItemButton onClick={() => navigate("doctors")}>
+                  <ListItemButton
+                    onClick={() => {
+                      setloading(!loading);
+                      navigate("doctors");
+                      setTimeout(() => {
+                        setloading(loading);
+                      }, 400);
+                    }}
+                  >
                     <ListItemIcon>
                       <HailIcon />
                     </ListItemIcon>
@@ -163,7 +174,15 @@ const Home = () => {
                   </ListItemButton>
                 </ListItem>
                 <ListItem disablePadding>
-                  <ListItemButton onClick={() => navigate("labTests")}>
+                  <ListItemButton
+                    onClick={() => {
+                      setloading(!loading);
+                      navigate("labTests");
+                      setTimeout(() => {
+                        setloading(loading);
+                      }, 400);
+                    }}
+                  >
                     <ListItemIcon>
                       <BiotechIcon />
                     </ListItemIcon>
@@ -174,7 +193,15 @@ const Home = () => {
             ) : (
               <>
                 <ListItem disablePadding>
-                  <ListItemButton onClick={() => navigate("patients")}>
+                  <ListItemButton
+                    onClick={() => {
+                      setloading(!loading);
+                      navigate("patients");
+                      setTimeout(() => {
+                        setloading(loading);
+                      }, 400);
+                    }}
+                  >
                     <ListItemIcon>
                       <AccessibilityIcon />
                     </ListItemIcon>
@@ -183,7 +210,13 @@ const Home = () => {
                 </ListItem>
                 <ListItem disablePadding>
                   <ListItemButton
-                    onClick={() => navigate("medicalAppointments")}
+                    onClick={() => {
+                      setloading(!loading);
+                      navigate("medicalAppointments");
+                      setTimeout(() => {
+                        setloading(loading);
+                      }, 400);
+                    }}
                   >
                     <ListItemIcon>
                       <MedicationIcon />
@@ -192,7 +225,15 @@ const Home = () => {
                   </ListItemButton>
                 </ListItem>
                 <ListItem disablePadding>
-                  <ListItemButton onClick={() => navigate("labTestResults")}>
+                  <ListItemButton
+                    onClick={() => {
+                      setloading(!loading);
+                      navigate("labTestResults");
+                      setTimeout(() => {
+                        setloading(loading);
+                      }, 400);
+                    }}
+                  >
                     <ListItemIcon>
                       <VaccinesIcon />
                     </ListItemIcon>

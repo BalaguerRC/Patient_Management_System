@@ -76,7 +76,7 @@ export const DialogComponent = ({ id, name, lastname, token }) => {
                   }, 1000);
                 }}
               >
-                Save
+                Agree
               </Button>
             )}
           </form>

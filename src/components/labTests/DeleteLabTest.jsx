@@ -73,7 +73,7 @@ const DeleteLabTest = ({ id, name, token }) => {
                 }}
                 autoFocus
               >
-                Save
+                Agree
               </Button>
             )}
           </form>

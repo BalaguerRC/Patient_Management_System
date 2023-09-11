@@ -4,12 +4,7 @@ import Top4Patients from "./Top4Patients";
 import DashboardAdmin from "./Dashboards/DashboardAdmin";
 import DashboardDoctor from "./Dashboards/DashboardDoctor";
 
-const doctors = [
-  { name: "jose" },
-  { name: "maria" },
-  { name: "ramires" },
-  { name: "garcia" },
-];
+
 const Dashboard = () => {
   const data = JSON.parse(localStorage.getItem("data_user"));
 
@@ -28,7 +23,7 @@ const Dashboard = () => {
         <Grid item>
           <Grid container direction={"row"} spacing={2}>
             <Grid item xs={8}>
-              <Typography variant="subtitle1" gutterBottom>
+              <Typography variant="subtitle1" gutterBottom sx={{ fontWeight:600}}>
                 {"> "}Medical Appointments
               </Typography>
               <Paper sx={{ p: 1 }}>
@@ -36,7 +31,7 @@ const Dashboard = () => {
               </Paper>
             </Grid>
             <Grid item xs={4}>
-              <Typography variant="subtitle1" gutterBottom>
+              <Typography variant="subtitle1" gutterBottom sx={{ fontWeight:600}}>
                 {"> "}Patients
               </Typography>
               <Paper

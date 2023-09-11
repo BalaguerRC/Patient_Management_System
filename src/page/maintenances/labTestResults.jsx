@@ -33,6 +33,23 @@ const LabTestResults = () => {
       .then((data) => setLabTestResults(data.data))
       .catch((err) => console.log(err));
   };
+  const getLabTestResultByPatientOrDoctor = (name) => {
+    fetch(import.meta.env.VITE_APIURL + "LabTestResults/byName", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/Json",
+      },
+      body: JSON.stringify({
+        name: name,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setLabTestResults(data.data);
+        if (data.data.length === 0) GetLabTestResults();
+      });
+  };
+
   useEffect(() => {
     GetLabTestResults();
   }, []);
@@ -89,7 +106,7 @@ const LabTestResults = () => {
               }}
               onChange={(e) => setName(e.target.value)}
             />
-            <IconButton>
+            <IconButton onClick={() => getLabTestResultByPatientOrDoctor(Name)}>
               <SearchIcon fontSize="small" />
             </IconButton>
           </FormControl>
