@@ -28,8 +28,6 @@ import "@fontsource/roboto/400.css";
 /*import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';*/
-
-//localStorage.setItem("theme", 1);
 const theme = localStorage.getItem("theme");
 if (!theme) localStorage.setItem("theme", 1);
 const darkTheme = createTheme({

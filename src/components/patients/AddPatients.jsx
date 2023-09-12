@@ -29,6 +29,7 @@ const AddPatients = () => {
   const [Birthday, setBirthday] = useState();
   const [Smoker, setSmoker] = useState(false);
   const [Allergies, setAllergies] = useState();
+  const [LinkImagen, setLinkImagen] = useState(null);
 
   const Img =
     "https://cdn.discordapp.com/attachments/649710964220100638/1144307499051270255/5a4613ddd099a2ad03f9c994.png";
@@ -103,6 +104,34 @@ const AddPatients = () => {
     }
   };
 
+  const onFileChange = async (event) => {
+    //setFile(event.target.files[0])
+    const clientID = import.meta.env.VITE_CLIENT_ID;
+
+    const file = event.target.files[0];
+
+    //console.log("agregado...")
+    const formdata = new FormData();
+    //
+    formdata.append("image", file);
+
+    await fetch("https://api.imgur.com/3/image/", {
+      method: "POST",
+      body: formdata,
+      headers: {
+        Authorization: "Client-ID " + clientID,
+        //Accept: "application/json",
+      },
+      mimeType: "multipart/form-data",
+    })
+      .then((data) => data.json())
+      .then((res) => {
+        console.log(res);
+        setLinkImagen(res.data.link);
+      })
+      .catch((err) => console.log("error: " + err));
+  };
+
   return (
     <div>
       <Dialog
@@ -148,12 +177,13 @@ const AddPatients = () => {
                     type="file"
                     variant="standard"
                     sx={{ width: "95%" }}
+                    onChange={(e) => onFileChange(e)}
                   />
                 }
               >
                 <Avatar
                   alt="Perfil"
-                  src="perfil"
+                  src={LinkImagen == null ? "perfil" : LinkImagen}
                   sx={{ width: 156, height: 156 }}
                 />
               </Badge>

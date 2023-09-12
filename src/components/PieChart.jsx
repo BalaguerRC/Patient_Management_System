@@ -13,7 +13,8 @@ const PieChart = () => {
         localStorage.setItem("dashboard", JSON.stringify(data.data));
       });
   };
-
+  //#121212
+  const theme = localStorage.getItem("theme");
   useEffect(() => {
     if (data === undefined) GetDashboard();
     GetDashboard();
@@ -44,11 +45,11 @@ const PieChart = () => {
               show: true,
               name: {},
               value: {
-                color: "undefined",
+                color: theme==1 ? "#000":"#fff",
               },
               total: {
                 show: true,
-                color: "#undefined",
+                color: theme==1 ? "#000":"#fff",
               },
             },
           },
@@ -56,7 +57,7 @@ const PieChart = () => {
       },
       stroke: {
         show: true,
-        colors: "#fff",
+        colors: theme==1 ? "#fff":"#202020",
         width: 5,
       },
       labels: ["Pending Results", "Results", "Pending Consultation"],

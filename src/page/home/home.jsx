@@ -65,6 +65,7 @@ const Home = () => {
                   Welcome, User!
                 </Typography>
               </Grid>
+
               <Grid item>
                 <form>
                   {theme == 1 ? (
@@ -75,11 +76,11 @@ const Home = () => {
                       <DarkModeIcon />
                     </IconButton>
                   ) : (
-                    <IconButton>
-                      <LightModeIcon
-                        type="submit"
-                        onClick={() => localStorage.setItem("theme", 1)}
-                      />
+                    <IconButton
+                      type="submit"
+                      onClick={() => localStorage.setItem("theme", 1)}
+                    >
+                      <LightModeIcon />
                     </IconButton>
                   )}
                 </form>
@@ -118,148 +119,234 @@ const Home = () => {
               <Typography variant="caption">{data.email}</Typography>
             </Grid>
           </Grid>
-          <Divider />
-          <List>
-            <Typography variant="caption" sx={{ ml: 2 }}>
-              Overview
-            </Typography>
-            <ListItem disablePadding>
-              <ListItemButton
-                onClick={() => {
-                  setloading(!loading);
-                  navigate("/");
-                  setTimeout(() => {
-                    setloading(loading);
-                  }, 500);
+          <Divider>
+            <Typography variant="caption">Overview</Typography>
+          </Divider>
+          <Box
+            sx={{
+              height: "100vh",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+            }}
+          >
+            <List>
+              <ListItem
+                disablePadding
+                sx={{
+                  ":hover": {
+                    borderRight: 5,
+                    borderColor: "blue",
+                    borderRadius: 0.8,
+                  },
                 }}
               >
-                <ListItemIcon>
-                  <HomeIcon />
-                </ListItemIcon>
-                <ListItemText primary={"Home"} />
-              </ListItemButton>
-            </ListItem>
-            {data.type === 1 ? (
-              <>
-                <ListItem disablePadding>
-                  <ListItemButton
-                    onClick={() => {
-                      setloading(!loading);
-                      navigate("users");
-                      setTimeout(() => {
-                        setloading(loading);
-                      }, 400);
-                    }}
-                  >
-                    <ListItemIcon>
-                      <PersonIcon />
-                    </ListItemIcon>
-                    <ListItemText primary={"Users"} />
-                  </ListItemButton>
-                </ListItem>
-                <ListItem disablePadding>
-                  <ListItemButton
-                    onClick={() => {
-                      setloading(!loading);
-                      navigate("doctors");
-                      setTimeout(() => {
-                        setloading(loading);
-                      }, 400);
-                    }}
-                  >
-                    <ListItemIcon>
-                      <HailIcon />
-                    </ListItemIcon>
-                    <ListItemText primary={"Doctors"} />
-                  </ListItemButton>
-                </ListItem>
-                <ListItem disablePadding>
-                  <ListItemButton
-                    onClick={() => {
-                      setloading(!loading);
-                      navigate("labTests");
-                      setTimeout(() => {
-                        setloading(loading);
-                      }, 400);
-                    }}
-                  >
-                    <ListItemIcon>
-                      <BiotechIcon />
-                    </ListItemIcon>
-                    <ListItemText primary={"Lab Tests"} />
-                  </ListItemButton>
-                </ListItem>
-              </>
-            ) : (
-              <>
-                <ListItem disablePadding>
-                  <ListItemButton
-                    onClick={() => {
-                      setloading(!loading);
-                      navigate("patients");
-                      setTimeout(() => {
-                        setloading(loading);
-                      }, 400);
-                    }}
-                  >
-                    <ListItemIcon>
-                      <AccessibilityIcon />
-                    </ListItemIcon>
-                    <ListItemText primary={"Patients"} />
-                  </ListItemButton>
-                </ListItem>
-                <ListItem disablePadding>
-                  <ListItemButton
-                    onClick={() => {
-                      setloading(!loading);
-                      navigate("medicalAppointments");
-                      setTimeout(() => {
-                        setloading(loading);
-                      }, 400);
-                    }}
-                  >
-                    <ListItemIcon>
-                      <MedicationIcon />
-                    </ListItemIcon>
-                    <ListItemText primary={"Medical Appointments"} />
-                  </ListItemButton>
-                </ListItem>
-                <ListItem disablePadding>
-                  <ListItemButton
-                    onClick={() => {
-                      setloading(!loading);
-                      navigate("labTestResults");
-                      setTimeout(() => {
-                        setloading(loading);
-                      }, 400);
-                    }}
-                  >
-                    <ListItemIcon>
-                      <VaccinesIcon />
-                    </ListItemIcon>
-                    <ListItemText primary={"Lab Test Results"} />
-                  </ListItemButton>
-                </ListItem>
-              </>
-            )}
-
-            <form>
-              <ListItem disablePadding>
                 <ListItemButton
-                  sx={{ background: "#B8022E" }}
                   onClick={() => {
-                    localStorage.removeItem("token_user");
-                    localStorage.removeItem("data_user");
+                    setloading(!loading);
+                    navigate("/");
+                    setTimeout(() => {
+                      setloading(loading);
+                    }, 500);
                   }}
                 >
                   <ListItemIcon>
+                    <HomeIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={"Home"} />
+                </ListItemButton>
+              </ListItem>
+              {data.type === 1 ? (
+                <>
+                  <ListItem
+                    disablePadding
+                    sx={{
+                      ":hover": {
+                        borderRight: 5,
+                        borderColor: "blue",
+                        borderRadius: 0.8,
+                      },
+                    }}
+                  >
+                    <ListItemButton
+                      onClick={() => {
+                        setloading(!loading);
+                        navigate("users");
+                        setTimeout(() => {
+                          setloading(loading);
+                        }, 400);
+                      }}
+                    >
+                      <ListItemIcon>
+                        <PersonIcon />
+                      </ListItemIcon>
+                      <ListItemText primary={"Users"} />
+                    </ListItemButton>
+                  </ListItem>
+                  <ListItem
+                    disablePadding
+                    sx={{
+                      ":hover": {
+                        borderRight: 5,
+                        borderColor: "blue",
+                        borderRadius: 0.8,
+                      },
+                    }}
+                  >
+                    <ListItemButton
+                      onClick={() => {
+                        setloading(!loading);
+                        navigate("doctors");
+                        setTimeout(() => {
+                          setloading(loading);
+                        }, 400);
+                      }}
+                    >
+                      <ListItemIcon>
+                        <HailIcon />
+                      </ListItemIcon>
+                      <ListItemText primary={"Doctors"} />
+                    </ListItemButton>
+                  </ListItem>
+                  <ListItem
+                    disablePadding
+                    sx={{
+                      ":hover": {
+                        borderRight: 5,
+                        borderColor: "blue",
+                        borderRadius: 0.8,
+                      },
+                    }}
+                  >
+                    <ListItemButton
+                      onClick={() => {
+                        setloading(!loading);
+                        navigate("labTests");
+                        setTimeout(() => {
+                          setloading(loading);
+                        }, 400);
+                      }}
+                    >
+                      <ListItemIcon>
+                        <BiotechIcon />
+                      </ListItemIcon>
+                      <ListItemText primary={"Lab Tests"} />
+                    </ListItemButton>
+                  </ListItem>
+                </>
+              ) : (
+                <>
+                  <ListItem
+                    disablePadding
+                    sx={{
+                      ":hover": {
+                        borderRight: 5,
+                        borderColor: "blue",
+                        borderRadius: 0.8,
+                      },
+                    }}
+                  >
+                    <ListItemButton
+                      onClick={() => {
+                        setloading(!loading);
+                        navigate("patients");
+                        setTimeout(() => {
+                          setloading(loading);
+                        }, 400);
+                      }}
+                    >
+                      <ListItemIcon>
+                        <AccessibilityIcon />
+                      </ListItemIcon>
+                      <ListItemText primary={"Patients"} />
+                    </ListItemButton>
+                  </ListItem>
+                  <ListItem
+                    disablePadding
+                    sx={{
+                      ":hover": {
+                        borderRight: 5,
+                        borderColor: "blue",
+                        borderRadius: 0.8,
+                      },
+                    }}
+                  >
+                    <ListItemButton
+                      onClick={() => {
+                        setloading(!loading);
+                        navigate("medicalAppointments");
+                        setTimeout(() => {
+                          setloading(loading);
+                        }, 400);
+                      }}
+                    >
+                      <ListItemIcon>
+                        <MedicationIcon />
+                      </ListItemIcon>
+                      <ListItemText primary={"Medical Appointments"} />
+                    </ListItemButton>
+                  </ListItem>
+                  <ListItem
+                    disablePadding
+                    sx={{
+                      ":hover": {
+                        borderRight: 5,
+                        borderColor: "blue",
+                        borderRadius: 0.8,
+                      },
+                    }}
+                  >
+                    <ListItemButton
+                      onClick={() => {
+                        setloading(!loading);
+                        navigate("labTestResults");
+                        setTimeout(() => {
+                          setloading(loading);
+                        }, 400);
+                      }}
+                    >
+                      <ListItemIcon>
+                        <VaccinesIcon />
+                      </ListItemIcon>
+                      <ListItemText primary={"Lab Test Results"} />
+                    </ListItemButton>
+                  </ListItem>
+                </>
+              )}
+              <List>
+                <Divider />
+              </List>
+            </List>
+            <List>
+              <ListItem
+                disablePadding
+                sx={{
+                  background: "#B8022E",
+                  color: "white",
+                  ":hover": {
+                    color: "black",
+                    background: "#E96282",
+                    borderRight: 5,
+                    borderColor: "#B8022E",
+                    borderRadius: 0.8,
+                  },
+                }}
+              >
+                <ListItemButton
+                  onClick={() => {
+                    localStorage.removeItem("token_user");
+                    localStorage.removeItem("data_user");
+                    navigate("/login");
+                  }}
+                >
+                  <ListItemIcon sx={{ color: "white" }}>
                     <LogoutIcon />
                   </ListItemIcon>
                   <ListItemText primary={"Log Out"} />
                 </ListItemButton>
               </ListItem>
-            </form>
-          </List>
+            </List>
+          </Box>
         </Drawer>
         <Box sx={{ flexGrow: 1, bgcolor: "background.default", p: 3 }}>
           <Toolbar />
