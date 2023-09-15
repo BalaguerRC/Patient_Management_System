@@ -1,7 +1,9 @@
 import {
   AppBar,
   Avatar,
+  Backdrop,
   Box,
+  CircularProgress,
   Divider,
   Drawer,
   Grid,
@@ -30,10 +32,12 @@ import LightModeIcon from "@mui/icons-material/LightMode";
 
 const Home = () => {
   const [loading, setloading] = useState(true);
+  //const [loading2, setloading2] = useState(true);
+  const [open, setopen] = useState(false);
   const navigate = useNavigate();
   const data = JSON.parse(localStorage.getItem("data_user"));
   const GetDashboard = () => {
-    fetch(import.meta.env.VITE_APIURL + "MedicalAppointments/dashboard")
+    fetch(import.meta.env.VITE_APIURL + "MedicalAppointmentGraph")
       .then((resp) => resp.json())
       .then((data) => {
         localStorage.setItem("dashboard", JSON.stringify(data.data));
@@ -334,9 +338,13 @@ const Home = () => {
               >
                 <ListItemButton
                   onClick={() => {
-                    localStorage.removeItem("token_user");
-                    localStorage.removeItem("data_user");
-                    navigate("/login");
+                    setopen(!open);
+                    setTimeout(() => {
+                      setopen(open);
+                      localStorage.removeItem("token_user");
+                      localStorage.removeItem("data_user");
+                      navigate("/login");
+                    }, 1000);
                   }}
                 >
                   <ListItemIcon sx={{ color: "white" }}>
@@ -372,6 +380,12 @@ const Home = () => {
           )}
         </Box>
       </Box>
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={open}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </div>
   );
 };

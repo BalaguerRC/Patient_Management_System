@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const AddUser = () => {
   //const [SecActive, setSecActive] = useState(false);
@@ -82,10 +83,41 @@ const AddUser = () => {
         })
           .then((res) => res.json())
           .then((data) => {
-            if (data.success) navigate("/users");
-            else if (data.message) setErr(data.message);
+            if (data.success) {
+              navigate("/users");
+              setTimeout(() => {
+                Swal.fire({
+                  title: "Success",
+                  text: "Do you want to continue?",
+                  icon: "success",
+                  confirmButtonText: "OK",
+                });
+              }, 800);
+            } else if (data.message) {
+              setErr(data.message);
+            } else {
+              navigate("/users");
+              setTimeout(() => {
+                Swal.fire({
+                  title: "Error!",
+                  icon: "error",
+                  confirmButtonText: "OK",
+                });
+              }, 800);
+            }
           })
-          .catch((err) => console.log("Error", err));
+          .catch((err) => {
+            navigate("/users");
+            console.log("Error", err);
+            setTimeout(() => {
+              Swal.fire({
+                title: "Error!",
+                icon: "error",
+                text: err,
+                confirmButtonText: "OK",
+              });
+            }, 800);
+          });
       } else {
         console.log("la contrase;a no es igual");
       }

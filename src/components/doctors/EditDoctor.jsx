@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const EditDoctor = () => {
   const [Name, setName] = useState("");
@@ -51,6 +52,16 @@ const EditDoctor = () => {
         setPhone(data.data.phone_Doctor);
         setIdentity(data.data.identity_Doctor);
         setImage(data.data.img_Doctor);
+      })
+      .catch((err) => {
+        navigate("/doctors");
+        console.log(err);
+        Swal.fire({
+          title: "Error!",
+          icon: "error",
+          text: "Token Expired",
+          confirmButtonText: "OK",
+        });
       });
   };
 
@@ -83,8 +94,37 @@ const EditDoctor = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          if (data.success) navigate("/doctors");
-          else console.log(data);
+          if (data.success) {
+            navigate("/doctors");
+            setTimeout(() => {
+              Swal.fire({
+                title: "Success",
+                text: "Do you want to continue?",
+                icon: "success",
+                confirmButtonText: "OK",
+              });
+            }, 800);
+          } else {
+            navigate("/doctors");
+            console.log(data);
+            setTimeout(() => {
+              Swal.fire({
+                title: "Error!",
+                icon: "error",
+                confirmButtonText: "OK",
+              });
+            }, 800);
+          }
+        })
+        .catch((err) => {
+          navigate("/doctors");
+          console.log(err);
+          Swal.fire({
+            title: "Error!",
+            icon: "error",
+            text: "Token Expired",
+            confirmButtonText: "OK",
+          });
         });
     }
   };

@@ -12,6 +12,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { LoadingButton } from "@mui/lab";
+import Swal from "sweetalert2";
 
 const DeleteLabTest = ({ id, name, token }) => {
   const [openDialog, setOpenDialog] = useState(false);
@@ -33,7 +34,30 @@ const DeleteLabTest = ({ id, name, token }) => {
         if (data) {
           navigate("/labTests");
           setOpenDialog(!openDialog);
-        } else console.log(data);
+          Swal.fire({
+            title: "Success",
+            text: "Do you want to continue?",
+            icon: "success",
+            confirmButtonText: "OK",
+          });
+        } else {
+          console.log(data);
+          Swal.fire({
+            title: "Error!",
+            icon: "error",
+            confirmButtonText: "OK",
+          });
+        }
+      })
+      .catch((err) => {
+        setOpenDialog(!openDialog);
+        console.log(err);
+        Swal.fire({
+          title: "Error!",
+          icon: "error",
+          text: "Token Expired",
+          confirmButtonText: "OK",
+        });
       });
   };
 

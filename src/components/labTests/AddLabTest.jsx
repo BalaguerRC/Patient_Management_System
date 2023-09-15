@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const AddLabTest = () => {
   const [Name, setName] = useState("");
@@ -21,6 +22,8 @@ const AddLabTest = () => {
 
   const navigate = useNavigate();
 
+  const token = localStorage.getItem("token_user");
+
   const Post = (name) => {
     if (!Name || Name === "") setErrName(!ErrName);
     else {
@@ -29,7 +32,7 @@ const AddLabTest = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/Json",
-          //Authorization: "Bearer " + token,
+          Authorization: "Bearer " + token,
         },
         body: JSON.stringify({
           name_LabTest: name,
@@ -37,10 +40,39 @@ const AddLabTest = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          if (data) navigate("/labTests");
-          else {
+          if (data) {
+            navigate("/labTests");
+            setTimeout(() => {
+              Swal.fire({
+                title: "Success",
+                text: "Do you want to continue?",
+                icon: "success",
+                confirmButtonText: "OK",
+              });
+            }, 800);
+          } else {
+            navigate("/labTests");
             console.log(data);
+            setTimeout(() => {
+              Swal.fire({
+                title: "Error!",
+                icon: "error",
+                confirmButtonText: "OK",
+              });
+            }, 800);
           }
+        })
+        .catch((err) => {
+          navigate("/labTests");
+          console.log(err);
+          setTimeout(() => {
+            Swal.fire({
+              title: "Error!",
+              icon: "error",
+              text: err,
+              confirmButtonText: "OK",
+            });
+          }, 800);
         });
     }
   };

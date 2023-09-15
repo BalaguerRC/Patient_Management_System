@@ -6,7 +6,7 @@ const PieChart = () => {
   const [dashboard, setdashboard] = useState({});
 
   const GetDashboard = () => {
-    fetch(import.meta.env.VITE_APIURL + "MedicalAppointments/dashboard")
+    fetch(import.meta.env.VITE_APIURL + "MedicalAppointmentGraph")
       .then((resp) => resp.json())
       .then((data) => {
         setdashboard(data.data);

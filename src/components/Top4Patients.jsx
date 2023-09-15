@@ -10,7 +10,7 @@ const Top4Patients = () => {
   const navigate = useNavigate();
 
   const GetTop4Patients = () => {
-    fetch(import.meta.env.VITE_APIURL + "Patients/top4")
+    fetch(import.meta.env.VITE_APIURL + "PatientsTop4")
       .then((resp) => resp.json())
       .then((data) => {
         console.log(data);

@@ -12,6 +12,7 @@ import { useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useNavigate } from "react-router-dom";
 import { LoadingButton } from "@mui/lab";
+import Swal from "sweetalert2";
 
 export const DialogComponent = ({ id, name, lastname, token }) => {
   const [openDialog, setOpenDialog] = useState(false);
@@ -19,7 +20,7 @@ export const DialogComponent = ({ id, name, lastname, token }) => {
   const [time, setTime] = useState(false);
 
   const deleteUser = (id) => {
-    setOpenDialog(!openDialog);
+    //setOpenDialog(!openDialog);
     fetch(import.meta.env.VITE_APIURL + "Users/" + id, {
       method: "DELETE",
       headers: {
@@ -31,9 +32,33 @@ export const DialogComponent = ({ id, name, lastname, token }) => {
         if (data) {
           navigate("/users");
           setOpenDialog(!openDialog);
+          Swal.fire({
+            title: "Success",
+            text: "Do you want to continue?",
+            icon: "success",
+            confirmButtonText: "OK",
+          });
         } else {
+          navigate("/users");
+          setOpenDialog(!openDialog);
           console.log(data);
+          Swal.fire({
+            title: "Error!",
+            icon: "error",
+            confirmButtonText: "OK",
+          });
         }
+      })
+      .catch((err) => {
+        navigate("/users");
+        setOpenDialog(!openDialog);
+        console.log(err);
+        Swal.fire({
+          title: "Error!",
+          icon: "error",
+          text: "Token Expired",
+          confirmButtonText: "OK",
+        });
       });
   };
 

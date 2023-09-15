@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const EditLabTest = () => {
   const [Name, setName] = useState("");
@@ -26,6 +27,8 @@ const EditLabTest = () => {
 
   const navigate = useNavigate();
 
+  const token = localStorage.getItem("token_user");
+
   const Edit = (name) => {
     if (!Name || Name === "") setErrName(!ErrName);
     else {
@@ -34,7 +37,7 @@ const EditLabTest = () => {
         method: "PUT",
         headers: {
           "Content-Type": "application/Json",
-          //Authorization: "Bearer " + token,
+          Authorization: "Bearer " + token,
         },
         body: JSON.stringify({
           name_LabTest: name,
@@ -42,18 +45,59 @@ const EditLabTest = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          if (data) navigate("/labTests");
-          else {
+          if (data) {
+            navigate("/labTests");
+            setTimeout(() => {
+              Swal.fire({
+                title: "Success",
+                text: "Do you want to continue?",
+                icon: "success",
+                confirmButtonText: "OK",
+              });
+            }, 800);
+          } else {
+            navigate("/labTests");
             console.log(data);
+            setTimeout(() => {
+              Swal.fire({
+                title: "Error!",
+                icon: "error",
+                confirmButtonText: "OK",
+              });
+            }, 800);
           }
+        })
+        .catch((err) => {
+          navigate("/labTests");
+          console.log(err);
+          Swal.fire({
+            title: "Error!",
+            icon: "error",
+            text: "Token Expired",
+            confirmButtonText: "OK",
+          });
         });
     }
   };
 
   const getLabTest = () => {
-    fetch(import.meta.env.VITE_APIURL + "LabTest/" + id)
+    fetch(import.meta.env.VITE_APIURL + "LabTest/" + id, {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
       .then((resp) => resp.json())
-      .then((data) => setName(data.data.name_LabTest));
+      .then((data) => setName(data.data.name_LabTest))
+      .catch((err) => {
+        navigate("/labTests");
+        console.log(err);
+        Swal.fire({
+          title: "Error!",
+          icon: "error",
+          text: "Token Expired",
+          confirmButtonText: "OK",
+        });
+      });
   };
 
   useEffect(() => {
@@ -143,73 +187,5 @@ const EditLabTest = () => {
     </div>
   );
 };
-
-{
-  /**
-  <Grid item>
-        <Paper>
-          <Grid
-            container
-            direction={"row"}
-            justifyContent={"left"}
-            alignItems={"center"}
-            sx={{ p: 1 }}
-          >
-            <Grid item>
-              <Button onClick={() => navigate("/labTests")}>{"<"}</Button>
-            </Grid>
-            <Grid item>
-              <Typography variant="h6">Update Lab Test: {id}</Typography>
-            </Grid>
-          </Grid>
-          <Divider />
-
-          <Grid container direction={"column"} justifyContent={"center"} p={2}>
-            <Grid
-              item
-              //sx={{ display: "flex", justifyContent: "space-between", pb: 4 }}
-              sx={{ pb: 2 }}
-            >
-              <TextField
-                type="text"
-                error={ErrName}
-                helperText={ErrName ? "falta name" : null}
-                placeholder="name..."
-                label={"Name"}
-                value={Name}
-                variant="standard"
-                fullWidth
-                required
-                onChange={(e) => {
-                  setName(e.target.value);
-                  setErrName(false);
-                }}
-              />
-            </Grid>
-          </Grid>
-          <Divider />
-          <Grid
-            container
-            direction={"row"}
-            justifyContent={"right"}
-            sx={{ p: 2 }}
-          >
-            <Grid item>
-              <Button variant="contained" type="submit" disabled sx={{ mr: 2 }}>
-                Cancel
-              </Button>
-              <Button
-                variant="outlined"
-                type="submit"
-                onClick={() => Edit(Name)}
-              >
-                Save
-              </Button>
-            </Grid>
-          </Grid>
-        </Paper>
-      </Grid>
-   */
-}
 
 export default EditLabTest;

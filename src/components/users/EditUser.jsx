@@ -17,6 +17,7 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const EditUser = () => {
   //const [SecActive, setSecActive] = useState(false);
@@ -59,7 +60,16 @@ const EditUser = () => {
         setUsername(data.data.userName);
         setType(data.data.type_User);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        navigate("/users");
+        console.log(err);
+        Swal.fire({
+          title: "Error!",
+          icon: "error",
+          text: "Token Expired",
+          confirmButtonText: "OK",
+        });
+      });
   };
 
   const Post = (
@@ -98,7 +108,37 @@ const EditUser = () => {
         })
           .then((res) => res.json())
           .then((data) => {
-            data.success ? navigate("/users") : console.log(data);
+            if (data.success) {
+              navigate("/users");
+              setTimeout(() => {
+                Swal.fire({
+                  title: "Success",
+                  text: "Do you want to continue?",
+                  icon: "success",
+                  confirmButtonText: "OK",
+                });
+              }, 800);
+            } else {
+              navigate("/users");
+              console.log(data);
+              setTimeout(() => {
+                Swal.fire({
+                  title: "Error!",
+                  icon: "error",
+                  confirmButtonText: "OK",
+                });
+              }, 800);
+            }
+          })
+          .catch((err) => {
+            navigate("/users");
+            console.log(err);
+            Swal.fire({
+              title: "Error!",
+              icon: "error",
+              text: "Token Expired",
+              confirmButtonText: "OK",
+            });
           });
 
         /*console.log(

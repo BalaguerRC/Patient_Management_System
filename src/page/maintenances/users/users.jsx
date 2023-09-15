@@ -2,11 +2,6 @@ import {
   Breadcrumbs,
   Button,
   Chip,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
   FormControl,
   Grid,
   IconButton,
@@ -29,6 +24,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { StyledTableCell } from "../../../components/users/style/table";
 import { DialogComponent } from "../../../components/users/DeleteUser";
 import { LoadingButton } from "@mui/lab";
+import Swal from "sweetalert2";
 
 const Users = () => {
   const [Usuarios, setUsuarios] = useState([]);
@@ -44,7 +40,16 @@ const Users = () => {
       },
     })
       .then((res) => res.json())
-      .then((data) => setUsuarios(data.data));
+      .then((data) => setUsuarios(data.data))
+      .catch((err) => {
+        console.log(err);
+        Swal.fire({
+          title: "Error!",
+          icon: "error",
+          text: "Token Expired",
+          confirmButtonText: "OK",
+        });
+      });
   };
 
   const GetUsersByName = (name) => {
@@ -62,6 +67,15 @@ const Users = () => {
       .then((data) => {
         setUsuarios(data.data);
         if (data.data.length === 0) GetUsers();
+      })
+      .catch((err) => {
+        console.log(err);
+        Swal.fire({
+          title: "Error!",
+          icon: "error",
+          text: "Token Expired",
+          confirmButtonText: "OK",
+        });
       });
   };
 

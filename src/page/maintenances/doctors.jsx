@@ -23,7 +23,10 @@ import SearchIcon from "@mui/icons-material/Search";
 import EditIcon from "@mui/icons-material/Edit";
 import { DeleteDoctor } from "../../components/doctors/DeleteDoctor";
 import { LoadingButton } from "@mui/lab";
+import Swal from "sweetalert2";
 //import DeleteIcon from "@mui/icons-material/Delete";
+
+// CommonJS
 
 const Doctors = () => {
   const [Doctores, setDoctores] = useState([]);
@@ -41,7 +44,16 @@ const Doctors = () => {
       },
     })
       .then((res) => res.json())
-      .then((data) => setDoctores(data.data));
+      .then((data) => setDoctores(data.data))
+      .catch((err) => {
+        console.log(err);
+        Swal.fire({
+          title: "Error!",
+          icon: "error",
+          text: "Token Expired",
+          confirmButtonText: "OK",
+        });
+      });
   };
 
   const GetDoctorsByNameOrIdentity = (name) => {
@@ -59,6 +71,15 @@ const Doctors = () => {
       .then((data) => {
         setDoctores(data.data);
         if (data.data.length === 0) GetDoctors();
+      })
+      .catch((err) => {
+        console.log(err);
+        Swal.fire({
+          title: "Error!",
+          icon: "error",
+          text: "Token Expired",
+          confirmButtonText: "OK",
+        });
       });
   };
 

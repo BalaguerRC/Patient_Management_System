@@ -23,6 +23,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteLabTest from "../../components/labTests/DeleteLabTest";
 import { LoadingButton } from "@mui/lab";
+import Swal from "sweetalert2";
 
 const LabTest = () => {
   const [LabTests, setLabTests] = useState([]);
@@ -32,9 +33,22 @@ const LabTest = () => {
   const token = localStorage.getItem("token_user");
 
   const getLabTests = () => {
-    fetch(import.meta.env.VITE_APIURL + "LabTest")
+    fetch(import.meta.env.VITE_APIURL + "LabTest", {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
       .then((res) => res.json())
-      .then((data) => setLabTests(data.data));
+      .then((data) => setLabTests(data.data))
+      .catch((err) => {
+        console.log(err);
+        Swal.fire({
+          title: "Error!",
+          icon: "error",
+          text: "Token Expired",
+          confirmButtonText: "OK",
+        });
+      });
   };
 
   const getLabTestByName = (name) => {
@@ -42,6 +56,7 @@ const LabTest = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/Json",
+        Authorization: "Bearer " + token,
       },
       body: JSON.stringify({
         name_LabTest: name,
@@ -51,6 +66,15 @@ const LabTest = () => {
       .then((data) => {
         setLabTests(data.data);
         if (data.data.length === 0) getLabTests();
+      })
+      .catch((err) => {
+        console.log(err);
+        Swal.fire({
+          title: "Error!",
+          icon: "error",
+          text: "Token Expired",
+          confirmButtonText: "OK",
+        });
       });
   };
 
@@ -206,47 +230,4 @@ const LabTest = () => {
   );
 };
 
-{
-  /**
-  <div>
-      Lab Test
-      <Button onClick={() => navigate("addLabTest")}>Add</Button>
-      <TableContainer component={Paper}>
-        <Table sx={{ width: "100%", minWidth: 800 }}>
-          <TableHead>
-            <TableRow>
-              <TableCell>Id</TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell>Date</TableCell>
-              <TableCell>Actions</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {LabTests?.map((data) => (
-              <TableRow key={data.id_LabTest}>
-                <TableCell>{data.id_LabTest}</TableCell>
-                <TableCell>{data.name_LabTest}</TableCell>
-                <TableCell>{data.date_LabTest}</TableCell>
-                <TableCell>
-                  <Button
-                    variant="contained"
-                    onClick={() => navigate("" + data.id_LabTest)}
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    variant="contained"
-                    onClick={() => Delete(data.id_LabTest)}
-                  >
-                    Delete
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </div>
-   */
-}
 export default LabTest;

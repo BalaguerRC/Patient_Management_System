@@ -34,6 +34,7 @@ const steps = ["Select a Patient", "Select a Doctor", "Last Step"];
 
 const AddMA = () => {
   const token = localStorage.getItem("token_user");
+  const data = JSON.parse(localStorage.getItem("data_user"));
 
   const navigate = useNavigate();
 
@@ -116,6 +117,7 @@ const AddMA = () => {
   }, []);
 
   const [RadioSelect, setRadioSelect] = useState(0);
+  //data.id ? data.id : 1
   const [RadioSelect2, setRadioSelect2] = useState(1);
 
   const getPatientById = (id) => {
