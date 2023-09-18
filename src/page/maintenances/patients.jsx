@@ -23,6 +23,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import EditIcon from "@mui/icons-material/Edit";
 import DeletePatient from "../../components/patients/DeletePatient";
 import { LoadingButton } from "@mui/lab";
+import Swal from "sweetalert2";
 
 const Patients = () => {
   const [Patients, setPatients] = useState();
@@ -34,11 +35,24 @@ const Patients = () => {
   const navigate = useNavigate();
 
   const GetPatients = () => {
-    fetch(import.meta.env.VITE_APIURL + "Patients")
+    fetch(import.meta.env.VITE_APIURL + "Patients", {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
       .then((resp) => resp.json())
       .then((data) => {
         setPatients(data.data);
         console.log(data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+        Swal.fire({
+          title: "Error!",
+          icon: "error",
+          text: "Token Expired",
+          confirmButtonText: "OK",
+        });
       });
   };
   const GetPatientByNameOrIdentity = (name) => {
@@ -56,6 +70,15 @@ const Patients = () => {
       .then((data) => {
         setPatients(data.data);
         if (data.data.length === 0) GetPatients();
+      })
+      .catch((err) => {
+        console.log(err);
+        Swal.fire({
+          title: "Error!",
+          icon: "error",
+          text: "Token Expired by",
+          confirmButtonText: "OK",
+        });
       });
   };
 

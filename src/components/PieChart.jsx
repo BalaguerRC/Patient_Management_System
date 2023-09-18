@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
+//import Swal from "sweetalert2";
 
 const PieChart = () => {
   const data = JSON.parse(localStorage.getItem("dashboard"));
@@ -12,6 +13,7 @@ const PieChart = () => {
         setdashboard(data.data);
         localStorage.setItem("dashboard", JSON.stringify(data.data));
       });
+      
   };
   //#121212
   const theme = localStorage.getItem("theme");
@@ -45,11 +47,11 @@ const PieChart = () => {
               show: true,
               name: {},
               value: {
-                color: theme==1 ? "#000":"#fff",
+                color: theme == 1 ? "#000" : "#fff",
               },
               total: {
                 show: true,
-                color: theme==1 ? "#000":"#fff",
+                color: theme == 1 ? "#000" : "#fff",
               },
             },
           },
@@ -57,7 +59,7 @@ const PieChart = () => {
       },
       stroke: {
         show: true,
-        colors: theme==1 ? "#fff":"#202020",
+        colors: theme == 1 ? "#fff" : "#202020",
         width: 5,
       },
       labels: ["Pending Results", "Results", "Pending Consultation"],

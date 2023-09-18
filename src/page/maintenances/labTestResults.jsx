@@ -20,24 +20,40 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { StyledTableCell } from "../../components/table";
 import SearchIcon from "@mui/icons-material/Search";
+import Swal from "sweetalert2";
 
 const LabTestResults = () => {
   const [LabTestResults, setLabTestResults] = useState([]);
   const [Name, setName] = useState("");
 
+  const token = localStorage.getItem("token_user");
+
   const navigate = useNavigate();
 
   const GetLabTestResults = () => {
-    fetch(import.meta.env.VITE_APIURL + "LabTestResult")
+    fetch(import.meta.env.VITE_APIURL + "LabTestResult", {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
       .then((resp) => resp.json())
       .then((data) => setLabTestResults(data.data))
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        Swal.fire({
+          title: "Error!",
+          icon: "error",
+          text: "Token Expired",
+          confirmButtonText: "OK",
+        });
+      });
   };
   const getLabTestResultByPatientOrDoctor = (name) => {
     fetch(import.meta.env.VITE_APIURL + "LabTestResults/byName", {
       method: "POST",
       headers: {
         "Content-Type": "application/Json",
+        Authorization: "Bearer " + token,
       },
       body: JSON.stringify({
         name: name,
@@ -47,6 +63,15 @@ const LabTestResults = () => {
       .then((data) => {
         setLabTestResults(data.data);
         if (data.data.length === 0) GetLabTestResults();
+      })
+      .catch((err) => {
+        console.log(err);
+        Swal.fire({
+          title: "Error!",
+          icon: "error",
+          text: "Token Expired",
+          confirmButtonText: "OK",
+        });
       });
   };
 

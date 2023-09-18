@@ -19,6 +19,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const AddPatients = () => {
   const [Name, setName] = useState();
@@ -36,6 +37,8 @@ const AddPatients = () => {
 
   const [open, setOpen] = useState(true);
   const [time, setTime] = useState(false);
+
+  const token = localStorage.getItem("token_user");
   /**Errors */
 
   const [ErrName, setErrName] = useState(false);
@@ -82,7 +85,7 @@ const AddPatients = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/Json",
-          //Authorization: "Bearer " + token,
+          Authorization: "Bearer " + token,
         },
         body: JSON.stringify({
           name_Patient: name,
@@ -98,8 +101,39 @@ const AddPatients = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          if (data) navigate("/patients");
-          else console.log(data);
+          if (data) {
+            navigate("/patients");
+            setTimeout(() => {
+              Swal.fire({
+                title: "Success",
+                text: "Do you want to continue?",
+                icon: "success",
+                confirmButtonText: "OK",
+              });
+            }, 800);
+          } else {
+            navigate("/patients");
+            console.log(data);
+            setTimeout(() => {
+              Swal.fire({
+                title: "Error!",
+                icon: "error",
+                confirmButtonText: "OK",
+              });
+            }, 800);
+          }
+        })
+        .catch((err) => {
+          navigate("/patients");
+          console.log(err);
+          setTimeout(() => {
+            Swal.fire({
+              title: "Error!",
+              icon: "error",
+              text: err,
+              confirmButtonText: "OK",
+            });
+          }, 800);
         });
     }
   };

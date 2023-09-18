@@ -36,8 +36,14 @@ const PendingConsultation = () => {
   const [open, setOpen] = useState(true);
   const [time, setTime] = useState(false);
 
+  const token = localStorage.getItem("token_user");
+
   const getLabTests = () => {
-    fetch(import.meta.env.VITE_APIURL + "LabTest")
+    fetch(import.meta.env.VITE_APIURL + "LabTest", {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         setLabTests(data.data);
@@ -49,7 +55,11 @@ const PendingConsultation = () => {
   const navigate = useNavigate();
 
   const getMAppointmets = () => {
-    fetch(import.meta.env.VITE_APIURL + "MedicalAppointments/" + id)
+    fetch(import.meta.env.VITE_APIURL + "MedicalAppointments/" + id, {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
       .then((resp) => resp.json())
       .then((data) => {
         setIdMA(data.data.id_MA);
@@ -64,6 +74,7 @@ const PendingConsultation = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/Json",
+        Authorization: "Bearer " + token,
       },
       body: JSON.stringify({
         id_Patient: patient,
@@ -84,6 +95,9 @@ const PendingConsultation = () => {
     //MedicalAppointments
     fetch(import.meta.env.VITE_APIURL + "MedicalAppointments/" + id, {
       method: "PUT",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
     })
       .then((resp) => resp.json())
       .then((data) => {

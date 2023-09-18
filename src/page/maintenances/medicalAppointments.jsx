@@ -21,6 +21,7 @@ import { useNavigate } from "react-router-dom";
 import { StyledTableCell } from "../../components/table";
 import SearchIcon from "@mui/icons-material/Search";
 import { LoadingButton } from "@mui/lab";
+import Swal from "sweetalert2";
 
 const MedicalAppointments = () => {
   const [Name, setName] = useState("");
@@ -29,11 +30,25 @@ const MedicalAppointments = () => {
 
   const navigate = useNavigate();
 
+  const token = localStorage.getItem("token_user");
   const getMAppointmets = () => {
-    fetch(import.meta.env.VITE_APIURL + "MedicalAppointments")
+    fetch(import.meta.env.VITE_APIURL + "MedicalAppointments", {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
       .then((resp) => resp.json())
       .then((data) => {
         setMAppointmets(data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+        Swal.fire({
+          title: "Error!",
+          icon: "error",
+          text: "Token Expired",
+          confirmButtonText: "OK",
+        });
       });
   };
 
@@ -42,7 +57,7 @@ const MedicalAppointments = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/Json",
-        //Authorization: "Bearer " + token,
+        Authorization: "Bearer " + token,
       },
       body: JSON.stringify({
         patientOrDoctor: name,
@@ -52,6 +67,15 @@ const MedicalAppointments = () => {
       .then((data) => {
         setMAppointmets(data.data);
         if (data.data.length === 0) getMAppointmets();
+      })
+      .catch((err) => {
+        console.log(err);
+        Swal.fire({
+          title: "Error!",
+          icon: "error",
+          text: "Token Expired",
+          confirmButtonText: "OK",
+        });
       });
   };
 

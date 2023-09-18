@@ -41,6 +41,7 @@ const DeleteLabTest = ({ id, name, token }) => {
             confirmButtonText: "OK",
           });
         } else {
+          setOpenDialog(!openDialog);
           console.log(data);
           Swal.fire({
             title: "Error!",

@@ -20,6 +20,7 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const EditPatients = () => {
   const [Name, setName] = useState("");
@@ -34,6 +35,7 @@ const EditPatients = () => {
   const [open, setOpen] = useState(true);
   const [time, setTime] = useState(false);
 
+  const token = localStorage.getItem("token_user");
   /**Errors */
 
   const [ErrName, setErrName] = useState(false);
@@ -48,13 +50,11 @@ const EditPatients = () => {
   const navigate = useNavigate();
 
   const getPatientById = () => {
-    fetch(
-      import.meta.env.VITE_APIURL + "Patients/" + id /*{
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      }*/
-    )
+    fetch(import.meta.env.VITE_APIURL + "Patients/" + id, {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
       .then((resp) => resp.json())
       .then((data) => {
         setName(data.data.name_Patient);
@@ -66,6 +66,10 @@ const EditPatients = () => {
         setSmoker(data.data.smoker_Patient == 1 ? true : false);
         setAllergies(data.data.allergies_Patient);
         setImg(data.data.img_Patient);
+      })
+      .catch((err) => {
+        navigate("/patients");
+        console.log(err);
       });
   };
 
@@ -92,7 +96,7 @@ const EditPatients = () => {
         method: "PUT",
         headers: {
           "Content-Type": "application/Json",
-          //Authorization: "Bearer " + token,
+          Authorization: "Bearer " + token,
         },
         body: JSON.stringify({
           name_Patient: name,
@@ -108,9 +112,39 @@ const EditPatients = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
-          if (data.success) navigate("/patients");
-          else console.log(data);
+          if (data) {
+            navigate("/patients");
+            setTimeout(() => {
+              Swal.fire({
+                title: "Success",
+                text: "Do you want to continue?",
+                icon: "success",
+                confirmButtonText: "OK",
+              });
+            }, 800);
+          } else {
+            navigate("/patients");
+            console.log(data);
+            setTimeout(() => {
+              Swal.fire({
+                title: "Error!",
+                icon: "error",
+                confirmButtonText: "OK",
+              });
+            }, 800);
+          }
+        })
+        .catch((err) => {
+          navigate("/patients");
+          console.log(err);
+          setTimeout(() => {
+            Swal.fire({
+              title: "Error!",
+              icon: "error",
+              text: err,
+              confirmButtonText: "OK",
+            });
+          }, 800);
         });
     }
   };

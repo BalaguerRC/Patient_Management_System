@@ -10,6 +10,7 @@ const TableTestResultByPatient = ({
   state,
   RadioSelect,
   idMedicalAppointment,
+  token,
 }) => {
   const [time, setTime] = useState(false);
   const navigate = useNavigate();
@@ -22,6 +23,9 @@ const TableTestResultByPatient = ({
     );
     fetch(import.meta.env.VITE_APIURL + "LabTestResult/" + id_LabTestResult, {
       method: "PUT",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
     })
       .then((resp) => resp.json())
       .then((data) => {
@@ -33,6 +37,9 @@ const TableTestResultByPatient = ({
         id_MA,
       {
         method: "PUT",
+        headers: {
+          Authorization: "Bearer " + token,
+        },
       }
     )
       .then((resp) => resp.json())

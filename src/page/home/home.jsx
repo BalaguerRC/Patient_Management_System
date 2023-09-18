@@ -29,6 +29,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import { useEffect, useState } from "react";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
+import Swal from "sweetalert2";
 
 const Home = () => {
   const [loading, setloading] = useState(true);
@@ -41,6 +42,15 @@ const Home = () => {
       .then((resp) => resp.json())
       .then((data) => {
         localStorage.setItem("dashboard", JSON.stringify(data.data));
+      })
+      .catch((err) => {
+        console.log(err);
+        Swal.fire({
+          title: "Error!",
+          icon: "error",
+          text: err,
+          confirmButtonText: "OK",
+        });
       });
   };
   const theme = localStorage.getItem("theme");

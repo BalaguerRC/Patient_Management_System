@@ -30,12 +30,18 @@ const PendingResults = () => {
 
   const [open, setOpen] = useState(true);
 
+  const token = localStorage.getItem("token_user");
+
   const { id } = useParams();
 
   const navigate = useNavigate();
 
   const getLabTestResultsByPatient = () => {
-    fetch(import.meta.env.VITE_APIURL + "LabTestResult/" + id)
+    fetch(import.meta.env.VITE_APIURL + "LabTestResult/" + id, {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
       .then((resp) => resp.json())
       .then((data) => {
         //console.log(data);
@@ -111,6 +117,7 @@ const PendingResults = () => {
                         state={data.state_Result == 0 ? "pending" : "completed"}
                         RadioSelect={RadioSelect}
                         idMedicalAppointment={data.id_MedicalAppointment}
+                        token={token}
                       />
                     </TableRow>
                   ))}
@@ -134,86 +141,4 @@ const PendingResults = () => {
   );
 };
 
-{
-  /**
-  <Grid item>
-        <Paper>
-          <Grid
-            container
-            direction={"row"}
-            justifyContent={"left"}
-            alignItems={"center"}
-            sx={{ p: 1 }}
-          >
-            <Grid item>
-              <Button onClick={() => navigate("/medicalAppointments")}>
-                {"<"}
-              </Button>
-            </Grid>
-            <Grid item>
-              <Typography variant="h6">Pending Results - {id}</Typography>
-            </Grid>
-          </Grid>
-          <Divider />
-          <Box p={2}>
-            <TableContainer component={Paper}>
-              <Table sx={{ width: "100%", minWidth: 800 }}>
-                <TableHead>
-                  <TableRow>
-                    <StyledTableCell align="right">
-                      id_LabTestResult
-                    </StyledTableCell>
-                    <StyledTableCell align="right">Patient</StyledTableCell>
-                    <StyledTableCell align="right">Test</StyledTableCell>
-                    <StyledTableCell align="right">State</StyledTableCell>
-                    <StyledTableCell align="right">Actions</StyledTableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {LabTestResultByPatient?.map((data) => (
-                    <TableRow
-                      key={data.id_LabTestResult}
-                      sx={{
-                        "&:last-child td, &:last-child th": {
-                          border: 0,
-                        },
-                        ":hover": { background: "#81BDF7" },
-                      }}
-                    >
-                      <TableTestResultByPatient
-                        idLabTest={data.id_LabTestResult}
-                        patient={data.patient}
-                        labTest={data.labTest}
-                        state={data.state_Result == 0 ? "pending" : "completed"}
-                        RadioSelect={RadioSelect}
-                        idMedicalAppointment={data.id_MedicalAppointment}
-                      />
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Box>
-
-          <Divider />
-          <Grid
-            container
-            direction={"row"}
-            justifyContent={"right"}
-            sx={{ p: 2 }}
-          >
-            <Grid item>
-              <Button
-                variant="outlined"
-                type="submit"
-                onClick={() => navigate("/medicalAppointments")}
-              >
-                ok
-              </Button>
-            </Grid>
-          </Grid>
-        </Paper>
-      </Grid>
-   */
-}
 export default PendingResults;

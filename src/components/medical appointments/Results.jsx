@@ -26,9 +26,15 @@ const Results = () => {
 
   const { id } = useParams();
 
+  const token = localStorage.getItem("token_user");
+
   const GetResultsByPatient = () => {
     //LabTestResults
-    fetch(import.meta.env.VITE_APIURL + "LabTestResults/" + id)
+    fetch(import.meta.env.VITE_APIURL + "LabTestResults/" + id, {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
       .then((resp) => resp.json())
       .then((data) => {
         setResults(data.data);

@@ -34,7 +34,7 @@ const steps = ["Select a Patient", "Select a Doctor", "Last Step"];
 
 const AddMA = () => {
   const token = localStorage.getItem("token_user");
-  const data = JSON.parse(localStorage.getItem("data_user"));
+  // const data = JSON.parse(localStorage.getItem("data_user"));
 
   const navigate = useNavigate();
 
@@ -45,7 +45,11 @@ const AddMA = () => {
   const [time, setTime] = useState(false);
 
   const getPatients = () => {
-    fetch(import.meta.env.VITE_APIURL + "Patients/getPInMA")
+    fetch(import.meta.env.VITE_APIURL + "Patients/getPInMA", {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
       .then((resp) => resp.json())
       .then((data) => {
         setPatients(data.data);
@@ -121,14 +125,22 @@ const AddMA = () => {
   const [RadioSelect2, setRadioSelect2] = useState(1);
 
   const getPatientById = (id) => {
-    fetch(import.meta.env.VITE_APIURL + "PatientsMa/" + id)
+    fetch(import.meta.env.VITE_APIURL + "PatientsMa/" + id, {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
       .then((resp) => resp.json())
       .then((data) => {
         setPatient(data.data.name_Patient);
       });
   }; //DoctorsMA
   const getDoctorById = (id) => {
-    fetch(import.meta.env.VITE_APIURL + "DoctorsMA/" + id)
+    fetch(import.meta.env.VITE_APIURL + "DoctorsMA/" + id, {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
       .then((resp) => resp.json())
       .then((data) => {
         setDoctor(data.data.name_Doctor);
