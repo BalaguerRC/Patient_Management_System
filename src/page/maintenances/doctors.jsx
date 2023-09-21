@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Breadcrumbs,
   Button,
   Chip,
@@ -34,6 +35,8 @@ const Doctors = () => {
   const [time, setTime] = useState(false);
 
   const token = localStorage.getItem("token_user");
+
+  const theme = localStorage.getItem("theme");
 
   const navigate = useNavigate();
 
@@ -179,7 +182,9 @@ const Doctors = () => {
                       key={data.id_Doctor}
                       sx={{
                         "&:last-child td, &:last-child th": { border: 0 },
-                        ":hover": { background: "#81BDF7" },
+                        ":hover": {
+                          background: theme == 1 ? "#81BDF7" : "#729582",
+                        },
                       }}
                     >
                       <TableCell align="right">{data.id_Doctor}</TableCell>
@@ -193,10 +198,7 @@ const Doctors = () => {
                         {data.identity_Doctor}
                       </TableCell>
                       <TableCell align="right">
-                        <Tooltip title={data.img_Doctor}>
-                          {/*data.password_User*/}
-                          <Chip variant="filled" label={"..."} />
-                        </Tooltip>
+                        <Avatar alt="Perfil" src={data.img_Doctor} />
                       </TableCell>
                       <TableCell align="right">
                         <Grid

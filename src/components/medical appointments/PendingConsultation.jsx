@@ -24,6 +24,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { StyledTableCell } from "../table";
 import TableLabTest from "./table/TableLabTest";
 import { LoadingButton } from "@mui/lab";
+import Swal from "sweetalert2";
 
 const PendingConsultation = () => {
   const [LabTests, setLabTests] = useState([]);
@@ -37,6 +38,7 @@ const PendingConsultation = () => {
   const [time, setTime] = useState(false);
 
   const token = localStorage.getItem("token_user");
+  const theme = localStorage.getItem("theme");
 
   const getLabTests = () => {
     fetch(import.meta.env.VITE_APIURL + "LabTest", {
@@ -101,9 +103,40 @@ const PendingConsultation = () => {
     })
       .then((resp) => resp.json())
       .then((data) => {
-        if (data) navigate("/medicalAppointments");
-        else console.log("PutMedicalAppointmen", data);
+        if (data) {
+          navigate("/medicalAppointments");
+          setTimeout(() => {
+            Swal.fire({
+              title: "Success",
+              text: "Do you want to continue?",
+              icon: "success",
+              confirmButtonText: "OK",
+            });
+          }, 800);
+        } else {
+          navigate("/medicalAppointments");
+          console.log("PutMedicalAppointmen", data);
+          setTimeout(() => {
+            Swal.fire({
+              title: "Error!",
+              icon: "error",
+              confirmButtonText: "OK",
+            });
+          }, 800);
+        }
         //console.log(data.data)
+      })
+      .catch((err) => {
+        navigate("/medicalAppointments");
+        console.log(err);
+        setTimeout(() => {
+          Swal.fire({
+            title: "Error!",
+            icon: "error",
+            text: err,
+            confirmButtonText: "OK",
+          });
+        }, 800);
       });
   };
 
@@ -178,7 +211,7 @@ const PendingConsultation = () => {
                           "&:last-child td, &:last-child th": {
                             border: 0,
                           },
-                          ":hover": { background: "#81BDF7" },
+                          ":hover": { background: theme == 1 ? "#81BDF7" : "#729582" },
                         }}
                       >
                         <TableCell align="right">

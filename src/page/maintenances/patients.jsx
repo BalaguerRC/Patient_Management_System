@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Breadcrumbs,
   Button,
   Chip,
@@ -31,6 +32,7 @@ const Patients = () => {
   const [time, setTime] = useState(false);
 
   const token = localStorage.getItem("token_user");
+  const theme = localStorage.getItem("theme");
 
   const navigate = useNavigate();
 
@@ -182,7 +184,7 @@ const Patients = () => {
                       key={data.id_Patient}
                       sx={{
                         "&:last-child td, &:last-child th": { border: 0 },
-                        ":hover": { background: "#81BDF7" },
+                        ":hover": { background: theme == 1 ? "#81BDF7" : "#729582" },
                       }}
                     >
                       <TableCell align="right">{data.id_Patient}</TableCell>
@@ -198,22 +200,22 @@ const Patients = () => {
                         </Tooltip>
                       </TableCell>
                       <TableCell align="right">
-                        {data.identity_Patient}
+                        <Tooltip title={data.identity_Patient}>
+                          {/*data.password_User*/}
+                          <Chip variant="filled" label={"..."} />
+                        </Tooltip>
                       </TableCell>
                       <TableCell align="right">
                         {data.birthdate_Patient.slice(0, 10)}
                       </TableCell>
                       <TableCell align="right">
-                        {data.smoker_Patient === 0 ? "No" : "Yes"}
+                        {data.smoker_Patient === 0 ? "N" : "Y"}
                       </TableCell>
                       <TableCell align="right">
                         {data.allergies_Patient}
                       </TableCell>
                       <TableCell align="right">
-                        <Tooltip title={data.img_Patient}>
-                          {/*data.password_User*/}
-                          <Chip variant="filled" label={"..."} />
-                        </Tooltip>
+                        <Avatar alt="perfil" src={data.img_Patient}/>
                       </TableCell>
                       <TableCell align="right">
                         {data.date_Patient.slice(0, 10)} (

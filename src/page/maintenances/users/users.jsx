@@ -32,6 +32,7 @@ const Users = () => {
   const [time, setTime] = useState(false);
 
   const token = localStorage.getItem("token_user");
+  const theme = localStorage.getItem("theme");
 
   const GetUsers = () => {
     fetch(import.meta.env.VITE_APIURL + "Users", {
@@ -82,21 +83,6 @@ const Users = () => {
   useEffect(() => {
     GetUsers();
   }, []);
-
-  /* const deleteUser = (id) => {
-    console.log(id);
-    fetch(import.meta.env.VITE_APIURL + "Users/" + id, {
-      method: "DELETE",
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        GetUsers();
-      });
-  };*/
 
   const navigate = useNavigate();
   return (
@@ -194,7 +180,9 @@ const Users = () => {
                       key={data.id_User}
                       sx={{
                         "&:last-child td, &:last-child th": { border: 0 },
-                        ":hover": { background: "#81BDF7" },
+                        ":hover": {
+                          background: theme == 1 ? "#81BDF7" : "#729582",
+                        },
                       }}
                     >
                       <TableCell align="right">{data.id_User}</TableCell>

@@ -30,6 +30,7 @@ import { useEffect, useState } from "react";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import Swal from "sweetalert2";
+import { blue } from "@mui/material/colors";
 
 const Home = () => {
   const [loading, setloading] = useState(true);
@@ -150,7 +151,7 @@ const Home = () => {
                 sx={{
                   ":hover": {
                     borderRight: 5,
-                    borderColor: "blue",
+                    borderColor: theme == 1 ? blue[700] : "#81CC96",
                     borderRadius: 0.8,
                   },
                 }}
@@ -177,7 +178,7 @@ const Home = () => {
                     sx={{
                       ":hover": {
                         borderRight: 5,
-                        borderColor: "blue",
+                        borderColor: theme == 1 ? blue[700] : "#81CC96",
                         borderRadius: 0.8,
                       },
                     }}
@@ -202,7 +203,7 @@ const Home = () => {
                     sx={{
                       ":hover": {
                         borderRight: 5,
-                        borderColor: "blue",
+                        borderColor:theme == 1 ? blue[700] : "#81CC96",
                         borderRadius: 0.8,
                       },
                     }}
@@ -227,7 +228,7 @@ const Home = () => {
                     sx={{
                       ":hover": {
                         borderRight: 5,
-                        borderColor: "blue",
+                        borderColor: theme == 1 ? blue[700] : "#81CC96",
                         borderRadius: 0.8,
                       },
                     }}
@@ -255,7 +256,7 @@ const Home = () => {
                     sx={{
                       ":hover": {
                         borderRight: 5,
-                        borderColor: "blue",
+                        borderColor: theme == 1 ? blue[700] : "#81CC96",
                         borderRadius: 0.8,
                       },
                     }}
@@ -280,7 +281,7 @@ const Home = () => {
                     sx={{
                       ":hover": {
                         borderRight: 5,
-                        borderColor: "blue",
+                        borderColor: theme == 1 ? blue[700] : "#81CC96",
                         borderRadius: 0.8,
                       },
                     }}
@@ -305,7 +306,7 @@ const Home = () => {
                     sx={{
                       ":hover": {
                         borderRight: 5,
-                        borderColor: "blue",
+                        borderColor: theme == 1 ? blue[700] : "#81CC96",
                         borderRadius: 0.8,
                       },
                     }}

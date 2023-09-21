@@ -31,6 +31,7 @@ const PendingResults = () => {
   const [open, setOpen] = useState(true);
 
   const token = localStorage.getItem("token_user");
+  const theme = localStorage.getItem("theme");
 
   const { id } = useParams();
 
@@ -107,7 +108,7 @@ const PendingResults = () => {
                         "&:last-child td, &:last-child th": {
                           border: 0,
                         },
-                        ":hover": { background: "#81BDF7" },
+                        ":hover": { background: theme == 1 ? "#81BDF7" : "#729582" },
                       }}
                     >
                       <TableTestResultByPatient

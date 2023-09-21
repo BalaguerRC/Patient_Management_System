@@ -1,5 +1,7 @@
 import { LoadingButton } from "@mui/lab";
 import {
+  Avatar,
+  Badge,
   Button,
   Dialog,
   DialogActions,
@@ -20,9 +22,11 @@ const EditDoctor = () => {
   const [Mail, setMail] = useState("");
   const [Phone, setPhone] = useState("");
   const [Identity, setIdentity] = useState("");
-  const [Image, setImage] = useState();
+  const [Image, setImage] = useState("");
   const [open, setOpen] = useState(true);
   const [time, setTime] = useState(false);
+
+  const [LinkImagen, setLinkImagen] = useState(null);
 
   /**Errors */
 
@@ -65,6 +69,34 @@ const EditDoctor = () => {
       });
   };
 
+  const onFileChange = async (event) => {
+    //setFile(event.target.files[0])
+    const clientID = import.meta.env.VITE_CLIENT_ID;
+
+    const file = event.target.files[0];
+
+    //console.log("agregado...")
+    const formdata = new FormData();
+    //
+    formdata.append("image", file);
+
+    await fetch("https://api.imgur.com/3/image/", {
+      method: "POST",
+      body: formdata,
+      headers: {
+        Authorization: "Client-ID " + clientID,
+        //Accept: "application/json",
+      },
+      mimeType: "multipart/form-data",
+    })
+      .then((data) => data.json())
+      .then((res) => {
+        console.log(res);
+        setLinkImagen(res.data.link);
+      })
+      .catch((err) => console.log("error: " + err));
+  };
+
   useEffect(() => {
     getUser();
   }, []);
@@ -89,7 +121,7 @@ const EditDoctor = () => {
           email_Doctor: mail,
           phone_Doctor: phone,
           identity_Doctor: identity,
-          img_Doctor: image,
+          img_Doctor: LinkImagen == null ? image : LinkImagen,
         }),
       })
         .then((res) => res.json())
@@ -161,6 +193,33 @@ const EditDoctor = () => {
         <DialogContent>
           <Grid
             container
+            direction={"column"}
+            justifyContent={"center"}
+            alignItems={"Center"}
+          >
+            <Grid item>
+              <Badge
+                overlap="circular"
+                anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+                badgeContent={
+                  <TextField
+                    type="file"
+                    variant="standard"
+                    sx={{ width: "95%" }}
+                    onChange={(e) => onFileChange(e)}
+                  />
+                }
+              >
+                <Avatar
+                  alt="Perfil"
+                  src={LinkImagen == null ? Image : LinkImagen}
+                  sx={{ width: 156, height: 156 }}
+                />
+              </Badge>
+            </Grid>
+          </Grid>
+          <Grid
+            container
             rowSpacing={1}
             columnSpacing={{ xs: 1, sm: 2, md: 3 }}
           >
@@ -198,7 +257,7 @@ const EditDoctor = () => {
                 }}
               />
             </Grid>
-            <Grid item sx={{ pb: 2 }} xs={6}>
+            <Grid item sx={{ pb: 2 }} xs={4}>
               <TextField
                 type="text"
                 error={ErrMail}
@@ -214,7 +273,7 @@ const EditDoctor = () => {
                 }}
               />
             </Grid>
-            <Grid item sx={{ pb: 2 }} xs={6}>
+            <Grid item sx={{ pb: 2 }} xs={4}>
               <TextField
                 type="text"
                 error={ErrPhone}
@@ -230,7 +289,7 @@ const EditDoctor = () => {
                 }}
               />
             </Grid>
-            <Grid item sx={{ pb: 2 }} xs={6}>
+            <Grid item sx={{ pb: 2 }} xs={4}>
               <TextField
                 type="text"
                 error={ErrIdentity}
@@ -244,19 +303,6 @@ const EditDoctor = () => {
                   setIdentity(e.target.value);
                   setErrIdentity(false);
                 }}
-              />
-            </Grid>
-            <Grid item sx={{ pb: 2 }} xs={6}>
-              <TextField
-                type="text"
-                placeholder="img..."
-                label={"Img"}
-                fullWidth
-                variant="standard"
-                onChange={(e) => {
-                  setImage(e.target.value);
-                }}
-                disabled
               />
             </Grid>
           </Grid>

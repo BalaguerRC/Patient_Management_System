@@ -25,6 +25,7 @@ import Results from "./components/medical appointments/Results";
 import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 import Dashboard from "./components/Dashboard";
 import "@fontsource/roboto/400.css";
+import { blue } from "@mui/material/colors";
 /*import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';*/
@@ -33,8 +34,14 @@ if (!theme) localStorage.setItem("theme", 1);
 const darkTheme = createTheme({
   palette: {
     mode: theme == 1 ? "light" : "dark",
+    primary: {
+      main: theme == 1 ? blue[700] : "#81CC96",
+    },
+    background: {
+      default: theme == 1 ? null : "#161C24",
+      paper: theme == 1 ? null : "#212B36",
+    },
   },
-  
 });
 
 function App() {

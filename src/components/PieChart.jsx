@@ -59,7 +59,7 @@ const PieChart = () => {
       },
       stroke: {
         show: true,
-        colors: theme == 1 ? "#fff" : "#202020",
+        colors: theme == 1 ? "#fff" : "#2C3640",
         width: 5,
       },
       labels: ["Pending Results", "Results", "Pending Consultation"],
@@ -79,7 +79,10 @@ const PieChart = () => {
       legend: {
         position: "right",
         offsetY: 0,
-        height: 230,
+        height: 230, 
+        labels: {
+          colors: theme!= 1 ? "#fff" : "#202020",
+      },
       },
     },
 

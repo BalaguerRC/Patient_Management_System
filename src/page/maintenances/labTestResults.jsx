@@ -27,6 +27,7 @@ const LabTestResults = () => {
   const [Name, setName] = useState("");
 
   const token = localStorage.getItem("token_user");
+  const theme = localStorage.getItem("theme");
 
   const navigate = useNavigate();
 
@@ -161,7 +162,7 @@ const LabTestResults = () => {
                       key={data.id_LabTestResult}
                       sx={{
                         "&:last-child td, &:last-child th": { border: 0 },
-                        ":hover": { background: "#81BDF7" },
+                        ":hover": { background: theme == 1 ? "#81BDF7" : "#729582" },
                       }}
                     >
                       <TableCell align="right">
@@ -207,45 +208,4 @@ const LabTestResults = () => {
   );
 };
 
-{
-  /**
-  <div>
-      Lab Tests Results
-      <TableContainer component={Paper}>
-        <Table sx={{ width: "100%", minWidth: 800 }}>
-          <TableHead>
-            <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell>ID_Patient</TableCell>
-              <TableCell>PatientName</TableCell>
-              <TableCell>ID_MA</TableCell>
-              <TableCell>LabTest</TableCell>
-              <TableCell>Doctor</TableCell>
-              <TableCell>Test_Result</TableCell>
-              <TableCell>State</TableCell>
-              <TableCell>Date</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {LabTestResults?.map((data) => (
-              <TableRow key={data.id_LabTestResult}>
-                <TableCell>{data.id_LabTestResult}</TableCell>
-                <TableCell>{data.id_Patient}</TableCell>
-                <TableCell>{data.patient}</TableCell>
-                <TableCell>{data.id_MedicalAppointment}</TableCell>
-                <TableCell>{data.labTest}</TableCell>
-                <TableCell>{data.doctor}</TableCell>
-                <TableCell>{data.test_Result}</TableCell>
-                <TableCell>
-                  {data.state_Result == 0 ? "pending" : "completed"}
-                </TableCell>
-                <TableCell>{data.date_TestResult}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </div>
-   */
-}
 export default LabTestResults;

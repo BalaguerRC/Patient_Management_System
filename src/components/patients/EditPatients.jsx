@@ -35,6 +35,8 @@ const EditPatients = () => {
   const [open, setOpen] = useState(true);
   const [time, setTime] = useState(false);
 
+  const [LinkImagen, setLinkImagen] = useState(null);
+
   const token = localStorage.getItem("token_user");
   /**Errors */
 
@@ -107,7 +109,7 @@ const EditPatients = () => {
           birthdate_Patient: birthday,
           smoker_Patient: smoker ? "1" : "0",
           allergies_Patient: allergies,
-          img_Patient: img,
+          img_Patient: LinkImagen == null ? img : LinkImagen,
         }),
       })
         .then((res) => res.json())
@@ -148,6 +150,35 @@ const EditPatients = () => {
         });
     }
   };
+
+  const onFileChange = async (event) => {
+    //setFile(event.target.files[0])
+    const clientID = import.meta.env.VITE_CLIENT_ID;
+
+    const file = event.target.files[0];
+
+    //console.log("agregado...")
+    const formdata = new FormData();
+    //
+    formdata.append("image", file);
+
+    await fetch("https://api.imgur.com/3/image/", {
+      method: "POST",
+      body: formdata,
+      headers: {
+        Authorization: "Client-ID " + clientID,
+        //Accept: "application/json",
+      },
+      mimeType: "multipart/form-data",
+    })
+      .then((data) => data.json())
+      .then((res) => {
+        console.log(res);
+        setLinkImagen(res.data.link);
+      })
+      .catch((err) => console.log("error: " + err));
+  };
+
   useEffect(() => {
     getPatientById();
   }, []);
@@ -197,12 +228,13 @@ const EditPatients = () => {
                     type="file"
                     variant="standard"
                     sx={{ width: "95%" }}
+                    onChange={(e) => onFileChange(e)}
                   />
                 }
               >
                 <Avatar
                   alt="Perfil"
-                  src={Img}
+                  src={LinkImagen == null ? Img : LinkImagen}
                   sx={{ width: 156, height: 156 }}
                 />
               </Badge>

@@ -31,6 +31,7 @@ const LabTest = () => {
   const [time, setTime] = useState(false);
 
   const token = localStorage.getItem("token_user");
+  const theme = localStorage.getItem("theme");
 
   const getLabTests = () => {
     fetch(import.meta.env.VITE_APIURL + "LabTest", {
@@ -187,7 +188,9 @@ const LabTest = () => {
                       key={data.id_LabTest}
                       sx={{
                         "&:last-child td, &:last-child th": { border: 0 },
-                        ":hover": { background: "#81BDF7" },
+                        ":hover": {
+                          background: theme == 1 ? "#81BDF7" : "#729582",
+                        },
                       }}
                     >
                       <TableCell align="right">{data.id_LabTest}</TableCell>

@@ -13,6 +13,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LockIcon from "@mui/icons-material/Lock";
 import { LoadingButton } from "@mui/lab";
+import { PaperBox } from "../../components/paperBox";
 
 const Login = () => {
   const [username, setUserName] = useState("");
@@ -61,10 +62,10 @@ const Login = () => {
         alignItems={"center"}
       >
         <Grid item sm={4} sx={{ display: { xs: "none", md: " grid" } }}>
-          <Paper className="containerApp2" sx={{ background: "blue" }}></Paper>
+          <PaperBox className="containerApp2"></PaperBox>
         </Grid>
         <Grid item xs={0.4} sx={{ display: { xs: "grid", md: " none" } }}>
-          <Paper className="containerApp2" sx={{ background: "blue" }}></Paper>
+          <PaperBox className="containerApp2"></PaperBox>
         </Grid>
         <Grid item xs sm>
           <Box sx={{ p: 5 }}>

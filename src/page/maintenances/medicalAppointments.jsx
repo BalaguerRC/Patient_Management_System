@@ -31,6 +31,8 @@ const MedicalAppointments = () => {
   const navigate = useNavigate();
 
   const token = localStorage.getItem("token_user");
+  const theme = localStorage.getItem("theme");
+
   const getMAppointmets = () => {
     fetch(import.meta.env.VITE_APIURL + "MedicalAppointments", {
       headers: {
@@ -174,7 +176,7 @@ const MedicalAppointments = () => {
                       key={data.id_MA}
                       sx={{
                         "&:last-child td, &:last-child th": { border: 0 },
-                        ":hover": { background: "#81BDF7" },
+                        ":hover": { background: theme == 1 ? "#81BDF7" : "#729582" },
                       }}
                     >
                       <TableCell align="right">{data.id_MA}</TableCell>

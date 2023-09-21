@@ -29,6 +29,7 @@ import TablePatients from "./TablePatients";
 import TableDoctor from "./TableDoctor";
 import { StyledTableCell } from "../table";
 import { LoadingButton } from "@mui/lab";
+import Swal from "sweetalert2";
 
 const steps = ["Select a Patient", "Select a Doctor", "Last Step"];
 
@@ -110,8 +111,39 @@ const AddMA = () => {
     })
       .then((resp) => resp.json())
       .then((data) => {
-        if (data) navigate("/medicalAppointments");
-        else console.log(data);
+        if (data) {
+          navigate("/medicalAppointments");
+          setTimeout(() => {
+            Swal.fire({
+              title: "Success",
+              text: "Do you want to continue?",
+              icon: "success",
+              confirmButtonText: "OK",
+            });
+          }, 800);
+        } else {
+          navigate("/medicalAppointments");
+          console.log(data);
+          setTimeout(() => {
+            Swal.fire({
+              title: "Error!",
+              icon: "error",
+              confirmButtonText: "OK",
+            });
+          }, 800);
+        }
+      })
+      .catch((err) => {
+        navigate("/medicalAppointments");
+        console.log(err);
+        setTimeout(() => {
+          Swal.fire({
+            title: "Error!",
+            icon: "error",
+            text: err,
+            confirmButtonText: "OK",
+          });
+        }, 800);
       });
   };
 
