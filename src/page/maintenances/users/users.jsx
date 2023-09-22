@@ -1,6 +1,8 @@
 import {
+  Box,
   Breadcrumbs,
   Button,
+  ButtonGroup,
   Chip,
   FormControl,
   Grid,
@@ -25,6 +27,7 @@ import { StyledTableCell } from "../../../components/users/style/table";
 import { DialogComponent } from "../../../components/users/DeleteUser";
 import { LoadingButton } from "@mui/lab";
 import Swal from "sweetalert2";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 const Users = () => {
   const [Usuarios, setUsuarios] = useState([]);
@@ -138,27 +141,43 @@ const Users = () => {
               <Chip label={"Users"} />
             </Link>
           </Breadcrumbs>
-          <FormControl sx={{ display: "flex", flexDirection: "row" }}>
-            <TextField
-              label={"Search"}
-              size="small"
-              placeholder="name..."
-              value={name}
-              InputProps={{
-                startAdornment: <SearchIcon fontSize="small" sx={{ mr: 1 }} />,
-              }}
-              onChange={(e) => {
-                setName(e.target.value);
-              }}
-            />
-            <IconButton onClick={() => GetUsersByName(name)}>
-              <SearchIcon fontSize="small" />
-            </IconButton>
-          </FormControl>
+          <Box sx={{ display: "flex", flexDirection: "row" }}>
+            <Grid container direction={"row"} spacing={1} alignItems={"center"}>
+              <Grid item>
+                <ButtonGroup disabled>
+                  <Button>Filter</Button>
+                  <Button size="small">
+                    <ArrowDropDownIcon />
+                  </Button>
+                </ButtonGroup>
+              </Grid>
+              <Grid item>
+                <FormControl sx={{ display: "flex", flexDirection: "row" }}>
+                  <TextField
+                    label={"Search"}
+                    size="small"
+                    placeholder="name..."
+                    value={name}
+                    InputProps={{
+                      startAdornment: (
+                        <SearchIcon fontSize="small" sx={{ mr: 1 }} />
+                      ),
+                    }}
+                    onChange={(e) => {
+                      setName(e.target.value);
+                    }}
+                  />
+                  <IconButton onClick={() => GetUsersByName(name)}>
+                    <SearchIcon fontSize="small" />
+                  </IconButton>
+                </FormControl>
+              </Grid>
+            </Grid>
+          </Box>
         </Grid>
 
         <Grid item sx={{ pt: 2 }}>
-          <TableContainer component={Paper}>
+          <TableContainer component={Paper} sx={{ maxHeight: "60vh" }}>
             <Table sx={{ minWidth: 650 }} size="small" stickyHeader>
               <TableHead>
                 <TableRow>

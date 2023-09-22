@@ -161,7 +161,7 @@ const Doctors = () => {
         </Grid>
 
         <Grid item sx={{ pt: 2 }}>
-          <TableContainer component={Paper}>
+          <TableContainer component={Paper} sx={{ maxHeight: "60vh" }}>
             <Table sx={{ minWidth: 650 }} size="small" stickyHeader>
               <TableHead>
                 <TableRow>

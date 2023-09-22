@@ -1,6 +1,8 @@
 import {
+  Box,
   Breadcrumbs,
   Button,
+  ButtonGroup,
   Chip,
   FormControl,
   Grid,
@@ -21,6 +23,7 @@ import { useNavigate } from "react-router-dom";
 import { StyledTableCell } from "../../components/table";
 import SearchIcon from "@mui/icons-material/Search";
 import Swal from "sweetalert2";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 const LabTestResults = () => {
   const [LabTestResults, setLabTestResults] = useState([]);
@@ -121,25 +124,43 @@ const LabTestResults = () => {
               <Chip label={"Lab Test Results"} />
             </Link>
           </Breadcrumbs>
-          <FormControl sx={{ display: "flex", flexDirection: "row" }}>
-            <TextField
-              label={"Search"}
-              size="small"
-              placeholder="name..."
-              value={Name}
-              InputProps={{
-                startAdornment: <SearchIcon fontSize="small" sx={{ mr: 1 }} />,
-              }}
-              onChange={(e) => setName(e.target.value)}
-            />
-            <IconButton onClick={() => getLabTestResultByPatientOrDoctor(Name)}>
-              <SearchIcon fontSize="small" />
-            </IconButton>
-          </FormControl>
+          <Box sx={{ display: "flex", flexDirection: "row" }}>
+            <Grid container direction={"row"} spacing={1} alignItems={"center"}>
+              <Grid item>
+                <ButtonGroup disabled>
+                  <Button>Filter</Button>
+                  <Button size="small">
+                    <ArrowDropDownIcon />
+                  </Button>
+                </ButtonGroup>
+              </Grid>
+              <Grid item>
+                <FormControl sx={{ display: "flex", flexDirection: "row" }}>
+                  <TextField
+                    label={"Search"}
+                    size="small"
+                    placeholder="name..."
+                    value={Name}
+                    InputProps={{
+                      startAdornment: (
+                        <SearchIcon fontSize="small" sx={{ mr: 1 }} />
+                      ),
+                    }}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                  <IconButton
+                    onClick={() => getLabTestResultByPatientOrDoctor(Name)}
+                  >
+                    <SearchIcon fontSize="small" />
+                  </IconButton>
+                </FormControl>
+              </Grid>
+            </Grid>
+          </Box>
         </Grid>
 
         <Grid item sx={{ pt: 2 }}>
-          <TableContainer component={Paper}>
+          <TableContainer component={Paper} sx={{ maxHeight: "60vh" }}>
             <Table sx={{ minWidth: 650 }} size="small" stickyHeader>
               <TableHead>
                 <TableRow>
@@ -162,7 +183,9 @@ const LabTestResults = () => {
                       key={data.id_LabTestResult}
                       sx={{
                         "&:last-child td, &:last-child th": { border: 0 },
-                        ":hover": { background: theme == 1 ? "#81BDF7" : "#729582" },
+                        ":hover": {
+                          background: theme == 1 ? "#81BDF7" : "#729582",
+                        },
                       }}
                     >
                       <TableCell align="right">

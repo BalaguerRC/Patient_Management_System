@@ -19,7 +19,8 @@ const PieChart = () => {
   const theme = localStorage.getItem("theme");
   useEffect(() => {
     if (data === undefined) GetDashboard();
-    GetDashboard();
+    //GetDashboard();
+    console.log("piechar.js")
   }, [dashboard]);
   //console.log("pending",dashboard[0]?.pending_Results)
   const [state, setstate] = useState({

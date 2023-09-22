@@ -77,7 +77,7 @@ const Home = () => {
             <Grid container direction={"row"} justifyContent={"space-between"}>
               <Grid item>
                 <Typography variant="h6" noWrap component="div">
-                  Welcome, User!
+                  Welcome, {data.type === 1? "Admin": "Doctor"}!
                 </Typography>
               </Grid>
 

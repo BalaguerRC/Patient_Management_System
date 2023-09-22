@@ -30,6 +30,7 @@ const Top4Patients = () => {
             sx={{
               p: 1,
             }}
+            variant="outlined"
           >
             <Grid
               container

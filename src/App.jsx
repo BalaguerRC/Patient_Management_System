@@ -38,8 +38,8 @@ const darkTheme = createTheme({
       main: theme == 1 ? blue[700] : "#81CC96",
     },
     background: {
-      default: theme == 1 ? null : "#161C24",
-      paper: theme == 1 ? null : "#212B36",
+      default: theme == 1 ? "#F3F3FD" : "#161C24",
+      paper: theme == 1 ? "#fff" : "#212B36",
     },
   },
 });

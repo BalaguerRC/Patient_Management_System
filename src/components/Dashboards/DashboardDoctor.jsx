@@ -45,7 +45,7 @@ const DashboardDoctor = () => {
       <Grid container direction={"row"} alignContent={"center"} spacing={2}>
         {data.map((data, index) => (
           <Grid item xs key={index}>
-            <Paper sx={{ p: 2 }}>
+            <Paper sx={{ p: 2, }}>
               <Box
                 sx={{
                   display: "flex",
@@ -63,7 +63,7 @@ const DashboardDoctor = () => {
                   <Typography
                     variant="h6"
                     gutterBottom
-                    sx={{ fontWeight: 600 }}
+                    sx={{ fontWeight: 600,fontSize: 19 }}
                   >
                     {data.name}
                   </Typography>
