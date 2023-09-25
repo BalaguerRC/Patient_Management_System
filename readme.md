@@ -1,7 +1,9 @@
 Steps
 
 1- npm install
+
 2- npm run dev
+
 3- View in the browser
 
 Api: https://github.com/BalaguerRC/Api_PMS
