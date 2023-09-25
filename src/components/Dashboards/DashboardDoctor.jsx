@@ -12,7 +12,7 @@ const DashboardDoctor = () => {
       .then((resp) => resp.json())
       .then((data) => {
         setdashboard2(data.data);
-        console.log(data.data);
+        //console.log(data.data);
       });
   };
   const data = [
@@ -39,7 +39,7 @@ const DashboardDoctor = () => {
 
   return (
     <Grid item>
-      <Typography variant="subtitle1" gutterBottom>
+      <Typography variant="subtitle1" gutterBottom sx={{fontWeight: 600}}>
         {"> "}Doctors Board
       </Typography>
       <Grid container direction={"row"} alignContent={"center"} spacing={2}>
@@ -108,40 +108,4 @@ const DashboardDoctor = () => {
   );
 };
 
-{
-  /**
-  <Grid container direction={"row"} alignContent={"center"} spacing={2}>
-        <Grid item xs>
-          <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-            <Typography variant="button" gutterBottom>
-              Patients
-            </Typography>
-            <Typography variant="caption" gutterBottom>
-              Amount: {dashboard2[0]?.patients}
-            </Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs>
-          <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-            <Typography variant="button" gutterBottom>
-              Medical Appointments
-            </Typography>
-            <Typography variant="caption" gutterBottom>
-              Amount: {dashboard2[0]?.medicalAppointmests}
-            </Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs>
-          <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-            <Typography variant="button" gutterBottom>
-              Lab Test Results
-            </Typography>
-            <Typography variant="caption" gutterBottom>
-              Amount: {dashboard2[0]?.lab_Tests_Results}
-            </Typography>
-          </Paper>
-        </Grid>
-      </Grid>
-   */
-}
 export default DashboardDoctor;

@@ -198,14 +198,13 @@ const AddDoctors = () => {
           >
             <Grid
               item
-              //sx={{ display: "flex", justifyContent: "space-between", pb: 4 }}
               sx={{ pb: 2 }}
               xs={6}
             >
               <TextField
                 type="text"
                 error={ErrName}
-                helperText={ErrName ? "falta name" : null}
+                helperText={ErrName ? "Type a name" : null}
                 placeholder="name..."
                 label={"Name"}
                 variant="standard"
@@ -219,7 +218,6 @@ const AddDoctors = () => {
             </Grid>
             <Grid
               item
-              //sx={{ display: "flex", justifyContent: "space-between", pb: 4 }}
               sx={{ pb: 2 }}
               xs={6}
             >
@@ -227,7 +225,7 @@ const AddDoctors = () => {
                 type="text"
                 placeholder="lastname..."
                 error={ErrLastName}
-                helperText={ErrLastName ? "falta lastname" : null}
+                helperText={ErrLastName ? "Type a lastname" : null}
                 required
                 label={"Last Name"}
                 fullWidth
@@ -240,14 +238,13 @@ const AddDoctors = () => {
             </Grid>
             <Grid
               item
-              //sx={{ display: "flex", justifyContent: "space-between", pb: 4 }}
               sx={{ pb: 2 }}
               xs={4}
             >
               <TextField
                 type="text"
                 error={ErrMail}
-                helperText={ErrMail ? "falta mail" : null}
+                helperText={ErrMail ? "Type an Email" : null}
                 placeholder="mail..."
                 label={"Email"}
                 fullWidth
@@ -260,14 +257,13 @@ const AddDoctors = () => {
             </Grid>
             <Grid
               item
-              //sx={{ display: "flex", justifyContent: "space-between", pb: 4 }}
               sx={{ pb: 2 }}
               xs={4}
             >
               <TextField
                 type="text"
                 error={ErrPhone}
-                helperText={ErrPhone ? "falta Phone" : null}
+                helperText={ErrPhone ? "Type a Phone" : null}
                 placeholder="Phone..."
                 label={"Phone"}
                 fullWidth
@@ -280,14 +276,13 @@ const AddDoctors = () => {
             </Grid>
             <Grid
               item
-              //sx={{ display: "flex", justifyContent: "space-between", pb: 4 }}
               sx={{ pb: 2 }}
               xs={4}
             >
               <TextField
                 type="text"
                 error={ErrIdentity}
-                helperText={ErrIdentity ? "falta Identity" : null}
+                helperText={ErrIdentity ? "Type an Identity" : null}
                 placeholder="identity..."
                 label={"Identity"}
                 fullWidth

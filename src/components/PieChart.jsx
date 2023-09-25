@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
-//import Swal from "sweetalert2";
 
 const PieChart = () => {
   const data = JSON.parse(localStorage.getItem("dashboard"));
@@ -13,16 +12,12 @@ const PieChart = () => {
         setdashboard(data.data);
         localStorage.setItem("dashboard", JSON.stringify(data.data));
       });
-      
   };
   //#121212
   const theme = localStorage.getItem("theme");
   useEffect(() => {
     if (data === undefined) GetDashboard();
-    //GetDashboard();
-    console.log("piechar.js")
   }, [dashboard]);
-  //console.log("pending",dashboard[0]?.pending_Results)
   const [state, setstate] = useState({
     series: [
       data[0]?.pending_Results,
@@ -80,66 +75,12 @@ const PieChart = () => {
       legend: {
         position: "right",
         offsetY: 0,
-        height: 230, 
+        height: 230,
         labels: {
-          colors: theme!= 1 ? "#fff" : "#202020",
-      },
+          colors: theme != 1 ? "#fff" : "#202020",
+        },
       },
     },
-
-    /*series: [
-      {
-        name: "Pending_Consultation",
-        data: [pending_Consultation],
-      },
-      {
-        name: "Pending_Results",
-        data: [0, pending_Results],
-      },
-      {
-        name: "Results",
-        data: [0, 0, results],
-      },
-    ],
-    options: {
-      chart: {
-        type: "bar",
-        height: 350,
-      },
-      plotOptions: {
-        bar: {
-          horizontal: false,
-          columnWidth: "55%",
-          endingShape: "rounded",
-        },
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      stroke: {
-        show: true,
-        width: 2,
-        colors: ["transparent"],
-      },
-      xaxis: {
-        categories: ["Feb", "Mar", "Apr"],
-      },
-      yaxis: {
-        title: {
-          text: "$ (thousands)",
-        },
-      },
-      fill: {
-        opacity: 1,
-      },
-      tooltip: {
-        y: {
-          formatter: function (val) {
-            return "$ " + val + " thousands";
-          },
-        },
-      },
-    },*/
   });
 
   return (

@@ -19,7 +19,6 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const AddUser = () => {
-  //const [SecActive, setSecActive] = useState(false);
   const [Name, setName] = useState("");
   const [LastName, setLastName] = useState("");
   const [Mail, setMail] = useState("");
@@ -39,7 +38,6 @@ const AddUser = () => {
   const [ErrUsername, setErrUsername] = useState(false);
   const [ErrPassword, setErrPassword] = useState(false);
   const [ErrConfirmPassword, setErrConfirmPassword] = useState(false);
-  /*const [ErrType, setErrType] = useState(false);*/
 
   /**,lastname:'',mail:'',username:'' */
   const token = localStorage.getItem("token_user");
@@ -161,15 +159,13 @@ const AddUser = () => {
           >
             <Grid
               item
-              //sx={{ display: "flex", justifyContent: "space-between", pb: 4 }}
               sx={{ pb: 2 }}
               xs={6}
             >
               <TextField
                 type="text"
-                /*error*/
                 error={ErrName}
-                helperText={ErrName ? "falta name" : null}
+                helperText={ErrName ? "Type a Name" : null}
                 placeholder="name..."
                 label={"Name"}
                 variant="standard"
@@ -183,7 +179,6 @@ const AddUser = () => {
             </Grid>
             <Grid
               item
-              //sx={{ display: "flex", justifyContent: "space-between", pb: 4 }}
               sx={{ pb: 2 }}
               xs={6}
             >
@@ -191,7 +186,7 @@ const AddUser = () => {
                 type="text"
                 placeholder="lastname..."
                 error={ErrLastName}
-                helperText={ErrLastName ? "falta lastname" : null}
+                helperText={ErrLastName ? "Type a LastName" : null}
                 required
                 label={"Last Name"}
                 fullWidth
@@ -204,14 +199,13 @@ const AddUser = () => {
             </Grid>
             <Grid
               item
-              //sx={{ display: "flex", justifyContent: "space-between", pb: 4 }}
               sx={{ pb: 2 }}
               xs={6}
             >
               <TextField
                 type="text"
                 error={ErrMail}
-                helperText={ErrMail ? "falta mail" : null}
+                helperText={ErrMail ? "Type an Email" : null}
                 placeholder="mail..."
                 label={"Email"}
                 fullWidth
@@ -224,14 +218,13 @@ const AddUser = () => {
             </Grid>
             <Grid
               item
-              //sx={{ display: "flex", justifyContent: "space-between", pb: 4 }}
               sx={{ pb: 2 }}
               xs={6}
             >
               <TextField
                 type="text"
                 error={ErrUsername}
-                helperText={ErrUsername ? "falta username" : null}
+                helperText={ErrUsername ? "Type a UserName" : null}
                 placeholder="username..."
                 label={"Username"}
                 fullWidth
@@ -253,7 +246,7 @@ const AddUser = () => {
               <TextField
                 type="password"
                 error={ErrPassword}
-                helperText={ErrPassword ? "falta password" : null}
+                helperText={ErrPassword ? "Type a Password" : null}
                 placeholder="password..."
                 label={"Password"}
                 fullWidth
@@ -269,7 +262,7 @@ const AddUser = () => {
                 type="password"
                 placeholder="confirm password..."
                 error={ErrConfirmPassword}
-                helperText={ErrConfirmPassword ? "Confirme el password" : null}
+                helperText={ErrConfirmPassword ? "Confirm your password" : null}
                 label={"Confirm Password"}
                 variant="standard"
                 fullWidth

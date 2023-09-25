@@ -11,7 +11,6 @@ import {
   FormControl,
   FormLabel,
   Grid,
-  Paper,
   Stack,
   Switch,
   TextField,
@@ -234,7 +233,7 @@ const AddPatients = () => {
               <TextField
                 type="text"
                 error={ErrName}
-                helperText={ErrName ? "falta Name" : null}
+                helperText={ErrName ? "Type a Name" : null}
                 placeholder="Name..."
                 label={"Name"}
                 fullWidth
@@ -250,7 +249,7 @@ const AddPatients = () => {
                 type="text"
                 placeholder="lastname..."
                 error={ErrLastName}
-                helperText={ErrLastName ? "falta lastName" : null}
+                helperText={ErrLastName ? "Type a lastName" : null}
                 label={"Last Name"}
                 variant="standard"
                 fullWidth
@@ -274,7 +273,7 @@ const AddPatients = () => {
                 type="tel"
                 placeholder="phone..."
                 error={ErrPhone}
-                helperText={ErrPhone ? "falta phone" : null}
+                helperText={ErrPhone ? "Type a phone" : null}
                 label={"Phone Number"}
                 variant="standard"
                 fullWidth
@@ -288,7 +287,7 @@ const AddPatients = () => {
               <TextField
                 type="text"
                 error={ErrAddress}
-                helperText={ErrAddress ? "falta address" : null}
+                helperText={ErrAddress ? "Type an address" : null}
                 placeholder="Address..."
                 label={"Address"}
                 fullWidth
@@ -304,7 +303,7 @@ const AddPatients = () => {
                 type="text"
                 placeholder="identity..."
                 error={ErrIdentity}
-                helperText={ErrIdentity ? "falta identity" : null}
+                helperText={ErrIdentity ? "Type an identity" : null}
                 label={"Identity"}
                 variant="standard"
                 fullWidth
@@ -328,7 +327,7 @@ const AddPatients = () => {
                 type="date"
                 placeholder="Birthday..."
                 error={ErrBirthday}
-                helperText={ErrBirthday ? "falta Birthday" : null}
+                helperText={ErrBirthday ? "Type a Birthday" : null}
                 variant="standard"
                 fullWidth
                 onChange={(e) => {
@@ -356,7 +355,7 @@ const AddPatients = () => {
                 type="text"
                 placeholder="allergies..."
                 error={ErrAllergies}
-                helperText={ErrAllergies ? "falta allergies" : null}
+                helperText={ErrAllergies ? "Type allergies" : null}
                 label={"Allergies"}
                 variant="standard"
                 fullWidth

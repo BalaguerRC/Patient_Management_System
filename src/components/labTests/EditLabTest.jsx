@@ -6,9 +6,7 @@ import {
   DialogContent,
   DialogTitle,
   Divider,
-  FormControl,
   Grid,
-  Paper,
   TextField,
   Typography,
 } from "@mui/material";
@@ -139,7 +137,7 @@ const EditLabTest = () => {
               <TextField
                 type="text"
                 error={ErrName}
-                helperText={ErrName ? "falta name" : null}
+                helperText={ErrName ? "Type a name" : null}
                 placeholder="name..."
                 label={"Name"}
                 value={Name}

@@ -26,7 +26,6 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteLabTest from "../../components/labTests/DeleteLabTest";
 import { LoadingButton } from "@mui/lab";
 import Swal from "sweetalert2";
-import InfoIcon from "@mui/icons-material/Info";
 import Info from "../../components/labTests/Info";
 
 const LabTest = () => {

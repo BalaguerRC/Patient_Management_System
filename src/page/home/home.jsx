@@ -77,7 +77,7 @@ const Home = () => {
             <Grid container direction={"row"} justifyContent={"space-between"}>
               <Grid item>
                 <Typography variant="h6" noWrap component="div">
-                  Welcome, {data.type === 1? "Admin": "Doctor"}!
+                  Welcome, {data?.type === 1? "Admin": "Doctor"}!
                 </Typography>
               </Grid>
 
@@ -123,15 +123,15 @@ const Home = () => {
             sx={{ pt: 2 }}
           >
             <Grid item>
-              <Avatar alt={data.name} src="a" />
+              <Avatar alt={data?.name} src="a" />
             </Grid>
             <Grid item>
               <Typography variant="subtitle1">
-                {data.name} {data.lastName}
+                {data?.name} {data?.lastName}
               </Typography>
             </Grid>
             <Grid item>
-              <Typography variant="caption">{data.email}</Typography>
+              <Typography variant="caption">{data?.email}</Typography>
             </Grid>
           </Grid>
           <Divider>
@@ -171,7 +171,7 @@ const Home = () => {
                   <ListItemText primary={"Home"} />
                 </ListItemButton>
               </ListItem>
-              {data.type === 1 ? (
+              {data?.type === 1 ? (
                 <>
                   <ListItem
                     disablePadding
@@ -371,10 +371,6 @@ const Home = () => {
           <Toolbar />
           {loading ? (
             <Box
-              /*container
-              direction={"columns"}
-              justifyContent={"center"}
-              alignContent={"center"}*/
               sx={{
                 display: "flex",
                 flexDirection: "column",

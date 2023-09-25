@@ -13,7 +13,7 @@ const Top4Patients = () => {
     fetch(import.meta.env.VITE_APIURL + "PatientsTop4")
       .then((resp) => resp.json())
       .then((data) => {
-        console.log(data);
+        //console.log(data);
         setPatients(data.data);
         //localStorage.setItem("dashboard", JSON.stringify(data.data));
       });

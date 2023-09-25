@@ -46,7 +46,7 @@ const Patients = () => {
       .then((resp) => resp.json())
       .then((data) => {
         setPatients(data.data);
-        console.log(data.data);
+        //console.log(data.data);
       })
       .catch((err) => {
         console.log(err);

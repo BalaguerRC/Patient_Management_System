@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
 import Notfound from "./page/error/notFound";
 import Home from "./page/home/home";
-import Users from "./page/maintenances/users/users";
+import Users from "./page/maintenances/users";
 import Doctors from "./page/maintenances/doctors";
 import LabTest from "./page/maintenances/labTest";
 import Patients from "./page/maintenances/patients";
@@ -26,9 +26,6 @@ import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 import Dashboard from "./components/Dashboard";
 import "@fontsource/roboto/400.css";
 import { blue } from "@mui/material/colors";
-/*import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';*/
 const theme = localStorage.getItem("theme");
 if (!theme) localStorage.setItem("theme", 1);
 const darkTheme = createTheme({

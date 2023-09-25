@@ -112,7 +112,7 @@ const AddLabTest = () => {
               <TextField
                 type="text"
                 error={ErrName}
-                helperText={ErrName ? "falta name" : null}
+                helperText={ErrName ? "Type a name" : null}
                 placeholder="name..."
                 label={"Name"}
                 variant="standard"

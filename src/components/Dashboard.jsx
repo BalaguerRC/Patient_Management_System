@@ -12,7 +12,7 @@ const Dashboard = () => {
     <div>
       <Grid container direction={"column"} spacing={2}>
         <Grid item>
-          <Typography variant="h5" gutterBottom>
+          <Typography variant="h5" gutterBottom sx={{fontWeight: 600}}>
             Patient Management System
           </Typography>
         </Grid>

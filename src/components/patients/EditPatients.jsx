@@ -9,10 +9,8 @@ import {
   DialogTitle,
   Divider,
   FormControl,
-  FormControlLabel,
   FormLabel,
   Grid,
-  Paper,
   Stack,
   Switch,
   TextField,
@@ -251,7 +249,7 @@ const EditPatients = () => {
               <TextField
                 type="text"
                 error={ErrName}
-                helperText={ErrName ? "falta Name" : null}
+                helperText={ErrName ? "Type a Name" : null}
                 placeholder="name..."
                 label={"Name"}
                 variant="standard"
@@ -270,7 +268,7 @@ const EditPatients = () => {
                 value={LastName}
                 placeholder="lastname..."
                 error={ErrLastName}
-                helperText={ErrLastName ? "falta lastName" : null}
+                helperText={ErrLastName ? "Type a lastName" : null}
                 label={"Last Name"}
                 variant="standard"
                 fullWidth
@@ -295,7 +293,7 @@ const EditPatients = () => {
                 value={Phone}
                 placeholder="phone..."
                 error={ErrPhone}
-                helperText={ErrPhone ? "falta phone" : null}
+                helperText={ErrPhone ? "Type a phone" : null}
                 label={"Phone Number"}
                 variant="standard"
                 fullWidth
@@ -310,7 +308,7 @@ const EditPatients = () => {
                 type="text"
                 value={Address}
                 error={ErrAddress}
-                helperText={ErrAddress ? "falta address" : null}
+                helperText={ErrAddress ? "Type an address" : null}
                 placeholder="Address..."
                 label={"Address"}
                 fullWidth
@@ -327,7 +325,7 @@ const EditPatients = () => {
                 value={Identity}
                 placeholder="identity..."
                 error={ErrIdentity}
-                helperText={ErrIdentity ? "falta identity" : null}
+                helperText={ErrIdentity ? "Type an identity" : null}
                 label={"Identity"}
                 variant="standard"
                 fullWidth
@@ -352,7 +350,7 @@ const EditPatients = () => {
                 value={Birthday?.slice(0, 10)}
                 placeholder="Birthday..."
                 error={ErrBirthday}
-                helperText={ErrBirthday ? "falta Birthday" : null}
+                helperText={ErrBirthday ? "Type a Birthday" : null}
                 variant="standard"
                 fullWidth
                 onChange={(e) => {
@@ -381,7 +379,7 @@ const EditPatients = () => {
                 value={Allergies}
                 placeholder="allergies..."
                 error={ErrAllergies}
-                helperText={ErrAllergies ? "falta allergies" : null}
+                helperText={ErrAllergies ? "Type allergies" : null}
                 label={"Allergies"}
                 variant="standard"
                 fullWidth
@@ -436,239 +434,5 @@ const EditPatients = () => {
     </div>
   );
 };
-{
-  /**
-  <Grid item>
-        <Paper>
-          <Grid
-            container
-            direction={"row"}
-            justifyContent={"left"}
-            alignItems={"center"}
-            sx={{ p: 1 }}
-          >
-            <Grid item>
-              <Button onClick={() => navigate("/patients")}>{"<"}</Button>
-            </Grid>
-            <Grid item>
-              <Typography variant="h6">Edit Patients: {id}</Typography>
-            </Grid>
-          </Grid>
-          <Divider />
-          <Grid
-            container
-            direction={"column"}
-            justifyContent={"center"}
-            alignItems={"Center"}
-            pt={4}
-          >
-            <Grid item>
-              <Badge
-                overlap="circular"
-                anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-                badgeContent={
-                  <TextField
-                    type="file"
-                    variant="standard"
-                    sx={{ width: "95%" }}
-                  />
-                }
-              >
-                <Avatar
-                  alt="Perfil"
-                  src={Img}
-                  sx={{ width: 156, height: 156 }}
-                />
-              </Badge>
-            </Grid>
-          </Grid>
 
-          <Grid
-            container
-            rowSpacing={1}
-            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-            sx={{ pr: 4, pl: 4, pb: 4, pt: 2 }}
-          >
-            <Grid item xs>
-              <TextField
-                type="text"
-                error={ErrName}
-                helperText={ErrName ? "falta Name" : null}
-                placeholder="name..."
-                label={"Name"}
-                variant="standard"
-                fullWidth
-                value={Name}
-                required
-                onChange={(e) => {
-                  setName(e.target.value);
-                  setErrName(false);
-                }}
-              />
-            </Grid>
-            <Grid item xs>
-              <TextField
-                type="text"
-                value={LastName}
-                placeholder="lastname..."
-                error={ErrLastName}
-                helperText={ErrLastName ? "falta lastName" : null}
-                label={"Last Name"}
-                variant="standard"
-                fullWidth
-                onChange={(e) => {
-                  setLastName(e.target.value);
-                  setErrLastName(false);
-                }}
-              />
-            </Grid>
-          </Grid>
-
-          <Grid
-            container
-            rowSpacing={1}
-            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-            sx={{ pr: 4, pl: 4, pb: 4 }}
-            alignItems={"center"}
-          >
-            <Grid item xs>
-              <TextField
-                type="tel"
-                value={Phone}
-                placeholder="phone..."
-                error={ErrPhone}
-                helperText={ErrPhone ? "falta phone" : null}
-                label={"Phone Number"}
-                variant="standard"
-                fullWidth
-                onChange={(e) => {
-                  setPhone(e.target.value);
-                  setErrPhone(false);
-                }}
-              />
-            </Grid>
-            <Grid item xs>
-              <TextField
-                type="text"
-                value={Address}
-                error={ErrAddress}
-                helperText={ErrAddress ? "falta address" : null}
-                placeholder="Address..."
-                label={"Address"}
-                fullWidth
-                variant="standard"
-                onChange={(e) => {
-                  setAddress(e.target.value);
-                  setErrAddress(false);
-                }}
-              />
-            </Grid>
-            <Grid item xs>
-              <TextField
-                type="text"
-                value={Identity}
-                placeholder="identity..."
-                error={ErrIdentity}
-                helperText={ErrIdentity ? "falta identity" : null}
-                label={"Identity"}
-                variant="standard"
-                fullWidth
-                onChange={(e) => {
-                  setIdentity(e.target.value);
-                  setErrIdentity(false);
-                }}
-              />
-            </Grid>
-          </Grid>
-
-          <Grid
-            container
-            rowSpacing={1}
-            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-            sx={{ pr: 4, pl: 4, pb: 4 }}
-            alignItems={"center"}
-          >
-            <Grid item xs>
-              <TextField
-                type="date"
-                value={Birthday?.slice(0, 10)}
-                placeholder="Birthday..."
-                error={ErrBirthday}
-                helperText={ErrBirthday ? "falta Birthday" : null}
-                variant="standard"
-                fullWidth
-                onChange={(e) => {
-                  setBirthday(e.target.value);
-                  setErrBirthday(false);
-                }}
-              />
-            </Grid>
-            <Grid item pr={1} pl={1}>
-              <FormControl component="fieldset" variant="standard">
-                <FormLabel component="legend">Smoker</FormLabel>
-                <Stack direction="row" spacing={1} alignItems="center">
-                  <Typography>No</Typography>
-                  <Switch
-                    checked={Smoker}
-                    onChange={(e) => setSmoker(e.target.checked)}
-                    color="warning"
-                  />
-                  <Typography>Yes</Typography>
-                </Stack>
-              </FormControl>
-            </Grid>
-            <Grid item xs>
-              <TextField
-                type="text"
-                value={Allergies}
-                placeholder="allergies..."
-                error={ErrAllergies}
-                helperText={ErrAllergies ? "falta allergies" : null}
-                label={"Allergies"}
-                variant="standard"
-                fullWidth
-                onChange={(e) => {
-                  setAllergies(e.target.value);
-                  setErrAllergies(false);
-                }}
-              />
-            </Grid>
-          </Grid>
-
-          <Divider />
-          <Grid
-            container
-            direction={"row"}
-            justifyContent={"right"}
-            sx={{ p: 2 }}
-          >
-            <Grid item>
-              <Button variant="contained" type="submit" disabled sx={{ mr: 2 }}>
-                Cancel
-              </Button>
-              <Button
-                variant="outlined"
-                type="submit"
-                onClick={() =>
-                  put(
-                    Name,
-                    LastName,
-                    Phone,
-                    Address,
-                    Identity,
-                    Birthday,
-                    Smoker,
-                    Allergies,
-                    Img
-                  )
-                }
-              >
-                Save
-              </Button>
-            </Grid>
-          </Grid>
-        </Paper>
-      </Grid>
-   */
-}
 export default EditPatients;

@@ -15,7 +15,6 @@ import {
   TableHead,
   TableRow,
   TextField,
-  Tooltip,
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -247,57 +246,4 @@ const Doctors = () => {
   );
 };
 
-{
-  /**
-  <div>
-      Doctors
-      <Button variant="contained" onClick={() => navigate("addDoctors")}>
-        Add
-      </Button>
-      <TableContainer component={Paper}>
-        <Table sx={{ width: "100%", minWidth: 800 }}>
-          <TableHead>
-            <TableRow>
-              <TableCell>Id</TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell>Last Name</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>Phone</TableCell>
-              <TableCell>IDPerson</TableCell>
-              <TableCell>Image</TableCell>
-              <TableCell>Actions</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {Doctores?.map((data) => (
-              <TableRow key={data.id_Doctor}>
-                <TableCell>{data.id_Doctor}</TableCell>
-                <TableCell>{data.name_Doctor}</TableCell>
-                <TableCell>{data.lastName_Doctor}</TableCell>
-                <TableCell>{data.email_Doctor}</TableCell>
-                <TableCell>{data.phone_Doctor}</TableCell>
-                <TableCell>{data.identity_Doctor}</TableCell>
-                <TableCell>{data.img_Doctor}</TableCell>
-                <TableCell>
-                  <Button
-                    variant="contained"
-                    onClick={() => navigate("" + data.id_Doctor)}
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    variant="contained"
-                    onClick={() => deleteDoctor(data.id_Doctor)}
-                  >
-                    Delete
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </div>
-   */
-}
 export default Doctors;
