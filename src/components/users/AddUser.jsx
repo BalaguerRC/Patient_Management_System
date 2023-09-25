@@ -157,11 +157,7 @@ const AddUser = () => {
             rowSpacing={1}
             columnSpacing={{ xs: 1, sm: 2, md: 3 }}
           >
-            <Grid
-              item
-              sx={{ pb: 2 }}
-              xs={6}
-            >
+            <Grid item sx={{ pb: 2 }} xs={6}>
               <TextField
                 type="text"
                 error={ErrName}
@@ -177,11 +173,7 @@ const AddUser = () => {
                 }}
               />
             </Grid>
-            <Grid
-              item
-              sx={{ pb: 2 }}
-              xs={6}
-            >
+            <Grid item sx={{ pb: 2 }} xs={6}>
               <TextField
                 type="text"
                 placeholder="lastname..."
@@ -197,11 +189,7 @@ const AddUser = () => {
                 }}
               />
             </Grid>
-            <Grid
-              item
-              sx={{ pb: 2 }}
-              xs={6}
-            >
+            <Grid item sx={{ pb: 2 }} xs={6}>
               <TextField
                 type="text"
                 error={ErrMail}
@@ -216,14 +204,10 @@ const AddUser = () => {
                 }}
               />
             </Grid>
-            <Grid
-              item
-              sx={{ pb: 2 }}
-              xs={6}
-            >
+            <Grid item sx={{ pb: 2 }} xs={6}>
               <TextField
                 type="text"
-                error={ErrUsername}
+                error={Err ? Err : ErrUsername}
                 helperText={ErrUsername ? "Type a UserName" : null}
                 placeholder="username..."
                 label={"Username"}
@@ -232,6 +216,7 @@ const AddUser = () => {
                 onChange={(e) => {
                   setUsername(e.target.value);
                   setErrUsername(false);
+                  setErr(null);
                 }}
               />
             </Grid>
@@ -292,7 +277,7 @@ const AddUser = () => {
               </FormControl>
             </Grid>
           </Grid>
-          <Typography color={"red"} variant="caption">
+          <Typography color={"#f44336"} variant="caption">
             {Err}
           </Typography>
         </DialogContent>

@@ -28,6 +28,7 @@ const EditUser = () => {
   const [Type, setType] = useState(2);
   const [open, setOpen] = useState(true);
   const [time, setTime] = useState(false);
+  const [Err, setErr] = useState();
 
   /**Errores */
 
@@ -116,6 +117,8 @@ const EditUser = () => {
                   confirmButtonText: "OK",
                 });
               }, 800);
+            } else if (data.message) {
+              setErr(data.message);
             } else {
               navigate("/users");
               console.log(data);
@@ -138,7 +141,6 @@ const EditUser = () => {
               confirmButtonText: "OK",
             });
           });
-
       }
     }
   };
@@ -182,11 +184,7 @@ const EditUser = () => {
             rowSpacing={1}
             columnSpacing={{ xs: 1, sm: 2, md: 3 }}
           >
-            <Grid
-              item
-              sx={{ pb: 2 }}
-              xs={6}
-            >
+            <Grid item sx={{ pb: 2 }} xs={6}>
               <TextField
                 type="text"
                 error={ErrName}
@@ -203,11 +201,7 @@ const EditUser = () => {
                 }}
               />
             </Grid>
-            <Grid
-              item
-              sx={{ pb: 2 }}
-              xs={6}
-            >
+            <Grid item sx={{ pb: 2 }} xs={6}>
               <TextField
                 type="text"
                 placeholder="lastname..."
@@ -224,11 +218,7 @@ const EditUser = () => {
                 }}
               />
             </Grid>
-            <Grid
-              item
-              sx={{ pb: 2 }}
-              xs={6}
-            >
+            <Grid item sx={{ pb: 2 }} xs={6}>
               <TextField
                 type="text"
                 error={ErrMail}
@@ -244,14 +234,10 @@ const EditUser = () => {
                 }}
               />
             </Grid>
-            <Grid
-              item
-              sx={{ pb: 2 }}
-              xs={6}
-            >
+            <Grid item sx={{ pb: 2 }} xs={6}>
               <TextField
                 type="text"
-                error={ErrUsername}
+                error={Err ? Err : ErrUsername}
                 helperText={ErrUsername ? "Type a username" : null}
                 placeholder="username..."
                 label={"Username"}
@@ -261,6 +247,7 @@ const EditUser = () => {
                 onChange={(e) => {
                   setUsername(e.target.value);
                   setErrUsername(false);
+                  setErr(null);
                 }}
               />
             </Grid>
@@ -320,6 +307,9 @@ const EditUser = () => {
               </FormControl>
             </Grid>
           </Grid>
+          <Typography color={"#f44336"} variant="caption">
+            {Err}
+          </Typography>
         </DialogContent>
         <Divider />
         <DialogActions>
