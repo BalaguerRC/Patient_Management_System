@@ -1,4 +1,5 @@
 import {
+  Box,
   Breadcrumbs,
   Button,
   Chip,
@@ -6,6 +7,7 @@ import {
   Grid,
   IconButton,
   Link,
+  Pagination,
   Paper,
   Table,
   TableBody,
@@ -24,6 +26,8 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteLabTest from "../../components/labTests/DeleteLabTest";
 import { LoadingButton } from "@mui/lab";
 import Swal from "sweetalert2";
+import InfoIcon from "@mui/icons-material/Info";
+import Info from "../../components/labTests/Info";
 
 const LabTest = () => {
   const [LabTests, setLabTests] = useState([]);
@@ -113,7 +117,7 @@ const LabTest = () => {
             pb: 5,
           }}
         >
-          <Typography variant="h6" gutterBottom>
+          <Typography variant="h6" gutterBottom sx={{ fontWeight: 600 }}>
             Lab Test
           </Typography>
           {time ? (
@@ -153,21 +157,32 @@ const LabTest = () => {
               <Chip label={"Lab Test"} />
             </Link>
           </Breadcrumbs>
-          <FormControl sx={{ display: "flex", flexDirection: "row" }}>
-            <TextField
-              label={"Search"}
-              size="small"
-              placeholder="name..."
-              value={Name}
-              InputProps={{
-                startAdornment: <SearchIcon fontSize="small" sx={{ mr: 1 }} />,
-              }}
-              onChange={(e) => setName(e.target.value)}
-            />
-            <IconButton onClick={() => getLabTestByName(Name)}>
-              <SearchIcon fontSize="small" />
-            </IconButton>
-          </FormControl>
+          <Box sx={{ display: "flex", flexDirection: "row" }}>
+            <Grid container direction={"row"} spacing={1} alignItems={"center"}>
+              <Grid item>
+                <Info/>
+              </Grid>
+              <Grid item>
+                <FormControl sx={{ display: "flex", flexDirection: "row" }}>
+                  <TextField
+                    label={"Search"}
+                    size="small"
+                    placeholder="name..."
+                    value={Name}
+                    InputProps={{
+                      startAdornment: (
+                        <SearchIcon fontSize="small" sx={{ mr: 1 }} />
+                      ),
+                    }}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                  <IconButton onClick={() => getLabTestByName(Name)}>
+                    <SearchIcon fontSize="small" />
+                  </IconButton>
+                </FormControl>
+              </Grid>
+            </Grid>
+          </Box>
         </Grid>
 
         <Grid item sx={{ pt: 2 }}>
@@ -227,6 +242,17 @@ const LabTest = () => {
               </TableBody>
             </Table>
           </TableContainer>
+        </Grid>
+        <Grid
+          item
+          pt={2}
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+          }}
+        >
+          <Pagination count={5} variant="outlined" disabled shape="rounded" />
         </Grid>
       </Grid>
     </div>

@@ -13,6 +13,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { LoadingButton } from "@mui/lab";
 import Swal from "sweetalert2";
+import InfoIcon from "@mui/icons-material/Info";
 
 const DeleteLabTest = ({ id, name, token }) => {
   const [openDialog, setOpenDialog] = useState(false);
@@ -76,7 +77,10 @@ const DeleteLabTest = ({ id, name, token }) => {
         <DialogTitle>Delete - {id}</DialogTitle>
         <Divider />
         <DialogContent>
-          <DialogContentText>Are you sure to delete {name}?</DialogContentText>
+          <DialogContentText>
+            Before deleting, look at the information in the <InfoIcon fontSize="small" color="warning"/> button. <br/>
+            Are you sure to delete {name}?
+          </DialogContentText>
         </DialogContent>
         <Divider />
         <DialogActions>

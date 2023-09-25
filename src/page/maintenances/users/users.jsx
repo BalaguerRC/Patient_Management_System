@@ -8,6 +8,7 @@ import {
   Grid,
   IconButton,
   Link,
+  Pagination,
   Paper,
   Table,
   TableBody,
@@ -101,7 +102,7 @@ const Users = () => {
             pb: 5,
           }}
         >
-          <Typography variant="h6" gutterBottom>
+          <Typography variant="h6" gutterBottom sx={{ fontWeight:600}}>
             Users
           </Typography>
           {time ? (
@@ -253,6 +254,18 @@ const Users = () => {
               </TableBody>
             </Table>
           </TableContainer>
+        </Grid>
+
+        <Grid
+          item
+          pt={2}
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+          }}
+        >
+          <Pagination count={5} variant="outlined" disabled shape="rounded" />
         </Grid>
       </Grid>
     </div>

@@ -6,6 +6,7 @@ import {
   FormControl,
   Grid,
   IconButton,
+  Pagination,
   Paper,
   Table,
   TableBody,
@@ -101,7 +102,7 @@ const Patients = () => {
             pb: 5,
           }}
         >
-          <Typography variant="h6" gutterBottom>
+          <Typography variant="h6" gutterBottom sx={{ fontWeight: 600 }}>
             Patients
           </Typography>
           {time ? (
@@ -184,7 +185,9 @@ const Patients = () => {
                       key={data.id_Patient}
                       sx={{
                         "&:last-child td, &:last-child th": { border: 0 },
-                        ":hover": { background: theme == 1 ? "#81BDF7" : "#729582" },
+                        ":hover": {
+                          background: theme == 1 ? "#81BDF7" : "#729582",
+                        },
                       }}
                     >
                       <TableCell align="right">{data.id_Patient}</TableCell>
@@ -215,7 +218,7 @@ const Patients = () => {
                         {data.allergies_Patient}
                       </TableCell>
                       <TableCell align="right">
-                        <Avatar alt="perfil" src={data.img_Patient}/>
+                        <Avatar alt="perfil" src={data.img_Patient} />
                       </TableCell>
                       <TableCell align="right">
                         {data.date_Patient.slice(0, 10)} (
@@ -250,6 +253,17 @@ const Patients = () => {
               </TableBody>
             </Table>
           </TableContainer>
+        </Grid>
+        <Grid
+          item
+          pt={2}
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+          }}
+        >
+          <Pagination count={5} variant="outlined" disabled shape="rounded" />
         </Grid>
       </Grid>
     </div>
